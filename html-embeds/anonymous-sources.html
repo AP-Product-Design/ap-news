@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Sources Policy Embed</title>
+</head>
+<body style="margin: 0; padding: 20px; background: #f4f4f4; font-family: system-ui;">
+
+<!-- AP Sources Policy Embed — Responsive HTML Template -->
+<div class="ap-embed" role="region" aria-label="AP's anonymous sources policy">
+  <div class="ap-embed-content">
+    <div class="ap-embed-text">
+      <div class="ap-embed-prompt"></div>
+      <h3 class="ap-embed-headline">AP's anonymous sources policy</h3>
+      <p class="ap-embed-description">Learn more about when AP uses anonymous sources in its journalism.</p>
+    </div>
+    <a 
+      class="ap-embed-cta" 
+      href="#" 
+      aria-label="Read more about AP's anonymous sources policy"
+    >
+      Read more
+    </a>
+  </div>
+</div>
+
+<style>
+  /* CSS Custom Properties using AP Design Tokens */
+  :root {
+    /* Colors from your design system */
+    --ap-color-white: #ffffff;
+    --ap-color-neutral-100: #f4f4f4;
+    --ap-color-neutral-200: #f2f2f2;
+    --ap-color-neutral-300: #efefef;
+    --ap-color-neutral-400: #e6e6e7;
+    --ap-color-neutral-700: #515151;
+    --ap-color-neutral-800: #3a3a3a;
+    --ap-color-neutral-900: #191919;
+    --ap-color-red-500: #ff1818;
+    --ap-color-red-600: #da1026;
+    --ap-color-blue-700: #0042a9;
+    
+    /* Typography */
+    --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ap-font-weight-regular: 400;
+    --ap-font-weight-medium: 530;
+    --ap-font-weight-bold: 676;
+    
+    /* Spacing (4pt scale) */
+    --ap-space-4: 0.25rem;
+    --ap-space-8: 0.5rem;
+    --ap-space-12: 0.75rem;
+    --ap-space-16: 1rem;
+    --ap-space-20: 1.25rem;
+    --ap-space-24: 1.5rem;
+    --ap-space-32: 2rem;
+    
+    /* Border radius */
+    --ap-border-radius: 0.1875rem; /* 3px */
+    
+    /* Strokes */
+    --ap-stroke-1: 0.0625rem; /* 1px */
+  }
+
+  /* Base embed container */
+  .ap-embed {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--ap-color-white);
+    border: var(--ap-stroke-1) solid var(--ap-color-neutral-400);
+    border-radius: var(--ap-border-radius);
+    overflow: hidden;
+    font-family: var(--ap-font-family);
+    box-sizing: border-box;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .ap-embed:hover {
+    box-shadow: 0 2px 8px rgba(25, 25, 25, 0.1);
+  }
+
+  /* Content container */
+  .ap-embed-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--ap-space-20) var(--ap-space-24);
+    gap: var(--ap-space-24);
+  }
+
+  /* Text content */
+  .ap-embed-text {
+    flex: 1;
+    min-width: 0; /* Allows text to shrink */
+  }
+
+  .ap-embed-headline {
+    margin: 0 0 var(--ap-space-8) 0;
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.3;
+    font-weight: var(--ap-font-weight-bold);
+    color: var(--ap-color-neutral-900);
+    font-variation-settings: "wght" 676;
+  }
+
+  .ap-embed-description {
+    margin: 0;
+    font-size: 0.875rem; /* 14px */
+    line-height: 1.4;
+    font-weight: var(--ap-font-weight-regular);
+    color: var(--ap-color-neutral-700);
+  }
+
+  /* CTA Button */
+  .ap-embed-cta {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--ap-space-8) var(--ap-space-20);
+    background: var(--ap-color-neutral-900);
+    color: var(--ap-color-white);
+    text-decoration: none;
+    border-radius: var(--ap-space-24);
+    font-size: 0.875rem; /* 14px */
+    font-weight: var(--ap-font-weight-medium);
+    white-space: nowrap;
+    transition: background-color 0.2s ease;
+    border: none;
+    cursor: pointer;
+    font-variation-settings: "wght" 530;
+  }
+
+  .ap-embed-cta:hover {
+    background: var(--ap-color-neutral-800);
+  }
+
+  .ap-embed-cta:focus {
+    outline: 2px solid var(--ap-color-blue-700);
+    outline-offset: 2px;
+  }
+
+    .ap-embed-prompt {
+      width: 60px; /* Slightly smaller on mobile */
+      height: 7px; /* Maintain 25:3 aspect ratio */
+      background-color: var(--ap-color-red-500);
+      margin-bottom: var(--ap-space-4);
+    }
+
+  /* Mobile responsive (follows your pattern) */
+  @media (max-width: 575.98px) {
+    .ap-embed-content {
+      flex-direction: column;
+      align-items: stretch;
+      padding: var(--ap-space-16) var(--ap-space-20);
+      gap: var(--ap-space-16);
+    }
+    
+    .ap-embed-text {
+      /* Keep text left-aligned on mobile */
+    }
+    
+    .ap-embed-prompt {
+      width: 48px; /* Slightly smaller on mobile */
+      height: 6px; /* Maintain 25:3 aspect ratio */
+      background-color: var(--ap-color-red-500);
+      margin-bottom: var(--ap-space-4);
+    }
+    
+    .ap-embed-headline {
+      font-size: 1rem; /* 16px on mobile */
+    }
+    
+    .ap-embed-description {
+      font-size: 0.8125rem; /* 13px on mobile */
+    }
+    
+    .ap-embed-cta {
+      align-self: flex-start; /* Left-align button */
+      padding: var(--ap-space-8) var(--ap-space-16);
+    }
+  }
+
+  /* Tablet */
+  @media (min-width: 576px) and (max-width: 991.98px) {
+    .ap-embed-content {
+      padding: var(--ap-space-20);
+      gap: var(--ap-space-20);
+    }
+  }
+
+  /* Dark mode support (optional) */
+  @media (prefers-color-scheme: dark) {
+    .ap-embed {
+      background: var(--ap-color-neutral-900);
+      border-color: var(--ap-color-neutral-800);
+    }
+    
+    .ap-embed-headline {
+      color: var(--ap-color-white);
+    }
+    
+    .ap-embed-description {
+      color: var(--ap-color-neutral-200);
+    }
+  }
+</style>
+
+</body>
+</html>
