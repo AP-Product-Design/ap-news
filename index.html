@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Product Design prototypes</title>
+    <style>
+          @font-face {
+  font-family: 'AP Var';
+  src: url('../fonts/APVarW05-Regular.woff2') format('woff2');  
+  font-display: swap;
+}
+  /* CSS Custom Properties using AP Design Tokens */
+  :root {
+    /* Colors from your design system */
+    --ap-color-white: #ffffff;
+    --ap-color-neutral-100: #f4f4f4;
+    --ap-color-neutral-200: #f2f2f2;
+    --ap-color-neutral-300: #efefef;
+    --ap-color-neutral-400: #e6e6e7;
+    --ap-color-neutral-700: #515151;
+    --ap-color-neutral-800: #3a3a3a;
+    --ap-color-neutral-900: #191919;
+    --ap-color-red-500: #ff1818;
+    --ap-color-red-600: #da1026;
+    --ap-color-blue-700: #0042a9;
+    
+    /* Typography */
+    --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --ap-font-weight-regular: 400;
+    --ap-font-weight-medium: 500;
+    --ap-font-weight-bold: 700;
+    
+    /* Spacing (4pt scale) */
+    --ap-space-4: 0.25rem;
+    --ap-space-8: 0.5rem;
+    --ap-space-12: 0.75rem;
+    --ap-space-16: 1rem;
+    --ap-space-20: 1.25rem;
+    --ap-space-24: 1.5rem;
+    --ap-space-32: 2rem;
+    
+    /* Border radius */
+    --ap-border-radius: 0.1875rem; /* 3px */
+    
+    /* Strokes */
+    --ap-stroke-1: 0.0625rem; /* 1px */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    }
+
+        body {
+            font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #ffffff;
+            color: #191919;
+        }
+
+        .ap-logo {
+            position: absolute;
+            top: 0;
+            left: 80px;
+            width: 60px;
+            height: auto;
+        }
+
+        .main-content {
+            margin-left: 80px;
+            margin-top: 100px; /* Space for logo + some breathing room */
+            max-width: 800px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 676;
+            color: #191919;
+            margin-bottom: 1rem;
+            font-variation-settings: "wght" 676;
+        }
+
+        .section-name {
+            font-size: 1.5rem;
+            font-weight: 530;
+            color: #515151;
+            margin-bottom: 2rem;
+            font-variation-settings: "wght" 530;
+        }
+
+        .text-link {
+            color: var(--ap-color-blue-700);
+            text-decoration: underline;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .text-link:hover {
+            color: #3a3a3a;
+            text-decoration: none;
+        }
+
+        .text-link:focus {
+            outline: 2px solid #0042a9;
+            outline-offset: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .ap-logo {
+                left: 20px;
+                width: 50px;
+            }
+
+            .main-content {
+                margin-left: 20px;
+                margin-right: 20px;
+                margin-top: 80px;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .section-name {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- AP Logo positioned flush top, 80px from left -->
+    <img 
+        class="ap-logo" 
+        src="images/ap-logo.png" 
+        alt="AP Logo"
+    />
+
+    <!-- Main content area -->
+    <div class="main-content">
+        <h1 class="title">AP Product Design</h1>
+        <h2 class="section-name">HTML embeds</h2>
+        
+        <a href="html-embeds/anonymous-sources.html" class="text-link">Anonymous sources embed</a>
+    </div>
+</body>
+</html>
