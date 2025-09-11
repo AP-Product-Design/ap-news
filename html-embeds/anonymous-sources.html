@@ -120,24 +120,16 @@
 
   /* CTA Button */
   .ap-embed-cta {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--ap-space-8) var(--ap-space-20);
-    background: var(--ap-color-neutral-900);
-    color: var(--ap-color-white);
-    text-decoration: none;
-    border-radius: var(--ap-space-24);
+    color: var(--ap-color-blue-700);
+    text-decoration: underline;
     font-size: 0.875rem; /* 14px */
     font-weight: var(--ap-font-weight-medium);
-    white-space: nowrap;
     transition: background-color 0.2s ease;
-    border: none;
-    cursor: pointer;
-    font-variation-settings: "wght" 530;
+    padding:0;
   }
 
   .ap-embed-cta:hover {
-    background: var(--ap-color-neutral-800);
+    text-decoration: none;
   }
 
   .ap-embed-cta:focus {
@@ -182,7 +174,7 @@
     
     .ap-embed-cta {
       align-self: flex-start; /* Left-align button */
-      padding: var(--ap-space-8) var(--ap-space-16);
+      padding: 0;
     }
   }
 
