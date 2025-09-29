@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking News Modal</title>
+    <style>
+        @font-face {
+            font-family: 'AP Var';
+            src: url('../fonts/APVarW05-Regular.woff2') format('woff2');  
+            font-display: swap;
+        }
+
+        /* CSS Custom Properties using AP Design Tokens */
+        :root {
+            /* Colors */
+            --ap-color-white: #ffffff;
+            --ap-color-neutral-100: #f4f4f4;
+            --ap-color-neutral-200: #f2f2f2;
+            --ap-color-neutral-300: #efefef;
+            --ap-color-neutral-400: #e6e6e7;
+            --ap-color-neutral-500: #c4c4c4;
+            --ap-color-neutral-600: #a8a8a9;
+            --ap-color-neutral-700: #515151;
+            --ap-color-neutral-800: #3a3a3a;
+            --ap-color-neutral-900: #191919;
+            --ap-color-red-500: #ff1818;
+            --ap-color-red-600: #da1026;
+            
+            /* Typography */
+            --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --ap-font-weight-regular: 400;
+            --ap-font-weight-medium: 530;
+            --ap-font-weight-bold: 676;
+            
+            /* Spacing */
+            --ap-space-4: 0.25rem;
+            --ap-space-8: 0.5rem;
+            --ap-space-12: 0.75rem;
+            --ap-space-16: 1rem;
+            --ap-space-20: 1.25rem;
+            --ap-space-24: 1.5rem;
+            --ap-space-32: 2rem;
+            
+            /* Border radius */
+            --ap-border-radius: 0.1875rem;
+            
+            /* Strokes */
+            --ap-stroke-1: 0.0625rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--ap-font-family);
+            background-color: rgba(25, 25, 25, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: var(--ap-space-20);
+        }
+
+        .modal {
+            background: var(--ap-color-white);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            padding: var(--ap-space-24);
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: var(--ap-space-12);
+            right: var(--ap-space-12);
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--ap-color-neutral-700);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--ap-color-neutral-900);
+        }
+
+        .modal-header {
+            margin-bottom: var(--ap-space-24);
+            padding-right: var(--ap-space-20);
+            text-align: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: var(--ap-font-weight-bold);
+            margin-bottom: var(--ap-space-12);
+            color: var(--ap-color-neutral-900);
+            line-height: 1.3;
+            font-variation-settings: "wght" 676;
+            font-stretch: 87.5%;
+        }
+
+        .modal-header p {
+            font-size: 0.875rem;
+            color: var(--ap-color-neutral-700);
+            line-height: 1.5;
+            font-weight: var(--ap-font-weight-regular);
+        }
+
+        .news-preview {
+            background: var(--ap-color-neutral-100);
+            border-radius: 24px;
+            padding: var(--ap-space-16);
+            margin-bottom: var(--ap-space-24);
+            border: var(--ap-stroke-1) solid var(--ap-color-neutral-400);
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: var(--ap-space-12);
+            margin-bottom: var(--ap-space-12);
+        }
+
+        .ap-logo {
+            width: 32px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .ap-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .news-label {
+            font-size: 1rem;
+            font-weight: var(--ap-font-weight-medium);
+            color: var(--ap-color-neutral-900);
+            font-variation-settings: "wght" 530;
+        }
+
+        .news-time {
+            font-size: 0.75rem;
+            color: var(--ap-color-neutral-600);
+            margin-left: auto;
+            font-weight: var(--ap-font-weight-regular);
+        }
+
+        .news-lines {
+            display: flex;
+            flex-direction: column;
+            gap: var(--ap-space-8);
+        }
+
+        .news-line {
+            height: 10px;
+            background: var(--ap-color-neutral-500);
+            border-radius: 2px;
+        }
+
+        .news-line:nth-child(1) {
+            width: 100%;
+        }
+
+        .news-line:nth-child(2) {
+            width: 100%;
+        }
+
+        .news-line:nth-child(3) {
+            width: 65%;
+        }
+
+        .btn {
+            width: 100%;
+            padding: var(--ap-space-12) var(--ap-space-20);
+            border-radius: var(--ap-space-32);
+            font-size: 0.875rem;
+            font-weight: var(--ap-font-weight-medium);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: var(--ap-font-family);
+            font-variation-settings: "wght" 530;
+        }
+
+        .btn-primary {
+            background: var(--ap-color-neutral-900);
+            color: var(--ap-color-white);
+            margin-bottom: var(--ap-space-12);
+        }
+
+        .btn-primary:hover {
+            background: var(--ap-color-neutral-800);
+        }
+
+        .btn-secondary {
+            background: var(--ap-color-white);
+            color: var(--ap-color-neutral-900);
+            border: var(--ap-stroke-1) solid var(--ap-color-neutral-400);
+        }
+
+        .btn-secondary:hover {
+            background: var(--ap-color-neutral-100);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--ap-color-neutral-900);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 480px) {
+            .modal {
+                padding: var(--ap-space-20);
+            }
+
+            .modal-header h2 {
+                font-size: 1.25rem;
+            }
+
+            .modal-header p {
+                font-size: 0.8125rem;
+            }
+
+            .btn {
+                padding: var(--ap-space-12) var(--ap-space-16);
+                font-size: 0.8125rem;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: rgba(0, 0, 0, 0.7);
+            }
+
+            .modal {
+                background: var(--ap-color-neutral-900);
+            }
+
+            .close-btn {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .close-btn:hover {
+                color: var(--ap-color-white);
+            }
+
+            .modal-header h2 {
+                color: var(--ap-color-white);
+            }
+
+            .modal-header p {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .news-preview {
+                background: var(--ap-color-neutral-800);
+                border-color: var(--ap-color-neutral-700);
+            }
+
+            .news-label {
+                color: var(--ap-color-white);
+            }
+
+            .news-time {
+                color: var(--ap-color-neutral-500);
+            }
+
+            .news-line {
+                background: var(--ap-color-neutral-600);
+            }
+
+            .btn-primary {
+                background: var(--ap-color-white);
+                color: var(--ap-color-neutral-900);
+            }
+
+            .btn-primary:hover {
+                background: var(--ap-color-neutral-200);
+            }
+
+            .btn-secondary {
+                background: transparent;
+                color: var(--ap-color-white);
+                border-color: var(--ap-color-neutral-600);
+            }
+
+            .btn-secondary:hover {
+                background: var(--ap-color-neutral-800);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modal">
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+        
+        <div class="modal-header">
+            <h2>Stay ahead of breaking news</h2>
+            <p>Get instant and personalized alerts the moment stories develop</p>
+        </div>
+
+        <div class="news-preview">
+            <div class="news-header">
+                <div class="ap-logo" aria-hidden="true">
+                    <img src="AP-logo-square.png" alt="AP Logo">
+                </div>
+                <span class="news-label">Breaking News</span>
+                <span class="news-time">1m ago</span>
+            </div>
+            <div class="news-lines">
+                <div class="news-line"></div>
+                <div class="news-line"></div>
+                <div class="news-line"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="enableNotifications()">Enable notifications</button>
+        <button class="btn btn-secondary" onclick="askLater()">Ask me later</button>
+    </div>
+
+    <script>
+        function closeModal() {
+            console.log('Modal closed');
+            // In a real app, this would close/hide the modal
+        }
+
+        function enableNotifications() {
+            console.log('Notifications enabled');
+            // In a real app, this would request notification permissions
+        }
+
+        function askLater() {
+            console.log('Ask me later clicked');
+            // In a real app, this would dismiss the modal and set a reminder
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breaking News Modal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .close-btn:hover {
+            opacity: 0.7;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-right: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #000;
+        }
+
+        .modal-header p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .news-preview {
+            background: #f5f5f5;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .ap-logo {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ap-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .news-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .news-time {
+            font-size: 14px;
+            color: #999;
+            margin-left: auto;
+        }
+
+        .news-lines {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .news-line {
+            height: 12px;
+            background: #d0d0d0;
+            border-radius: 6px;
+        }
+
+        .news-line:nth-child(1) {
+            width: 100%;
+        }
+
+        .news-line:nth-child(2) {
+            width: 100%;
+        }
+
+        .news-line:nth-child(3) {
+            width: 65%;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        @media (max-width: 480px) {
+            .modal {
+                padding: 20px;
+            }
+
+            .modal-header h2 {
+                font-size: 22px;
+            }
+
+            .modal-header p {
+                font-size: 15px;
+            }
+
+            .btn {
+                padding: 14px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="modal">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+        
+        <div class="modal-header">
+            <h2>Stay ahead of breaking news</h2>
+            <p>Get instant and personalized alerts the moment stories develop</p>
+        </div>
+
+        <div class="news-preview">
+            <div class="news-header">
+                <div class="ap-logo">
+                    <img src="https://logo.clearbit.com/apnews.com" alt="AP Logo">
+                </div>
+                <span class="news-label">Breaking News</span>
+                <span class="news-time">1m ago</span>
+            </div>
+            <div class="news-lines">
+                <div class="news-line"></div>
+                <div class="news-line"></div>
+                <div class="news-line"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="enableNotifications()">Enable notifications</button>
+        <button class="btn btn-secondary" onclick="askLater()">Ask me later</button>
+    </div>
+
+    <script>
+        function closeModal() {
+            console.log('Modal closed');
+            // In a real app, this would close/hide the modal
+        }
+
+        function enableNotifications() {
+            console.log('Notifications enabled');
+            // In a real app, this would request notification permissions
+        }
+
+        function askLater() {
+            console.log('Ask me later clicked');
+            // In a real app, this would dismiss the modal and set a reminder
+        }
+    </script>
+</body>
+</html>
