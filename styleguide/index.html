@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Typography Styleguide — (Typography Only)</title>
+  <style>
+    @font-face {
+      font-family: APVar;
+      font-weight: 400;
+      src: url('https://assets.apnews.com/resource/00000188-2a81-d28a-a1fd-7bfb6ccb0000/assets/fonts/APCustomFont/APVarW05-Regular.3c0c9d016bf55b85d0800dd405b807e3.woff2') format('woff2');
+    }
+
+    :root {
+      --muted: #666;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Segoe UI Mono", monospace;
+      --container-max: 980px;
+    }
+
+    body {
+      margin:0;
+      font-family: APVar, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color:#111;
+      background:#fff;
+    }
+
+    .wrap{max-width:var(--container-max);margin:36px auto;padding:24px}
+    header h1{font-size:20px;margin:0 0 8px 0;text-transform:uppercase;}
+    header p{margin:0;color:var(--muted);font-size:13px}
+
+    section.card{padding:18px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);margin-bottom:18px;}
+
+    .sample{padding:12px 0;border-top:1px dashed rgba(0,0,0,0.06);}
+    .sample:first-of-type{border-top:0;padding-top:0}
+
+    .section-heading{text-transform:uppercase;font-weight:700;letter-spacing:0.5px;display:flex;align-items:baseline;gap:8px;margin-bottom:8px;}
+    .paren{font-size:12px;color:var(--muted);margin-left:8px;font-family:var(--mono)}
+    .size{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:8px}
+
+    .story-link{display:block;margin-bottom:4px}
+    .story-link.medium{font-weight:500}
+    .story-link.bold{font-weight:700}
+
+    /* Toggle */
+    .toggle-wrap{margin:0 0 20px 0;display:flex;align-items:center;gap:8px;font-size:14px}
+    .switch{position:relative;display:inline-block;width:50px;height:26px;}
+    .switch input{opacity:0;width:0;height:0;}
+    .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.3s;border-radius:34px;}
+    .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background-color:white;transition:.3s;border-radius:50%;}
+    input:checked + .slider{background-color:#333;}
+    input:checked + .slider:before{transform:translateX(24px);}
+    .toggle-labels{display:flex;justify-content:space-between;width:120px;font-size:13px;color:var(--muted);}
+    .toggle-labels span{flex:1;text-align:center;}
+    .toggle-labels .active{font-weight:700;color:#000;}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Typography Styleguide — (Typography Only)</h1>
+      <p>All section headings are UPPERCASE (<span class="paren">(PageList-header-title)</span>). Story link titles (<span class="paren">(PagePromo-title)</span>) can be toggled between <strong>Medium 500</strong> and <strong>Bold 700</strong>.</p>
+    </header>
+
+    <!-- Story Link Toggle -->
+    <div class="toggle-wrap">
+      <div class="toggle-labels">
+        <span id="labelMedium" class="active">Medium</span>
+        <span id="labelBold">Bold</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="weightToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- SECTION HEADINGS -->
+    <section class="card">
+      <div class="section-heading">Section Headings <span class="paren">(PageList-header-title)</span></div>
+      <div class="sample"><span style="font-size:32px;font-weight:700;text-transform:uppercase;">Section Heading 1</span><span class="size">/* 32px */</span></div>
+      <div class="sample"><span style="font-size:24px;font-weight:700;text-transform:uppercase;">Section Heading 2</span><span class="size">/* 24px */</span></div>
+      <div class="sample"><span style="font-size:20px;font-weight:700;text-transform:uppercase;">Section Heading 3</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:16px;font-weight:700;text-transform:uppercase;">Section Heading 4</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;font-weight:700;text-transform:uppercase;">Section Heading 5</span><span class="size">/* 14px */</span></div>
+    </section>
+
+    <!-- STORY LINK TITLES -->
+    <section class="card">
+      <div class="section-heading">Story Link Titles <span class="paren">(PagePromo-title)</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:32px">Story link title — 32px</span><span class="size">/* title-1 */</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:24px">Story link title — 24px</span><span class="size">/* title-2 */</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:20px">Story link title — 20px</span><span class="size">/* title-3 */</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:16px">Story link title — 16px</span><span class="size">/* title-4 */</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:14px">Story link title — 14px</span><span class="size">/* title-5 */</span></div>
+      <div class="sample"><span class="story-link medium" style="font-size:12px">Story link title — 12px</span><span class="size">/* title-6 */</span></div>
+    </section>
+
+    <!-- EYEBROWS & SUBHEADS -->
+    <section class="card">
+      <div class="section-heading">Eyebrows & Subheads</div>
+      <div class="sample"><span style="font-size:12px;font-weight:700;text-transform:uppercase;">Eyebrow Heading</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:20px;font-weight:400;">Subhead</span><span class="size">/* 20px */</span></div>
+    </section>
+
+    <!-- BODY TEXT -->
+    <section class="card">
+      <div class="section-heading">Body Text</div>
+      <div class="sample"><span style="font-size:14px;">Body Small</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Body Standard</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:20px;">Body Large</span><span class="size">/* 20px */</span></div>
+    </section>
+
+    <!-- LISTS -->
+    <section class="card">
+      <div class="section-heading">Lists</div>
+      <div class="sample"><span style="font-size:14px;">List Item Small</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:16px;">List Item Medium</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:20px;">List Item Large</span><span class="size">/* 20px */</span></div>
+    </section>
+
+    <!-- FORMS -->
+    <section class="card">
+      <div class="section-heading">Forms</div>
+      <div class="sample"><span style="font-size:32px;font-weight:700;">Form Title</span><span class="size">/* 32px */</span></div>
+      <div class="sample"><span style="font-size:20px;">Section Label</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Form Label</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Form Label Eyebrow</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Form Input</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Menu Item</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Placeholder Text</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Helper Text</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Error Text</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Success Text</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Char Counter</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Button Text Default</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Button Text Compact</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Text Link Default</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Text Link Compact</span><span class="size">/* 14px */</span></div>
+    </section>
+
+    <!-- UTILITY -->
+    <section class="card">
+      <div class="section-heading">Utility</div>
+      <div class="sample"><span style="font-size:14px;">Main Nav Link</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Trending Nav Link</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Section Nav Link</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Related Nav Link</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:12px;">Sub Topic Small</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Sub Topic Large</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Button Label LG</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Button Label</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Credit</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Caption</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Label-1</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Label-2</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Label-3</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Label-4</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:12px;">Label-5</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:20px;">Description XL</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Description LG</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Description MD</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:12px;">Description SM</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:24px;">Product Price LG</span><span class="size">/* 24px */</span></div>
+      <div class="sample"><span style="font-size:16px;">Product Price SM</span><span class="size">/* 16px */</span></div>
+      <div class="sample"><span style="font-size:20px;">Product Price MD</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Byline-1</span><span class="size">/* 14px */</span></div>
+      <div class="sample"><span style="font-size:14px;">Byline-2</span><span class="size">/* 14px */</span></div>
+    </section>
+
+    <!-- QUOTES & STATS -->
+    <section class="card">
+      <div class="section-heading">Quotes & Stats</div>
+      <div class="sample"><span style="font-size:20px;">Quote-1</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:20px;">Quote-2</span><span class="size">/* 20px */</span></div>
+      <div class="sample"><span style="font-size:40px;">Stat-1</span><span class="size">/* 40px */</span></div>
+      <div class="sample"><span style="font-size:24px;">Stat-2</span><span class="size">/* 24px */</span></div>
+    </section>
+
+    <!-- TIMESTAMPS -->
+    <section class="card">
+      <div class="section-heading">Timestamps</div>
+      <div class="sample"><span style="font-size:12px;font-weight:700;">Time Stamp Bold</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:12px;font-weight:500;">Time Stamp Medium</span><span class="size">/* 12px */</span></div>
+      <div class="sample"><span style="font-size:12px;">Date/Time</span><span class="size">/* 12px */</span></div>
+    </section>
+  </div>
+
+  <script>
+    const toggle = document.getElementById('weightToggle');
+    const links = document.querySelectorAll('.story-link');
+    const labelMedium = document.getElementById('labelMedium');
+    const labelBold = document.getElementById('labelBold');
+
+    toggle.addEventListener('change', () => {
+      if (toggle.checked) {
+        links.forEach(link => { link.classList.remove('medium'); link.classList.add('bold'); });
+        labelBold.classList.add('active');
+        labelMedium.classList.remove('active');
+      } else {
+        links.forEach(link => { link.classList.remove('bold'); link.classList.add('medium'); });
+        labelMedium.classList.add('active');
+        labelBold.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
