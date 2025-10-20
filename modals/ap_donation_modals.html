@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Donation Modals</title>
+    <style>
+        @font-face {
+            font-family: 'AP Var';
+            src: url('../fonts/APVarW05-Regular.woff2') format('woff2');  
+            font-display: swap;
+        }
+
+        /* CSS Custom Properties using AP Design Tokens */
+        :root {
+            /* Colors */
+            --ap-color-white: #ffffff;
+            --ap-color-neutral-100: #f4f4f4;
+            --ap-color-neutral-200: #f2f2f2;
+            --ap-color-neutral-300: #efefef;
+            --ap-color-neutral-400: #e6e6e7;
+            --ap-color-neutral-500: #c4c4c4;
+            --ap-color-neutral-600: #a8a8a9;
+            --ap-color-neutral-700: #515151;
+            --ap-color-neutral-800: #3a3a3a;
+            --ap-color-neutral-900: #191919;
+            --ap-color-red-500: #ff1818;
+            --ap-color-red-600: #da1026;
+            --ap-color-blue-700: #0042a9;
+            
+            /* Typography */
+            --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --ap-font-weight-regular: 400;
+            --ap-font-weight-medium: 500;
+            --ap-font-weight-bold: 700;
+            
+            /* Spacing */
+            --ap-space-4: 0.25rem;
+            --ap-space-8: 0.5rem;
+            --ap-space-12: 0.75rem;
+            --ap-space-16: 1rem;
+            --ap-space-20: 1.25rem;
+            --ap-space-24: 1.5rem;
+            --ap-space-32: 2rem;
+            --ap-space-40: 2.5rem;
+            
+            /* Strokes */
+            --ap-stroke-1: 0.0625rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--ap-font-family);
+            background-color: var(--ap-color-neutral-100);
+            padding: var(--ap-space-40);
+            display: flex;
+            flex-direction: column;
+            gap: var(--ap-space-40);
+            align-items: center;
+        }
+
+        h2 {
+            margin-top: 1rem;
+        }
+
+        /* Modal container */
+        .modal {
+            background: var(--ap-color-white);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 350px;
+            padding: var(--ap-space-24);
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: var(--ap-space-12);
+            right: var(--ap-space-12);
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--ap-color-neutral-900);
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: color 0.2s ease;
+        }
+
+        .close-btn:hover {
+            color: var(--ap-color-neutral-700);
+        }
+
+        /* AP Logo */
+         .ap-logo {
+            width: 32px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .ap-logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Headline */
+        .modal-headline {
+            font-size: 1.5rem;
+            font-weight: var(--ap-font-weight-bold);
+            color: var(--ap-color-neutral-900);
+            line-height: 1.2;
+            margin-bottom: var(--ap-space-16);
+            text-align: center;
+            font-variation-settings: "wght" 676;
+            font-stretch: 87.5%;
+        }
+
+        /* Body text */
+        .modal-body {
+            font-size: 0.9375rem;
+            color: var(--ap-color-neutral-900);
+            line-height: 1.5;
+            margin-bottom: var(--ap-space-24);
+            text-align: center;
+            font-weight: var(--ap-font-weight-regular);
+        }
+
+        /* Primary button */
+        .btn-primary {
+            width: 100%;
+            padding: var(--ap-space-16);
+            background: var(--ap-color-red-600);
+            color: var(--ap-color-white);
+            border: none;
+            border-radius: var(--ap-space-32);
+            font-size: 1rem;
+            font-weight: var(--ap-font-weight-medium);
+            font-family: var(--ap-font-family);
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--ap-space-8);
+            margin-bottom: var(--ap-space-16);
+            font-variation-settings: "wght" 530;
+        }
+
+        .btn-primary:hover {
+            background: var(--ap-color-red-500);
+        }
+
+        .btn-primary:focus {
+            outline: 2px solid var(--ap-color-red-500);
+            outline-offset: 2px;
+        }
+
+        /* Arrow icon */
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Text link button */
+        .btn-text {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--ap-color-blue-700);
+            font-size: 1rem;
+            font-weight: var(--ap-font-weight-medium);
+            font-family: var(--ap-font-family);
+            cursor: pointer;
+            padding: var(--ap-space-8);
+            text-align: center;
+            transition: opacity 0.2s ease;
+            font-variation-settings: "wght" 530;
+        }
+
+        .btn-text:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .btn-text:focus {
+            outline: 2px solid var(--ap-color-blue-700);
+            outline-offset: 2px;
+        }
+
+        /* Divider */
+        .divider {
+            width: 100%;
+            height: var(--ap-stroke-1);
+            background: var(--ap-color-neutral-400);
+            margin: var(--ap-space-24) 0;
+        }
+
+        /* Secondary section */
+        .secondary-section {
+            text-align: center;
+        }
+
+        .secondary-text {
+            font-size: 0.9375rem;
+            color: var(--ap-color-neutral-900);
+            margin-bottom: var(--ap-space-16);
+            font-weight: var(--ap-font-weight-regular);
+        }
+
+        /* Secondary button (outlined) */
+        .btn-secondary {
+            width: 100%;
+            padding: var(--ap-space-16);
+            background: var(--ap-color-white);
+            color: var(--ap-color-neutral-900);
+            border: var(--ap-stroke-1) solid var(--ap-color-neutral-400);
+            border-radius: var(--ap-space-32);
+            font-size: 1rem;
+            font-weight: var(--ap-font-weight-medium);
+            font-family: var(--ap-font-family);
+            cursor: pointer;
+            transition: background 0.2s ease;
+            margin-bottom: var(--ap-space-16);
+            font-variation-settings: "wght" 530;
+        }
+
+        .btn-secondary:hover {
+            background: var(--ap-color-neutral-100);
+        }
+
+        .btn-secondary:focus {
+            outline: 2px solid var(--ap-color-neutral-900);
+            outline-offset: 2px;
+        }
+
+        /* Small text with link */
+        .small-text {
+            font-size: 0.8125rem;
+            color: var(--ap-color-neutral-900);
+            text-align: center;
+            line-height: 1.5;
+            font-weight: var(--ap-font-weight-regular);
+        }
+
+        .small-text a {
+            color: var(--ap-color-neutral-900);
+            text-decoration: underline;
+            font-weight: var(--ap-font-weight-medium);
+        }
+
+        .small-text a:hover {
+            text-decoration: none;
+        }
+
+        /* Demo labels */
+        .demo-label {
+            font-size: 0.875rem;
+            color: var(--ap-color-neutral-700);
+            text-align: center;
+            margin-bottom: var(--ap-space-16);
+            font-weight: var(--ap-font-weight-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: var(--ap-space-20);
+            }
+
+            .modal {
+                padding: var(--ap-space-20);
+            }
+
+            .modal-headline {
+                font-size: 1.375rem;
+            }
+
+            .modal-body {
+                font-size: 0.875rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- LITE VERSION -->
+    <div class="demo-label">Lite Version</div>
+    <div class="modal">
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+        
+        <div class="ap-logo">
+            <img src="../images/ap-logo.png" alt="AP Logo">
+        </div>
+
+        <h2 class="modal-headline">Support independent journalism</h2>
+        <p class="modal-body">Make any recurring donation and see fewer ads in the AP News app</p>
+
+        <button class="btn-primary" onclick="donate()">
+            Donate to the AP
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <button class="btn-text" onclick="maybeLater()">Maybe later</button>
+    </div>
+
+    <!-- FULL VERSION -->
+    <div class="demo-label">Full Version</div>
+    <div class="modal">
+        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+        
+        <div class="ap-logo">
+            <img src="../images/ap-logo.png" alt="AP Logo">
+        </div>
+
+        <h2 class="modal-headline">Support independent journalism</h2>
+        <p class="modal-body">Make any recurring donation and see fewer ads in the AP News app</p>
+
+        <button class="btn-primary" onclick="donate()">
+            Donate to the AP
+            <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <div class="divider"></div>
+
+        <div class="secondary-section">
+            <p class="secondary-text">Already donated, or registered</p>
+            <button class="btn-secondary" onclick="signIn()">Sign in</button>
+            <p class="small-text">
+                <a href="#" onclick="createAccount()">Create an account</a> to stay connected and up to date with new features
+            </p>
+        </div>
+
+        <button class="btn-text" onclick="maybeLater()">Maybe later</button>
+    </div>
+
+    <script>
+        function closeModal() {
+            console.log('Modal closed');
+        }
+
+        function donate() {
+            console.log('Donate clicked');
+        }
+
+        function signIn() {
+            console.log('Sign in clicked');
+        }
+
+        function createAccount() {
+            console.log('Create account clicked');
+        }
+
+        function maybeLater() {
+            console.log('Maybe later clicked');
+        }
+    </script>
+</body>
+</html>
