@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AP Donation Modals</title>
+    <title>AP Donation Modal - Full</title>
     <style>
         @font-face {
             font-family: 'AP Var';
@@ -31,8 +31,8 @@
             /* Typography */
             --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             --ap-font-weight-regular: 400;
-            --ap-font-weight-medium: 500;
-            --ap-font-weight-bold: 700;
+            --ap-font-weight-medium: 530;
+            --ap-font-weight-bold: 676;
             
             /* Spacing */
             --ap-space-4: 0.25rem;
@@ -42,7 +42,6 @@
             --ap-space-20: 1.25rem;
             --ap-space-24: 1.5rem;
             --ap-space-32: 2rem;
-            --ap-space-40: 2.5rem;
             
             /* Strokes */
             --ap-stroke-1: 0.0625rem;
@@ -56,16 +55,27 @@
 
         body {
             font-family: var(--ap-font-family);
-            background-color: var(--ap-color-neutral-100);
-            padding: var(--ap-space-40);
-            display: flex;
-            flex-direction: column;
-            gap: var(--ap-space-40);
-            align-items: center;
+            margin: 0;
+            padding: 0;
         }
 
-        h2 {
+           h2 {
             margin-top: 1rem;
+        }
+
+        /* Modal overlay - semi-transparent background */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(25, 25, 25, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--ap-space-20);
+            z-index: 1000;
         }
 
         /* Modal container */
@@ -76,7 +86,9 @@
             max-width: 350px;
             padding: var(--ap-space-24);
             position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         /* Close button */
@@ -103,10 +115,10 @@
         }
 
         /* AP Logo */
-         .ap-logo {
-            width: 32px;
+        .ap-logo {
+            width: 40px;
             height: auto;
-            flex-shrink: 0;
+            margin-bottom: var(--ap-space-16);
         }
 
         .ap-logo img {
@@ -173,32 +185,6 @@
             height: 20px;
         }
 
-        /* Text link button */
-        .btn-text {
-            width: 100%;
-            background: none;
-            border: none;
-            color: var(--ap-color-blue-700);
-            font-size: 1rem;
-            font-weight: var(--ap-font-weight-medium);
-            font-family: var(--ap-font-family);
-            cursor: pointer;
-            padding: var(--ap-space-8);
-            text-align: center;
-            transition: opacity 0.2s ease;
-            font-variation-settings: "wght" 530;
-        }
-
-        .btn-text:hover {
-            opacity: 0.8;
-            text-decoration: underline;
-        }
-
-        .btn-text:focus {
-            outline: 2px solid var(--ap-color-blue-700);
-            outline-offset: 2px;
-        }
-
         /* Divider */
         .divider {
             width: 100%;
@@ -252,6 +238,7 @@
             text-align: center;
             line-height: 1.5;
             font-weight: var(--ap-font-weight-regular);
+            margin-bottom: var(--ap-space-16);
         }
 
         .small-text a {
@@ -264,22 +251,32 @@
             text-decoration: none;
         }
 
-        /* Demo labels */
-        .demo-label {
-            font-size: 0.875rem;
-            color: var(--ap-color-neutral-700);
-            text-align: center;
-            margin-bottom: var(--ap-space-16);
+        /* Text link button */
+        .btn-text {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--ap-color-blue-700);
+            font-size: 1rem;
             font-weight: var(--ap-font-weight-medium);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-family: var(--ap-font-family);
+            cursor: pointer;
+            padding: var(--ap-space-8);
+            text-align: center;
+            transition: opacity 0.2s ease;
+            font-variation-settings: "wght" 530;
+        }
+
+        .btn-text:hover {
+            opacity: 0.8;
+        }
+
+        .btn-text:focus {
+            outline: 2px solid var(--ap-color-blue-700);
+            outline-offset: 2px;
         }
 
         @media (max-width: 480px) {
-            body {
-                padding: var(--ap-space-20);
-            }
-
             .modal {
                 padding: var(--ap-space-20);
             }
@@ -292,79 +289,132 @@
                 font-size: 0.875rem;
             }
         }
+
+        @media (prefers-color-scheme: dark) {
+            .modal-overlay {
+                background: rgba(0, 0, 0, 0.7);
+            }
+
+            .modal {
+                background: var(--ap-color-neutral-900);
+            }
+
+            .close-btn {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .close-btn:hover {
+                color: var(--ap-color-white);
+            }
+
+            .modal-headline {
+                color: var(--ap-color-white);
+            }
+
+            .modal-body {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .secondary-text {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .small-text {
+                color: var(--ap-color-neutral-200);
+            }
+
+            .small-text a {
+                color: var(--ap-color-white);
+            }
+
+            .btn-secondary {
+                background: transparent;
+                color: var(--ap-color-white);
+                border-color: var(--ap-color-neutral-600);
+            }
+
+            .btn-secondary:hover {
+                background: var(--ap-color-neutral-800);
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- LITE VERSION -->
-    <div class="demo-label">Lite Version</div>
-    <div class="modal">
-        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
-        
-        <div class="ap-logo">
-            <img src="../images/ap-logo.png" alt="AP Logo">
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
+            
+            <div class="ap-logo">
+                <img src="../images/ap-logo.png" alt="AP Logo">
+            </div>
+
+            <h2 class="modal-headline">Support independent journalism</h2>
+            <p class="modal-body">Make any recurring donation and see fewer ads in the AP News app</p>
+
+            <button class="btn-primary" onclick="donate()">
+                Donate to the AP
+                <img src="../images/forward-arrow.svg" alt="Arrow">
+            </button>
+
+            <div class="divider"></div>
+
+            <div class="secondary-section">
+                <p class="secondary-text">Already donated, or registered</p>
+                <button class="btn-secondary" onclick="signIn()">Sign in</button>
+                <p class="small-text">
+                    <a href="#" onclick="createAccount(); return false;">Create an account</a> to stay connected and up to date with new features
+                </p>
+            </div>
+
+            <button class="btn-text" onclick="maybeLater()">Maybe later</button>
         </div>
-
-        <h2 class="modal-headline">Support independent journalism</h2>
-        <p class="modal-body">Make any recurring donation and see fewer ads in the AP News app</p>
-
-        <button class="btn-primary" onclick="donate()">
-            Donate to the AP
-                                   <img src="../images/forward-arrow.svg" alt="Arrow">
-        </button>
-
-        <button class="btn-text" onclick="maybeLater()">Maybe later</button>
-    </div>
-    <!-- FULL VERSION -->
-    <div class="demo-label">Full Version</div>
-    <div class="modal">
-        <button class="close-btn" onclick="closeModal()" aria-label="Close modal">✕</button>
-        
-        <div class="ap-logo">
-            <img src="../images/ap-logo.png" alt="AP Logo">
-        </div>
-
-        <h2 class="modal-headline">Support independent journalism</h2>
-        <p class="modal-body">Make any recurring donation and see fewer ads in the AP News app</p>
-
-        <button class="btn-primary" onclick="donate()">
-            Donate to the AP
-                       <img src="../images/forward-arrow.svg" alt="Arrow">
-
-        </button>
-
-        <div class="divider"></div>
-
-        <div class="secondary-section">
-            <p class="secondary-text">Already donated, or registered</p>
-            <button class="btn-secondary" onclick="signIn()">Sign in</button>
-            <p class="small-text">
-                <a href="#" onclick="createAccount()">Create an account</a> to stay connected and up to date with new features
-            </p>
-        </div>
-
-        <button class="btn-text" onclick="maybeLater()">Maybe later</button>
     </div>
 
     <script>
         function closeModal() {
+            const overlay = document.getElementById('modalOverlay');
+            overlay.style.display = 'none';
             console.log('Modal closed');
+            // In a real app, you might remove the element or trigger additional logic
         }
 
         function donate() {
             console.log('Donate clicked');
+            // Redirect to donation page or open donation flow
+            window.location.href = '/donate';
         }
 
         function signIn() {
             console.log('Sign in clicked');
+            // Redirect to sign in page
+            window.location.href = '/signin';
         }
 
         function createAccount() {
             console.log('Create account clicked');
+            // Redirect to registration page
+            window.location.href = '/register';
         }
 
         function maybeLater() {
+            closeModal();
             console.log('Maybe later clicked');
+            // Set a cookie or localStorage to not show again for X days
         }
+
+        // Optional: Close modal when clicking outside of it
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Optional: Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
