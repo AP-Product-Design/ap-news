@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AP Var W05 — Font Styleguide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8f7f5 0%, #fafaf8 100%);
+            color: #1a1a1a;
+            line-height: 1.5;
+            padding: 60px 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 80px;
+            border-bottom: 1px solid #e0dcd8;
+            padding-bottom: 60px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 400;
+        }
+
+        section {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            color: #2a2a2a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 13px;
+        }
+
+        /* Weight Comparison */
+        .weight-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 60px;
+        }
+
+        .weight-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .weight-sample {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .sample-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 24px;
+        }
+
+        .sample-text {
+            font-size: 56px;
+            line-height: 1.2;
+            font-family: 'AP Var W05', system-ui;
+            margin-bottom: 16px;
+            letter-spacing: -0.8px;
+        }
+
+        .sample-weight {
+            font-size: 13px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Side-by-side comparison */
+        .comparison-section {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 60px;
+            margin-bottom: 40px;
+        }
+
+        .comparison-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 40px;
+        }
+
+        .weight-comparison {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .weight-comparison-text {
+            font-size: 64px;
+            line-height: 1.1;
+            font-family: 'AP Var W05', system-ui;
+            letter-spacing: -1px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .weight-comparison-text.medium {
+            font-weight: 500;
+            margin: 16px 0;
+        }
+
+        .weight-comparison-text.bold {
+            font-weight: 700;
+            margin: 16px 0;
+        }
+
+        .comparison-label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        /* Width variations */
+        .width-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .width-sample {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .width-text {
+            font-size: 48px;
+            line-height: 1.3;
+            font-family: 'AP Var W05', system-ui;
+            font-weight: 500;
+            margin-bottom: 24px;
+            letter-spacing: -0.6px;
+        }
+
+        .width-text.condensed {
+            font-variation-settings: 'wdth' 75;
+        }
+
+        .width-text.semicondensed {
+            font-variation-settings: 'wdth' 87.5;
+        }
+
+        .width-text.normal {
+            font-variation-settings: 'wdth' 100;
+        }
+
+        .width-info {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .width-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2a2a2a;
+            margin-bottom: 8px;
+        }
+
+        .width-value {
+            font-size: 11px;
+            color: #999;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Overlay comparison */
+        .overlay-comparison {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 60px;
+            margin-bottom: 40px;
+        }
+
+        .overlay-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 40px;
+        }
+
+        .overlay-stack {
+            position: relative;
+            height: 120px;
+            margin-bottom: 16px;
+        }
+
+        .overlay-text {
+            position: absolute;
+            font-size: 64px;
+            line-height: 1;
+            font-family: 'AP Var W05', system-ui;
+            letter-spacing: -1px;
+            left: 0;
+            top: 0;
+        }
+
+        .overlay-text.weight-400 {
+            font-weight: 400;
+            color: rgba(26, 26, 26, 0.4);
+        }
+
+        .overlay-text.weight-500 {
+            font-weight: 500;
+            color: rgba(26, 26, 26, 0.6);
+        }
+
+        .overlay-text.weight-700 {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .overlay-label {
+            font-size: 12px;
+            color: #999;
+            font-weight: 500;
+            margin-top: 8px;
+        }
+
+        /* Paragraph test */
+        .paragraph-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .paragraph-sample {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .paragraph-text {
+            font-family: 'AP Var W05', system-ui;
+            font-size: 16px;
+            line-height: 1.6;
+            letter-spacing: -0.3px;
+            margin-bottom: 16px;
+        }
+
+        .paragraph-text.regular {
+            font-weight: 400;
+        }
+
+        .paragraph-text.medium {
+            font-weight: 500;
+        }
+
+        .paragraph-bold {
+            font-weight: 700;
+        }
+
+        /* News content examples */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .news-card {
+            background: white;
+            border: 1px solid #e0dcd8;
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .news-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 28px;
+            display: block;
+        }
+
+        .news-item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .news-headline {
+            font-family: 'AP Var W05', system-ui;
+            font-size: 20px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+            margin: 0;
+            color: #1a1a1a;
+            font-variation-settings: 'wdth' 87.5;
+        }
+
+        .news-headline.headline-bold {
+            font-weight: 700;
+        }
+
+        .news-headline.headline-medium {
+            font-weight: 500;
+        }
+
+        .news-summary {
+            font-family: 'AP Var W05', system-ui;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: -0.3px;
+            color: #333;
+            margin: 0;
+        }
+
+        .news-timestamp {
+            font-family: 'AP Var W05', system-ui;
+            font-size: 12px;
+            font-weight: 500;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            border-top: 1px solid #e0dcd8;
+            padding-top: 40px;
+            margin-top: 80px;
+            text-align: center;
+            font-size: 13px;
+            color: #999;
+        }
+
+        @font-face {
+            font-family: 'AP Var W05';
+            src: url('APVarW05-Regular.woff2') format('woff2-variations');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+
+            .weight-row {
+                grid-template-columns: 1fr;
+            }
+
+            .width-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .paragraph-section {
+                grid-template-columns: 1fr;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .sample-text {
+                font-size: 40px;
+            }
+
+            .weight-comparison-text {
+                font-size: 48px;
+            }
+
+            .overlay-text {
+                font-size: 48px;
+            }
+
+            .news-headline {
+                font-size: 18px;
+            }
+
+            .news-summary {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AP Var W05</h1>
+            <p class="subtitle">Variable Font Styleguide — Weight & Width Variations</p>
+        </header>
+
+        <!-- Weight Samples -->
+        <section>
+            <div class="section-title">Weight Scale</div>
+            <div class="weight-grid">
+                <div class="weight-row">
+                    <div class="weight-sample">
+                        <div class="sample-label">Regular</div>
+                        <div class="sample-text" style="font-weight: 400;">Aa</div>
+                        <div class="sample-weight">Weight: 400</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="sample-label">Medium</div>
+                        <div class="sample-text" style="font-weight: 500;">Aa</div>
+                        <div class="sample-weight">Weight: 500</div>
+                    </div>
+                    <div class="weight-sample">
+                        <div class="sample-label">Bold</div>
+                        <div class="sample-text" style="font-weight: 700;">Aa</div>
+                        <div class="sample-weight">Weight: 700</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Side-by-side comparison -->
+        <section>
+            <div class="section-title">Weight Comparison</div>
+            <div class="comparison-section">
+                <div class="weight-comparison">
+                    <div class="weight-comparison-text">Breaking News</div>
+                    <div class="comparison-label">Regular (400)</div>
+                </div>
+                <div class="weight-comparison">
+                    <div class="weight-comparison-text medium">Breaking News</div>
+                    <div class="comparison-label">Medium (500)</div>
+                </div>
+                <div class="weight-comparison">
+                    <div class="weight-comparison-text bold">Breaking News</div>
+                    <div class="comparison-label">Bold (700)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Overlay comparison -->
+        <section>
+            <div class="section-title">Weight Overlay</div>
+            <div class="overlay-comparison">
+                <div class="overlay-title">See weight contrast at a glance</div>
+                <div class="overlay-stack">
+                    <div class="overlay-text weight-400">Journalism</div>
+                    <div class="overlay-text weight-500">Journalism</div>
+                    <div class="overlay-text weight-700">Journalism</div>
+                </div>
+                <div class="overlay-label">Weights 400, 500, and 700 layered for comparison</div>
+            </div>
+        </section>
+
+        <!-- Width variations -->
+        <section>
+            <div class="section-title">Width Variations</div>
+            <div class="width-grid">
+                <div class="width-sample">
+                    <div class="width-text condensed">Condensed</div>
+                    <div class="width-info">
+                        <div class="width-name">Condensed</div>
+                        <div class="width-value">Width: 75%</div>
+                    </div>
+                </div>
+                <div class="width-sample">
+                    <div class="width-text semicondensed">Semicond</div>
+                    <div class="width-info">
+                        <div class="width-name">Semicondensed</div>
+                        <div class="width-value">Width: 87.5%</div>
+                    </div>
+                </div>
+                <div class="width-sample">
+                    <div class="width-text normal">Normal</div>
+                    <div class="width-info">
+                        <div class="width-name">Normal</div>
+                        <div class="width-value">Width: 100%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Body text examples -->
+        <section>
+            <div class="section-title">Body Text</div>
+            <div class="paragraph-section">
+                <div class="paragraph-sample">
+                    <div class="paragraph-text regular">
+                        <span class="paragraph-bold">Regular Weight (400):</span> The Associated Press delivers news, photos and graphics that matter. We tell stories that shape America. We document history as it happens, and our journalists work to tell the complete story, free from bias.
+                    </div>
+                </div>
+                <div class="paragraph-sample">
+                    <div class="paragraph-text medium">
+                        <span class="paragraph-bold">Medium Weight (500):</span> The Associated Press delivers news, photos and graphics that matter. We tell stories that shape America. We document history as it happens, and our journalists work to tell the complete story, free from bias.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News content examples -->
+        <section>
+            <div class="section-title">News Content Examples</div>
+            
+            <div class="news-grid">
+                <!-- Variant 1: Bold Headline -->
+                <div class="news-card">
+                    <div class="news-label">Semicondensed Bold Headline</div>
+                    <article class="news-item">
+                        <h2 class="news-headline headline-bold">Federal Reserve Signals Potential Rate Cuts in Coming Months</h2>
+                        <p class="news-summary">The central bank's latest statement suggests officials are considering easing monetary policy amid cooling inflation pressures. Markets responded positively to the announcement.</p>
+                        <time class="news-timestamp">March 15, 2025 • 2:34 PM ET</time>
+                    </article>
+                </div>
+
+                <!-- Variant 2: Medium Headline -->
+                <div class="news-card">
+                    <div class="news-label">Semicondensed Medium Headline</div>
+                    <article class="news-item">
+                        <h2 class="news-headline headline-medium">Federal Reserve Signals Potential Rate Cuts in Coming Months</h2>
+                        <p class="news-summary">The central bank's latest statement suggests officials are considering easing monetary policy amid cooling inflation pressures. Markets responded positively to the announcement.</p>
+                        <time class="news-timestamp">March 15, 2025 • 2:34 PM ET</time>
+                    </article>
+                </div>
+            </div>
+
+            <div class="news-grid">
+                <!-- More examples -->
+                <div class="news-card">
+                    <div class="news-label">Variant: Bold with Different Story</div>
+                    <article class="news-item">
+                        <h2 class="news-headline headline-bold">Tech Giant Announces Major Investment in Renewable Energy</h2>
+                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step toward climate goals.</p>
+                        <time class="news-timestamp">March 14, 2025 • 9:12 AM ET</time>
+                    </article>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-label">Variant: Medium with Different Story</div>
+                    <article class="news-item">
+                        <h2 class="news-headline headline-medium">Tech Giant Announces Major Investment in Renewable Energy</h2>
+                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step toward climate goals.</p>
+                        <time class="news-timestamp">March 14, 2025 • 9:12 AM ET</time>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            AP Var W05 — Variable Font Styleguide | Generated for AP News Design System
+        </footer>
+    </div>
+</body>
+</html>
