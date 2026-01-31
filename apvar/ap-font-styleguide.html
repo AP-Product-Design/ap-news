@@ -211,6 +211,35 @@
             letter-spacing: 0.5px;
         }
 
+        /* Weight & Width Matrix */
+        .matrix-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .matrix-item {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .matrix-headline {
+            font-family: 'AP Var W05', system-ui;
+            font-size: 20px;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+            color: #191919;
+        }
+
+        .matrix-label {
+            font-size: 11px;
+            font-weight: 500;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         /* Overlay comparison */
         .overlay-comparison {
             background: white;
@@ -412,6 +441,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .matrix-grid {
+                grid-template-columns: 1fr;
+            }
+
             .paragraph-section {
                 grid-template-columns: 1fr;
             }
@@ -438,6 +471,10 @@
 
             .news-summary {
                 font-size: 14px;
+            }
+
+            .matrix-headline {
+                font-size: 18px;
             }
         }
     </style>
@@ -490,7 +527,7 @@
                     <div class="comparison-label">Bold (700)</div>
                 </div>
             </div>
-        </section
+        </section>
 
         <!-- Width variations -->
         <section>
@@ -515,6 +552,62 @@
                     <div class="width-info">
                         <div class="width-name">Normal</div>
                         <div class="width-value">Width: 100%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weight & Width Matrix -->
+        <section>
+            <div class="section-title">Weight & Width Matrix</div>
+            <div class="comparison-section">
+                <div class="matrix-grid">
+                    <!-- Regular Weight -->
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 400; font-variation-settings: 'wdth' 100;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Regular (400) • Normal Width (100%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 500; font-variation-settings: 'wdth' 100;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Medium (500) • Normal Width (100%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 700; font-variation-settings: 'wdth' 100;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Bold (700) • Normal Width (100%)</div>
+                    </div>
+
+                    <!-- SemiCondensed Weight -->
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 400; font-variation-settings: 'wdth' 87.5;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Regular (400) • SemiCondensed (87.5%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 500; font-variation-settings: 'wdth' 87.5;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Medium (500) • SemiCondensed (87.5%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 700; font-variation-settings: 'wdth' 87.5;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Bold (700) • SemiCondensed (87.5%)</div>
+                    </div>
+
+                    <!-- Condensed Weight -->
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 400; font-variation-settings: 'wdth' 75;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Regular (400) • Condensed (75%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 500; font-variation-settings: 'wdth' 75;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Medium (500) • Condensed (75%)</div>
+                    </div>
+
+                    <div class="matrix-item">
+                        <div class="matrix-headline" style="font-weight: 700; font-variation-settings: 'wdth' 75;">Judge bars federal prosecutors from seeking the death penalty against Luigi Mangione</div>
+                        <div class="matrix-label">Bold (700) • Condensed (75%)</div>
                     </div>
                 </div>
             </div>
@@ -568,7 +661,7 @@
                     <div class="news-label">Variant: Bold with Different Story, Regular weight text (400), Medium weight timestamp (500)</div>
                     <article class="news-item">
                         <h2 class="news-headline headline-bold">Tech giant announces major investment in renewable energy</h2>
-                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step toward climate goals.</p>
+                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step towards climate goals.</p>
                         <time class="news-timestamp">March 14, 2025 • 9:12 AM ET</time>
                     </article>
                 </div>
@@ -577,7 +670,7 @@
                     <div class="news-label">Variant: Medium with Different Story, Regular weight text (400), Medium weight timestamp (500)</div>
                     <article class="news-item">
                         <h2 class="news-headline headline-medium">Tech giant announces major investment in renewable energy</h2>
-                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step toward climate goals.</p>
+                        <p class="news-summary">The company committed over $5 billion to develop sustainable infrastructure across operations. Industry analysts view the move as significant step towards climate goals.</p>
                         <time class="news-timestamp">March 14, 2025 • 9:12 AM ET</time>
                     </article>
                 </div>
