@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>AP News Breaking Timeline</title>
+<style>
+  /* Font face - AP Var */
+  @font-face {
+    font-family: "AP Var";
+    src: url("../fonts/APVarW05-Regular.woff2") format("woff2");
+    font-weight: 400;
+  }
+
+  /* Reset & Base */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "AP Var", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    background: #ffffff;
+    color: #191919;
+    padding: 2rem;
+  }
+
+  /* Design system tokens */
+  :root {
+    /* Colors - Surface Light */
+    --color-bg-primary: #ffffff;
+    --color-text-primary: #191919;
+    --color-text-secondary: #666666;
+    --color-text-eyebrow: #da1026;
+    --color-border-subtle: #e6e6e7;
+    --color-border-moderate: #c4c4c4;
+    
+    /* Spacing */
+    --spacing-100: 0.25rem;  /* 4px */
+    --spacing-400: 1rem;      /* 16px */
+    
+    /* Typography - AP Var */
+    --font-weight-medium: 500;
+    --font-size-metadata: 0.75rem;     /* 12px */
+    --font-size-list-md: 1rem;         /* 16px */
+    --font-size-heading-5: 0.875rem;    /* 14px */
+    --line-height-body: 1.5;
+  }
+
+  /* Main container */
+  .timeline-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Section heading (h5 equivalent) */
+  .section-heading {
+    font-size: var(--font-size-heading-5);
+    font-weight: 700;
+    font-stretch: 75%;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* Live Updates Section */
+  .live-updates {
+    margin-bottom: 3rem;
+  }
+
+  .timeline-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: var(--spacing-400);
+    position: relative;
+    padding-bottom: var(--spacing-400);
+  }
+
+  /* Vertical connecting line */
+  .timeline-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 3.5px;
+    top: 1.5rem;
+    width: 1px;
+    height: calc(100% - 1.5rem);
+    background: var(--color-border-subtle);
+  }
+
+  /* Timeline bullet */
+  .bullet {
+    width: 8px;
+    height: 8px;
+    background: var(--color-text-eyebrow);
+    border-radius: 50%;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  /* Content wrapper */
+  .content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Eyebrow - elapsed time */
+  .eyebrow {
+    font-size: var(--font-size-metadata);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-eyebrow);
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .eyebrow-with-badge {
+    font-size: var(--font-size-metadata);
+    font-weight: var(--font-weight-medium);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .live-badge {
+    display: inline-block;
+    background: var(--color-text-eyebrow);
+    color: #ffffff;
+    padding: 0.125rem 0.375rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .elapsed-time {
+    color: var(--color-text-eyebrow);
+    text-transform: uppercase;
+  }
+
+  .timestamp-recent {
+    font-size: var(--font-size-metadata);
+    color: var(--color-text-eyebrow);  /* ap-adaptive-red */
+    margin-top: 0.25rem;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .related-timestamp-recent {
+    font-size: var(--font-size-metadata);
+    color: var(--color-text-eyebrow);  /* ap-adaptive-red */
+    margin-top: 0.25rem;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  /* Headline */
+  .headline {
+    display: block;
+    font-size: var(--font-size-list-md);
+    font-weight: 400;
+    line-height: var(--line-height-body);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .headline:hover {
+    color: var(--color-text-secondary);
+  }
+
+  /* Timestamp (for More coverage section) */
+  .timestamp {
+    font-size: var(--font-size-metadata);
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  /* More Coverage Section */
+  .more-coverage {
+    margin-top: 3rem;
+  }
+
+  .coverage-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .coverage-item {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: var(--spacing-400);
+  }
+
+  .coverage-item:not(:last-child) {
+    margin-bottom: var(--spacing-400);
+  }
+
+  /* Eyebrow for More coverage - can have badge or topic label */
+  .coverage-eyebrow {
+    font-size: var(--font-size-metadata);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .topic-label {
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-medium);
+  }
+
+  /* Light theme adjustments */
+  body.light-theme {
+    --color-bg-primary: #ffffff;
+    --color-text-primary: #191919;
+    --color-text-secondary: #666666;
+    --color-border-subtle: #e6e6e7;
+  }
+
+  /* Dark theme support */
+  body.dark-theme {
+    background: #191919;
+    --color-bg-primary: #191919;
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #f2f2f2;
+    --color-text-eyebrow: #ff5c58;
+    --color-border-subtle: #515151;
+  }
+
+  body.dark-theme .headline:hover {
+    color: #c4c4c4;
+  }
+
+  /* Utility for font width control (AP Var supports this) */
+  .font-width-normal {
+    font-stretch: 100%;
+  }
+
+  /* Related Stories Section - with bullets, no connecting line */
+  .related-stories {
+    margin-top: 3rem;
+  }
+
+  .related-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .related-item {
+    display: flex;
+    gap: var(--spacing-400);
+    padding-bottom: var(--spacing-400);
+    align-items: flex-start;
+  }
+
+  /* Related item bullet - no connecting line */
+  .related-bullet {
+    width: 8px;
+    height: 8px;
+    background: var(--color-border-moderate);
+    border-radius: 50%;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  .related-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .related-eyebrow {
+    font-size: var(--font-size-metadata);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .related-headline {
+    display: block;
+    font-size: var(--font-size-list-md);
+    font-weight: 400;
+    line-height: var(--line-height-body);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .related-headline:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .related-timestamp {
+    font-size: var(--font-size-metadata);
+    color: var(--color-text-secondary);
+    margin-top: 0.25rem;
+    display: block;
+    text-transform: uppercase;
+  }
+</style>
+</head>
+<body class="light-theme">
+
+<div class="timeline-container">
+
+  <!-- Live Updates Section -->
+  <section class="live-updates">
+    <h5 class="section-heading">Live updates</h5>
+    
+    <ul class="timeline-list">
+      <li class="timeline-item">
+        <span class="bullet"></span>
+        <div class="content font-width-normal">
+          <span class="eyebrow">29 MINS AGO</span>
+          <a href="#" class="headline">Election officials announce extended voting hours in three counties</a>
+        </div>
+      </li>
+
+      <li class="timeline-item">
+        <span class="bullet"></span>
+        <div class="content font-width-normal">
+          <span class="eyebrow">42 MINS AGO</span>
+          <a href="#" class="headline">Voter turnout surpasses early projections in key battleground state</a>
+        </div>
+      </li>
+
+      <li class="timeline-item">
+        <span class="bullet"></span>
+        <div class="content font-width-normal">
+          <span class="eyebrow">50 MINS AGO</span>
+          <a href="#" class="headline">Federal monitors deployed to polling locations amid ongoing disputes</a>
+        </div>
+      </li>
+
+      <li class="timeline-item">
+        <span class="bullet"></span>
+        <div class="content font-width-normal">
+          <span class="eyebrow">55 MINS AGO</span>
+          <a href="#" class="headline">Campaign headquarters respond to latest polling data</a>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Related Stories Section -->
+  <section class="related-stories">
+    <h5 class="section-heading">More coverage (with bullets)</h5>
+    
+    <ul class="related-list">
+      <li class="related-item">
+        <span class="related-bullet"></span>
+        <div class="related-content font-width-normal">
+          <div class="eyebrow-with-badge">
+            <span class="live-badge">Live</span>
+            <span class="elapsed-time">29 MINS AGO</span>
+          </div>
+          <a href="#" class="related-headline">Breaking developments from the campaign trail</a>
+        </div>
+      </li>
+
+      <li class="related-item">
+        <span class="related-bullet"></span>
+        <div class="related-content font-width-normal">
+          <div class="related-eyebrow">
+            <span class="topic-label">Politics</span>
+          </div>
+          <a href="#" class="related-headline">Voter profiles show surprising demographic shifts in swing regions</a>
+          <span class="related-timestamp-recent">38 MINS AGO</span>
+        </div>
+      </li>
+
+      <li class="related-item">
+        <span class="related-bullet"></span>
+        <div class="related-content font-width-normal">
+          <a href="#" class="related-headline">Tech industry braces for potential regulatory changes</a>
+          <span class="related-timestamp">4 min read</span>
+        </div>
+      </li>
+
+      <li class="related-item">
+        <span class="related-bullet"></span>
+        <div class="related-content font-width-normal">
+          <div class="related-eyebrow">
+            <span class="topic-label">Courts</span>
+          </div>
+          <a href="#" class="related-headline">Legal experts analyze implications for Supreme Court appointments</a>
+          <span class="related-timestamp">6 min read</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- More Coverage Section -->
+  <section class="more-coverage">
+    <h5 class="section-heading">More coverage (w/o bullets)</h5>
+    
+    <ul class="coverage-list">
+      <li class="coverage-item">
+        <div class="eyebrow-with-badge">
+          <span class="live-badge">Live</span>
+          <span class="elapsed-time">29 MINS AGO</span>
+        </div>
+        <a href="#" class="headline">Markets respond to election results and policy announcements</a>
+      </li>
+
+      <li class="coverage-item">
+        <div class="coverage-eyebrow">
+          <span class="topic-label">Politics</span>
+        </div>
+        <a href="#" class="headline">What today's results mean for the economy and trade policy</a>
+        <span class="timestamp-recent">38 MINS AGO</span>
+      </li>
+
+      <li class="coverage-item">
+        <div class="coverage-eyebrow">
+          <span class="topic-label">Analysis</span>
+        </div>
+        <a href="#" class="headline">How these outcomes reshape political landscape for next two years</a>
+        <span class="timestamp">4 MIN READ</span>
+      </li>
+
+      <li class="coverage-item">
+        <div class="coverage-eyebrow">
+          <span class="topic-label">World</span>
+        </div>
+        <a href="#" class="headline">International leaders react to election outcome</a>
+        <span class="timestamp">6 MIN READ</span>
+      </li>
+    </ul>
+  </section>
+
+</div>
+
+</body>
+</html>
