@@ -133,7 +133,7 @@
 
   .live-badge {
     display: inline-block;
-    background: var(--color-text-eyebrow);
+    background: #da1026;
     color: #ffffff;
     padding: 0.125rem 0.375rem;
     font-weight: 600;
@@ -232,7 +232,7 @@
     --color-border-subtle: #e6e6e7;
   }
 
-  /* Dark theme support */
+  /* Dark theme support - mapped from design tokens JSON */
   body.dark-theme {
     background: #191919;
     --color-bg-primary: #191919;
@@ -240,9 +240,14 @@
     --color-text-secondary: #f2f2f2;
     --color-text-eyebrow: #ff5c58;
     --color-border-subtle: #515151;
+    --color-border-moderate: #e6e6e7;
   }
 
   body.dark-theme .headline:hover {
+    color: #c4c4c4;
+  }
+
+  body.dark-theme .related-headline:hover {
     color: #c4c4c4;
   }
 
@@ -314,9 +319,100 @@
     display: block;
     text-transform: uppercase;
   }
+
+  .theme-toggle-label {
+    position: fixed;
+    top: 1.5rem;
+    right: 5.5rem;
+    z-index: 999;
+    font-size: var(--font-size-metadata);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  body.dark-theme .theme-toggle-label {
+    color: var(--color-text-primary);
+  }
+
+  /* Theme toggle button */
+  .theme-toggle {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 1000;
+    width: 3.5rem;
+    height: 1.75rem;
+    background: var(--color-border-moderate);
+    border: none;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: "AP Var", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 0.125rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .theme-toggle::before {
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    background: var(--color-bg-primary);
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .theme-toggle:hover {
+    opacity: 0.8;
+  }
+
+  body.dark-theme .theme-toggle {
+    background: var(--color-text-eyebrow);
+  }
+
+  body.dark-theme .theme-toggle::before {
+    transform: translateX(1.75rem);
+  }
+
+  /* Tooltip for toggle */
+  .theme-toggle::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -2rem;
+    right: 0;
+    background: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.625rem;
+    font-weight: var(--font-weight-medium);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    text-transform: uppercase;
+  }
+
+  .theme-toggle:hover::after {
+    opacity: 1;
+  }
+
+  body.dark-theme .theme-toggle::after {
+    background: #ffffff;
+    color: #191919;
+  }
 </style>
 </head>
 <body class="light-theme">
+
+<!-- Theme Toggle -->
+<span class="theme-toggle-label">Switch theme</span>
+<button class="theme-toggle" id="themeToggle" data-tooltip="Toggle Theme"></button>
 
 <div class="timeline-container">
 
@@ -447,6 +543,31 @@
   </section>
 
 </div>
+
+<script>
+  // Theme switcher functionality
+  const themeToggle = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Check for saved theme preference or default to light
+  const savedTheme = localStorage.getItem('theme') || 'light-theme';
+  body.classList.remove('light-theme', 'dark-theme');
+  body.classList.add(savedTheme);
+
+  themeToggle.addEventListener('click', () => {
+    const isLight = body.classList.contains('light-theme');
+    
+    body.classList.remove('light-theme', 'dark-theme');
+    
+    if (isLight) {
+      body.classList.add('dark-theme');
+      localStorage.setItem('theme', 'dark-theme');
+    } else {
+      body.classList.add('light-theme');
+      localStorage.setItem('theme', 'light-theme');
+    }
+  });
+</script>
 
 </body>
 </html>
