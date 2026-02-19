@@ -1,0 +1,88 @@
+/**
+ * AP News Design Tokens
+ * Mapped from ap_news-design-tokens.json
+ * Use these CSS custom properties for consistent styling across prototypes.
+ */
+
+@font-face {
+  font-family: "AP Var";
+  src: url("fonts/APVarW05-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+:root {
+  /* ========== Colors (Surface / Light) ========== */
+  --ap-color-background-primary: #ffffff;
+  --ap-color-background-secondary: #f2f2f2;
+  --ap-color-background-tertiary: #efefef;
+  --ap-color-backgrounds-ap-alert-red: #da1026;
+  --ap-color-backgrounds-elevated: #ffffff;
+
+  --ap-color-text-primary: #191919;
+  --ap-color-text-secondary: #666666;
+  --ap-color-text-primary-hover: #a8a8a9;
+  --ap-color-text-ap-adaptive-red: #da1026;
+  --ap-color-text-eyebrow-breaking: #da1026;
+  --ap-color-text-eyebrow-default: #666666;
+
+  --ap-color-elements-border-subtle: #e6e6e7;
+  --ap-color-elements-border-moderate: #c4c4c4;
+  --ap-color-elements-border-bold: #191919;
+
+  --ap-color-icons-primary-enabled: #191919;
+  --ap-color-icons-inverse-enabled: #ffffff;
+
+  --ap-color-interactive-text-link-enabled: #0042a9;
+  --ap-color-interactive-text-link-subtle-enabled: #191919;
+  --ap-color-interactive-filled-background-enabled-bg: #191919;
+
+  /* ========== Typography (Utility) ========== */
+  --ap-font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ap-font-weight-regular: 400;
+  --ap-font-weight-medium: 500;
+  --ap-font-weight-bold: 700;
+
+  --ap-letter-spacing-wide: 0.0625rem;
+  --ap-letter-spacing-tight: -0.0313rem;
+
+  /* Text sizes – base scale (align with token text-size/x-scale and text/text-size) */
+  --ap-text-size-x-3: 0.625rem;
+  --ap-text-size-x-2: 0.75rem;   /* metadata, utility-sm */
+  --ap-text-size-x-1: 0.875rem;  /* body-sm, nav-link */
+  --ap-text-size-x-base: 1rem;   /* body-base */
+  --ap-text-size-x1: 1.25rem;
+  --ap-text-size-x2: 1.5rem;    /* headline */
+  --ap-text-size-x3: 2rem;
+  --ap-text-size-x4: 2.5rem;
+  --ap-text-size-x5: 3rem;
+
+  /* Semantic aliases */
+  --ap-text-size-metadata: var(--ap-text-size-x-2);
+  --ap-text-size-body-sm: var(--ap-text-size-x-1);
+  --ap-text-size-body-base: var(--ap-text-size-x-base);
+  --ap-text-size-story-headline-sm: 1.25rem;  /* story-page-headline-sm SM */
+  --ap-text-size-story-headline-md: 1.5rem;   /* story-page-headline-md SM */
+
+  /* ========== Spacing (Responsive – SM base) ========== */
+  --ap-spacing-0: 0rem;
+  --ap-spacing-100: 0.25rem;   /* size/4 */
+  --ap-spacing-200: 0.5rem;    /* size/8 */
+  --ap-spacing-300: 0.75rem;   /* size/12 */
+  --ap-spacing-400: 1rem;      /* size/16 */
+  --ap-spacing-500: 1.25rem;   /* size/20 */
+  --ap-spacing-600: 1.5rem;    /* size/24 */
+  --ap-spacing-700: 2rem;      /* size/32 */
+  --ap-spacing-800: 3rem;      /* size/48 */
+  --ap-spacing-900: 4rem;      /* size/64 */
+
+  --ap-screen-margins: 1.25rem;  /* SM */
+
+  /* ========== Layout (Utility) ========== */
+  --ap-border-radius-sm: 0.1875rem;
+  --ap-border-radius-md: 0.5rem;
+  --ap-border-radius-lg: 1.5rem;
+  --ap-border-radius-xl: 2rem;
+
+  --ap-stroke-01: 0.0625rem;
+  --ap-stroke-02: 0.125rem;
+}

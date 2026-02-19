@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List E – News Module</title>
+  <link rel="stylesheet" href="ap-design-tokens.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: var(--ap-font-family);
+      font-size: var(--ap-text-size-body-base);
+      line-height: 1.4;
+      color: var(--ap-color-text-primary);
+    }
+    .module {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: var(--ap-spacing-400);
+    }
+    .module-title {
+      font-size: var(--ap-text-size-metadata);
+      font-weight: var(--ap-font-weight-bold);
+      letter-spacing: var(--ap-letter-spacing-wide);
+      text-transform: uppercase;
+      margin: 0 0 var(--ap-spacing-200);
+      color: var(--ap-color-text-primary);
+    }
+    .storyline-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--ap-spacing-200);
+      margin-bottom: var(--ap-spacing-400);
+    }
+    .storyline-nav a {
+      color: var(--ap-color-text-primary);
+      text-decoration: none;
+      font-size: var(--ap-text-size-body-sm);
+    }
+    .storyline-nav a:hover {
+      text-decoration: underline;
+      color: var(--ap-color-text-primary-hover);
+    }
+    .live-badge {
+      display: inline-block;
+      background: var(--ap-color-backgrounds-ap-alert-red);
+      color: var(--ap-color-icons-inverse-enabled);
+      font-size: var(--ap-text-size-x-2);
+      font-weight: var(--ap-font-weight-bold);
+      letter-spacing: var(--ap-letter-spacing-wide);
+      padding: var(--ap-spacing-100) var(--ap-spacing-200);
+      text-transform: uppercase;
+    }
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      background: var(--ap-color-background-tertiary);
+      margin-bottom: var(--ap-spacing-300);
+    }
+    .category {
+      font-size: var(--ap-text-size-metadata);
+      font-weight: var(--ap-font-weight-bold);
+      letter-spacing: var(--ap-letter-spacing-wide);
+      text-transform: uppercase;
+      margin-bottom: var(--ap-spacing-200);
+      color: var(--ap-color-text-primary);
+    }
+    .headline {
+      font-size: var(--ap-text-size-x2);
+      font-weight: var(--ap-font-weight-bold);
+      line-height: 1.25;
+      margin: 0 0 var(--ap-spacing-300);
+    }
+    .headline a {
+      color: var(--ap-color-text-primary);
+      text-decoration: none;
+    }
+    .headline a:hover {
+      text-decoration: underline;
+      color: var(--ap-color-text-primary-hover);
+    }
+    .summary {
+      font-size: var(--ap-text-size-body-sm);
+      margin: 0 0 var(--ap-spacing-200);
+      color: var(--ap-color-text-secondary);
+    }
+    .timestamp {
+      font-size: var(--ap-text-size-metadata);
+      font-weight: var(--ap-font-weight-medium);
+      color: var(--ap-color-text-ap-adaptive-red);
+      letter-spacing: var(--ap-letter-spacing-wide);
+    }
+    .more-coverage {
+      margin-top: var(--ap-spacing-700);
+      padding-top: var(--ap-spacing-600);
+      border-top: var(--ap-stroke-01) solid var(--ap-color-elements-border-subtle);
+    }
+    .more-coverage-title {
+      font-size: var(--ap-text-size-metadata);
+      font-weight: var(--ap-font-weight-bold);
+      letter-spacing: var(--ap-letter-spacing-wide);
+      text-transform: uppercase;
+      margin: 0 0 var(--ap-spacing-400);
+      color: var(--ap-color-text-primary);
+    }
+    .more-coverage-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .more-coverage-list li {
+      padding: var(--ap-spacing-300) 0;
+      border-bottom: var(--ap-stroke-01) solid var(--ap-color-elements-border-subtle);
+    }
+    .more-coverage-list li:last-child {
+      border-bottom: none;
+    }
+    .more-coverage-list .headline-link {
+      font-size: var(--ap-text-size-body-base);
+      font-weight: var(--ap-font-weight-bold);
+      margin-bottom: var(--ap-spacing-100);
+    }
+    .more-coverage-list .headline-link a {
+      color: var(--ap-color-text-primary);
+      text-decoration: none;
+    }
+    .more-coverage-list .headline-link a:hover {
+      text-decoration: underline;
+      color: var(--ap-color-text-primary-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="module">
+    <h2 class="module-title">This is a module title</h2>
+    <nav class="storyline-nav">
+      <a href="#">Storyline title</a>
+      <span class="live-badge">Live</span>
+      <a href="#">Storyline link</a>
+      <a href="#">Storyline link</a>
+      <a href="#">Storyline</a>
+    </nav>
+
+    <img class="hero-image" src="https://placehold.co/600x375/333/eee?text=Hero+Image" alt="">
+    <p class="category">U.S. News</p>
+    <h1 class="headline">
+      <a href="#">The ash left behind by the Los Angeles wildfires might be toxic, experts warn</a>
+    </h1>
+    <p class="summary">As some people return to what's left of their homes after the Los Angeles-area wildfires, experts are warning about possible dangers of the ash that's left behind.</p>
+    <p class="timestamp">29 mins ago</p>
+
+    <section class="more-coverage">
+      <h3 class="more-coverage-title">More Coverage</h3>
+      <ul class="more-coverage-list">
+        <li>
+          <p class="headline-link"><a href="#">Wildfires still causing 153,000 evacuations, as California officials apologize for erroneous alerts</a></p>
+          <p class="timestamp">29 mins ago</p>
+        </li>
+        <li>
+          <p class="headline-link"><a href="#">Wildfires still causing 153,000 evacuations, as California officials apologize for erroneous alerts</a></p>
+          <p class="timestamp">29 mins ago</p>
+        </li>
+        <li>
+          <p class="headline-link"><a href="#">Wildfires still causing 153,000 evacuations, as California officials apologize for erroneous alerts</a></p>
+          <p class="timestamp">29 mins ago</p>
+        </li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>
