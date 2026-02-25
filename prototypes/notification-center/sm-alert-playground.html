@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SM Alert · Component Playground</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: 'AP Var', sans-serif;
+      --white:   #ffffff;
+      --n100:    #f2f2f2;
+      --n200:    #e6e6e7;
+      --n400:    #c4c4c4;
+      --n500:    #a8a8a9;
+      --n600:    #666666;
+      --n900:    #191919;
+      --red:     #da1026;
+    }
+
+    body {
+      font-family: var(--font);
+      background: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: 248px;
+      min-height: 100vh;
+      max-height: 100vh;
+      background: var(--n900);
+      padding: 24px 18px 32px;
+      flex-shrink: 0;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #2e2e2e #191919;
+    }
+    .sidebar::-webkit-scrollbar { width: 3px; }
+    .sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+    .sb-eyebrow {
+      font-variation-settings: 'wght' 724, 'wdth' 75;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+    .sb-title {
+      font-variation-settings: 'wght' 550, 'wdth' 87.5;
+      font-size: 17px;
+      color: var(--white);
+      margin-bottom: 2px;
+    }
+    .sb-sub {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 11px;
+      color: #444;
+      padding-bottom: 18px;
+      border-bottom: 1px solid #242424;
+      margin-bottom: 18px;
+    }
+
+    .ctrl-group {
+      padding-bottom: 16px;
+      border-bottom: 1px solid #222;
+      margin-bottom: 16px;
+    }
+    .ctrl-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .ctrl-label {
+      font-variation-settings: 'wght' 550, 'wdth' 87.5;
+      font-size: 9px;
+      color: #3a3a3a;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 11px;
+    }
+
+    /* Toggle switch */
+    .tog-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 9px;
+      cursor: pointer;
+    }
+    .tog-row:last-child { margin-bottom: 0; }
+    .tog-name {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 12px;
+      color: #b0b0b0;
+      user-select: none;
+    }
+    .tog-hint {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 10px;
+      color: #3a3a3a;
+      margin-top: -6px;
+      margin-bottom: 9px;
+      padding-left: 2px;
+    }
+
+    .sw { position: relative; display: inline-block; width: 30px; height: 16px; flex-shrink: 0; }
+    .sw input { opacity: 0; width: 0; height: 0; }
+    .sw-t {
+      position: absolute; inset: 0;
+      background: #2a2a2a;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .sw-t::before {
+      content: '';
+      position: absolute;
+      width: 10px; height: 10px;
+      left: 3px; top: 3px;
+      background: #4a4a4a;
+      border-radius: 50%;
+      transition: transform .18s, background .18s;
+    }
+    .sw input:checked + .sw-t { background: var(--red); }
+    .sw input:checked + .sw-t::before { transform: translateX(14px); background: #fff; }
+
+    /* Radio */
+    .rad-group { display: flex; flex-direction: column; gap: 8px; }
+    .rad-opt { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+    .rad-opt input[type="radio"] {
+      appearance: none;
+      width: 13px; height: 13px;
+      border: 1.5px solid #333;
+      border-radius: 50%;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color .12s;
+    }
+    .rad-opt input[type="radio"]:checked {
+      border-color: var(--red);
+      background: var(--red);
+      box-shadow: inset 0 0 0 2.5px var(--n900);
+    }
+    .rad-opt span {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 12px;
+      color: #b0b0b0;
+      user-select: none;
+    }
+    .rad-swatch { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Select */
+    .ctrl-select {
+      width: 100%;
+      background: #202020;
+      border: 1px solid #2e2e2e;
+      color: #b0b0b0;
+      padding: 6px 28px 6px 9px;
+      font-family: var(--font);
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 8px;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+    }
+    .ctrl-select:focus { outline: none; border-color: var(--red); }
+
+    /* Mutually exclusive pair badge */
+    .mutex-note {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 10px;
+      color: #3a3a3a;
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    /* ─── PREVIEW AREA ─── */
+    .preview {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 48px 40px;
+      overflow-y: auto;
+    }
+
+    .prev-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      width: 350px;
+      margin-bottom: 20px;
+    }
+    .prev-title {
+      font-variation-settings: 'wght' 550, 'wdth' 87.5;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #999;
+    }
+    .prev-size {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 10px;
+      color: #bbb;
+    }
+
+    /* ─── SM ALERT COMPONENT ─── */
+    .sm-alert {
+      width: 350px;
+      background: var(--white);
+    }
+
+    .sm-alert__top-div {
+      height: 1px;
+      background: var(--n200);
+    }
+
+    .sm-alert__story {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 12px 0;
+    }
+
+    /* Eyebrow row — dot is optional, collapses when hidden */
+    .sm-alert__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sm-alert__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+    }
+
+    .sm-alert__meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Category label */
+    .sm-alert__category {
+      font-variation-settings: 'wght' 550, 'wdth' 87.5;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--n600);
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* LIVE badge — replaces category */
+    .sm-alert__live {
+      display: inline-flex;
+      align-items: center;
+      background: var(--red);
+      padding: 2px 8px;
+      flex-shrink: 0;
+    }
+    .sm-alert__live-text {
+      font-variation-settings: 'wght' 700, 'wdth' 100;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Time + Follow */
+    .sm-alert__time-follow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sm-alert__timestamp {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 12px;
+      line-height: 1.3;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    /* Follow button — margin-left: auto keeps it right-aligned
+       regardless of whether timestamp or any sibling is visible */
+    .sm-alert__follow {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      border-radius: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: auto;
+      background: transparent;
+      border: 1px solid var(--n500);
+      padding: 3px 6px 4px;
+      font-family: var(--font);
+      transition: background .15s, border-color .15s;
+    }
+    .sm-alert__follow-label {
+      font-variation-settings: 'wght' 500, 'wdth' 100;
+      font-size: 12px;
+      line-height: 1.2;
+      color: var(--n900);
+      white-space: nowrap;
+    }
+    .sm-alert__follow.is-following {
+      background: var(--n900);
+      border-color: var(--n900);
+    }
+    .sm-alert__follow.is-following .sm-alert__follow-label { color: var(--n100); }
+
+    /* Headline + Thumbnail */
+    .sm-alert__body {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .sm-alert__headline {
+      flex: 1;
+      min-width: 0;
+      font-variation-settings: 'wght' 550, 'wdth' 87.5;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--n900);
+    }
+    .sm-alert__thumb {
+      width: 78px;
+      height: 51px;
+      border-radius: 3px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: var(--n200);
+    }
+    .sm-alert__thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Comment counter (showTimestamp=true area) */
+    .sm-alert__comments {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0 0 8px;
+    }
+    .sm-alert__comment-count {
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 12px;
+      color: var(--n600);
+    }
+
+    .sm-alert__bottom-div {
+      height: 1px;
+      background: var(--n200);
+    }
+
+    /* ─── STATE CHIPS ─── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      width: 350px;
+      margin-top: 20px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 9px;
+      border-radius: 10px;
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: 10px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+    .chip-on  { background: var(--n900); color: var(--white); }
+    .chip-off { background: var(--n200); color: var(--n400); text-decoration: line-through; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════
+       SIDEBAR
+  ═══════════════════════════════ -->
+  <aside class="sidebar">
+
+    <p class="sb-eyebrow">AP News Design System</p>
+    <p class="sb-title">SM Alert</p>
+    <p class="sb-sub">News alert content module</p>
+
+    <!-- 1. DOT / READ STATUS -->
+    <div class="ctrl-group">
+      <p class="ctrl-label">Dot · Read Status</p>
+      <div class="rad-group">
+        <label class="rad-opt">
+          <input type="radio" name="dot" value="red" checked>
+          <span class="rad-swatch" style="background:var(--red)"></span>
+          <span>Red · Unread</span>
+        </label>
+        <label class="rad-opt">
+          <input type="radio" name="dot" value="none">
+          <span class="rad-swatch" style="border:1px solid #444;background:transparent"></span>
+          <span>None · Read (shifts left)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 2. ALERT TYPE (mutually exclusive) -->
+    <div class="ctrl-group">
+      <p class="ctrl-label">Alert Type</p>
+      <p class="mutex-note">Category OR LIVE — not both</p>
+      <div class="rad-group">
+        <label class="rad-opt">
+          <input type="radio" name="alerttype" value="category" checked>
+          <span>Category label</span>
+        </label>
+        <label class="rad-opt">
+          <input type="radio" name="alerttype" value="live">
+          <span>LIVE badge</span>
+        </label>
+      </div>
+      <select class="ctrl-select" id="ctrl-cat-value">
+        <option>Politics</option>
+        <option selected>Olympics</option>
+        <option>World</option>
+        <option>U.S. News</option>
+        <option>Science</option>
+        <option>Business</option>
+        <option>Entertainment</option>
+        <option>Technology</option>
+        <option>Sports</option>
+      </select>
+    </div>
+
+    <!-- 3. TIMESTAMP / PUBLISH DATE -->
+    <div class="ctrl-group">
+      <p class="ctrl-label">Timestamp · Publish Date</p>
+      <div class="rad-group">
+        <label class="rad-opt">
+          <input type="radio" name="ts" value="shown" checked>
+          <span>Shown · Published today</span>
+        </label>
+        <label class="rad-opt">
+          <input type="radio" name="ts" value="hidden">
+          <span>Hidden · Previous day</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 4. FOLLOW BUTTON -->
+    <div class="ctrl-group">
+      <p class="ctrl-label">Follow Button</p>
+      <div class="rad-group">
+        <label class="rad-opt">
+          <input type="radio" name="follow" value="show" checked>
+          <span>Shown · Topic not followed</span>
+        </label>
+        <label class="rad-opt">
+          <input type="radio" name="follow" value="hide">
+          <span>Hidden · Already following</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- 5. STRUCTURE TOGGLES -->
+    <div class="ctrl-group">
+      <p class="ctrl-label">Structure</p>
+
+      <label class="tog-row">
+        <span class="tog-name">Top Divider</span>
+        <label class="sw"><input type="checkbox" id="ctrl-top-div" checked><span class="sw-t"></span></label>
+      </label>
+      <p class="tog-hint">ON for all stories except the first — the first story sits directly under the section header which provides its own visual boundary</p>
+
+      <label class="tog-row">
+        <span class="tog-name">Bottom Divider</span>
+        <label class="sw"><input type="checkbox" id="ctrl-bot-div" checked><span class="sw-t"></span></label>
+      </label>
+
+      <label class="tog-row">
+        <span class="tog-name">Thumbnail</span>
+        <label class="sw"><input type="checkbox" id="ctrl-thumb" checked><span class="sw-t"></span></label>
+      </label>
+
+      <label class="tog-row">
+        <span class="tog-name">Comment Counter</span>
+        <label class="sw"><input type="checkbox" id="ctrl-comments"><span class="sw-t"></span></label>
+      </label>
+    </div>
+
+  </aside>
+
+  <!-- ═══════════════════════════════
+       PREVIEW
+  ═══════════════════════════════ -->
+  <main class="preview">
+
+    <div class="prev-header">
+      <span class="prev-title">Live Preview</span>
+      <span class="prev-size">350 × auto · SM Alert</span>
+    </div>
+
+    <div class="sm-alert" id="smAlert">
+
+      <div class="sm-alert__top-div" id="sa-top-div"></div>
+
+      <div class="sm-alert__story">
+
+        <div class="sm-alert__eyebrow">
+          <!-- Dot — hidden when read -->
+          <div class="sm-alert__dot" id="sa-dot"></div>
+
+          <div class="sm-alert__meta">
+            <!-- LIVE badge (mutually exclusive with category) -->
+            <div class="sm-alert__live hidden" id="sa-live">
+              <span class="sm-alert__live-text">Live</span>
+            </div>
+            <!-- Category (mutually exclusive with LIVE) -->
+            <span class="sm-alert__category" id="sa-cat">Olympics</span>
+
+            <div class="sm-alert__time-follow">
+              <!-- Timestamp -->
+              <span class="sm-alert__timestamp" id="sa-ts">29 MINS AGO</span>
+              <!-- Follow button -->
+              <button class="sm-alert__follow" id="sa-follow" onclick="clickFollow()">
+                <span class="sm-alert__follow-label" id="sa-follow-label">Follow +</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sm-alert__body">
+          <p class="sm-alert__headline">The Milan Cortina Olympics officially open with a multi-site ceremony for a spread-out Winter Games</p>
+          <div class="sm-alert__thumb" id="sa-thumb">
+            <img src="https://www.figma.com/api/mcp/asset/9ba94d23-e3cc-42cf-9a0b-e392c97f8398" alt="">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sm-alert__comments hidden" id="sa-comments">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M1.5 1.5h9a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.5.5H7l-2 2V8.5H2a.5.5 0 0 1-.5-.5V2a.5.5 0 0 1 .5-.5z" stroke="#666" stroke-width="1.1" stroke-linejoin="round"/>
+        </svg>
+        <span class="sm-alert__comment-count">100</span>
+      </div>
+
+      <div class="sm-alert__bottom-div" id="sa-bot-div"></div>
+
+    </div>
+
+    <div class="chips" id="chips"></div>
+
+  </main>
+
+  <script>
+    // Follow button click in preview → sync sidebar radio
+    function clickFollow() {
+      const btn = document.getElementById('sa-follow');
+      if (!btn.classList.contains('is-following')) {
+        // Animate to "Following" then hide after brief delay
+        btn.classList.add('is-following');
+        document.getElementById('sa-follow-label').textContent = 'Following';
+        setTimeout(() => {
+          document.querySelector('input[name="follow"][value="hide"]').checked = true;
+          applyState();
+        }, 600);
+      }
+    }
+
+    function getState() {
+      return {
+        dot:      document.querySelector('input[name="dot"]:checked').value,
+        type:     document.querySelector('input[name="alerttype"]:checked').value,
+        catVal:   document.getElementById('ctrl-cat-value').value,
+        ts:       document.querySelector('input[name="ts"]:checked').value,
+        follow:   document.querySelector('input[name="follow"]:checked').value,
+        topDiv:   document.getElementById('ctrl-top-div').checked,
+        botDiv:   document.getElementById('ctrl-bot-div').checked,
+        thumb:    document.getElementById('ctrl-thumb').checked,
+        comments: document.getElementById('ctrl-comments').checked,
+      };
+    }
+
+    function applyState() {
+      const s = getState();
+
+      // Dot
+      document.getElementById('sa-dot').classList.toggle('hidden', s.dot === 'none');
+
+      // Alert type — LIVE vs Category (mutually exclusive)
+      const isLive = s.type === 'live';
+      document.getElementById('sa-live').classList.toggle('hidden', !isLive);
+      document.getElementById('sa-cat').classList.toggle('hidden', isLive);
+      document.getElementById('sa-cat').textContent = s.catVal.toUpperCase();
+
+      // Timestamp
+      document.getElementById('sa-ts').classList.toggle('hidden', s.ts === 'hidden');
+
+      // Follow button
+      const btn = document.getElementById('sa-follow');
+      const lbl = document.getElementById('sa-follow-label');
+      btn.classList.toggle('hidden', s.follow === 'hide');
+      btn.classList.remove('is-following');
+      lbl.textContent = 'Follow +';
+
+      // Structure
+      document.getElementById('sa-top-div').classList.toggle('hidden', !s.topDiv);
+      document.getElementById('sa-bot-div').classList.toggle('hidden', !s.botDiv);
+      document.getElementById('sa-thumb').classList.toggle('hidden', !s.thumb);
+      document.getElementById('sa-comments').classList.toggle('hidden', !s.comments);
+
+      renderChips(s);
+    }
+
+    function renderChips(s) {
+      const c = document.getElementById('chips');
+      c.innerHTML = '';
+      const items = [
+        { label: 'Dot: ' + s.dot,            on: s.dot !== 'none' },
+        { label: s.type === 'live' ? 'LIVE badge' : 'Category: ' + s.catVal, on: true },
+        { label: 'Timestamp',                on: s.ts === 'shown' },
+        { label: 'Follow btn',               on: s.follow === 'show' },
+        { label: 'Top divider',              on: s.topDiv },
+        { label: 'Bottom divider',           on: s.botDiv },
+        { label: 'Thumbnail',                on: s.thumb },
+        { label: 'Comment counter',          on: s.comments },
+      ];
+      items.forEach(({ label, on }) => {
+        const el = document.createElement('span');
+        el.className = 'chip ' + (on ? 'chip-on' : 'chip-off');
+        el.textContent = label;
+        c.appendChild(el);
+      });
+    }
+
+    document.querySelectorAll('input[type="checkbox"], input[type="radio"], select')
+      .forEach(el => el.addEventListener('change', applyState));
+
+    applyState();
+  </script>
+
+</body>
+</html>
