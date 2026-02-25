@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AP News — Notification Center</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #f4f4f4;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px; /* 20px screen margins */
+      font-family: 'AP Var', sans-serif;
+    }
+
+    /* ════════════════════════════════════════════════════
+       AP NEWS DESIGN TOKENS — AP News Tokens.json
+    ════════════════════════════════════════════════════ */
+    :root {
+      /* Colors */
+      --color-neutral-white:    #ffffff;
+      --color-neutral-200:      #f2f2f2;  /* surface.light.backgrounds.secondary */
+      --color-neutral-400:      #e6e6e7;  /* surface.light.borders.border-subtle */
+      --color-neutral-500:      #c4c4c4;  /* surface.light.borders.border-moderate / gray dot */
+      --color-neutral-600:      #a8a8a9;  /* surface.light.interactive.outlined-border-enabled */
+      --color-neutral-650:      #666666;  /* surface.light.text.secondary */
+      --color-neutral-900:      #191919;  /* surface.light.text.primary */
+      --color-red-600:          #da1026;  /* surface.light.brand.ap-solid-red / ap-adaptive-red */
+
+      /* Typography */
+      --font:                   'AP Var', sans-serif;
+
+      /* Spacing — responsive/sm */
+      --spacing-100:            4px;
+      --spacing-200:            8px;
+      --spacing-300:            12px;
+      --spacing-400:            16px;
+
+      /* Sizes — primitives */
+      --size-4:                 4px;
+      --size-8:                 8px;
+      --size-12:                12px;
+
+      /* Border radius — utility/layout */
+      --radius-sm:              3px;
+
+      /* Letter spacing — utility/text */
+      --ls-wide:                1px;
+    }
+
+    /* ════════════════════════════════════════════════════
+       PANEL
+    ════════════════════════════════════════════════════ */
+    .notification-panel {
+      width: 350px;
+      background: #ffffff; /* surface.light.backgrounds.primary */
+    }
+
+    /* ════════════════════════════════════════════════════
+       SECTION HEADER
+       Top border: 1px solid #c4c4c4 (border-moderate)
+       Heading: AP Var Condensed Bold, 16px, #191919, uppercase
+       Gap between divider and heading: spacing-300 = 12px
+       Gap below heading before first alert: spacing-400 = 16px
+    ════════════════════════════════════════════════════ */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-300);         /* 12px divider → heading */
+      padding-bottom: var(--spacing-400); /* 16px heading → first alert */
+    }
+
+    .section-divider {
+      height: 1px;
+      background: #c4c4c4; /* border-moderate */
+      width: 100%;
+    }
+
+    .section-heading {
+      font-family: var(--font);
+      font-variation-settings: 'wght' 724, 'wdth' 75; /* Condensed Bold */
+      font-size: 16px;          /* responsive/sm/text-size/x-base */
+      line-height: 1.3;
+      color: #191919;           /* text.primary */
+      text-transform: uppercase;
+      letter-spacing: 0;
+      font-style: normal;
+    }
+
+    /* ════════════════════════════════════════════════════
+       ALERT LIST
+    ════════════════════════════════════════════════════ */
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      /* No gap — top dividers + content padding handle all spacing */
+    }
+
+    /* ════════════════════════════════════════════════════
+       SINGLE ALERT ROW
+    ════════════════════════════════════════════════════ */
+    .alert {
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top divider — present on all stories EXCEPT the first.
+       The first story sits directly under the section header
+       which provides its own visual boundary above. */
+    .alert__top-divider {
+      height: 1px;
+      background: #e6e6e7; /* border-subtle */
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Content: 12px padding top+bottom, eyebrow→body gap 4px */
+    .alert__content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-4); /* 4px */
+      padding: var(--spacing-300) 0; /* 12px top and bottom */
+    }
+
+    /* ── Eyebrow row ───────────────────────────────────
+       [dot] [8px gap] [category] [8px gap] [timestamp · Follow]
+    ─────────────────────────────────────────────────── */
+    .alert__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-200); /* 8px */
+      width: 100%;
+    }
+
+    /* Notification dot: 8px circle */
+    .alert__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .alert__dot--red  { background: #da1026; } /* surface.light.brand.ap-adaptive-red */
+
+    /* Right side of eyebrow: category + [timestamp + follow right-aligned] */
+    .alert__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-200); /* 8px */
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Category label
+       AP Var SemiCondensed Medium, 12px, #666666, uppercase */
+    .alert__category {
+      font-family: var(--font);
+      font-variation-settings: 'wght' 550, 'wdth' 87.5; /* SemiCondensed Medium */
+      font-size: 12px;    /* utility/text/text-size/metadata */
+      line-height: 1.2;
+      color: #666666;     /* text.secondary */
+      text-transform: uppercase;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    /* Time + Follow: timestamp left, button right */
+    .alert__time-follow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Group for LIVE badge + timestamp together */
+    .alert__time-group {
+      display: flex;
+      align-items: center;
+      gap: var(--size-8); /* 8px */
+    }
+
+    /* ── LIVE badge ─────────────────────────────────────
+       bg: #da1026  px: 8px  py: 4px
+       AP Var Bold, 12px, white, uppercase, ls 1px
+    ─────────────────────────────────────────────────── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #da1026; /* brand.ap-solid-red */
+      padding: 4px 8px;    /* primitives/size/4 + primitives/size/8 */
+      flex-shrink: 0;
+    }
+    .live-badge__text {
+      font-family: var(--font);
+      font-variation-settings: 'wght' 700, 'wdth' 100; /* Bold */
+      font-size: 12px;
+      line-height: 1.2;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px; /* ls-wide */
+      font-style: normal;
+    }
+
+    /* ── Timestamp ──────────────────────────────────────
+       AP Var Medium, 12px, uppercase, ls 1px
+       Red (#da1026) for recent · Gray (#666666) for older
+    ─────────────────────────────────────────────────── */
+    .alert__timestamp {
+      font-family: var(--font);
+      font-variation-settings: 'wght' 530, 'wdth' 100; /* Medium */
+      font-size: 12px;    /* utility/text/text-size/metadata */
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 1px; /* ls-wide */
+      font-style: normal;
+      white-space: nowrap;
+    }
+    .alert__timestamp--red  { color: #da1026; } /* text.ap-adaptive-red */
+    .alert__timestamp--gray { color: #666666; } /* text.secondary */
+
+    /* ── Follow button ──────────────────────────────────
+       Follow state (default):
+         border: 1px solid #a8a8a9
+         bg: transparent
+         text: "Follow +" in #191919
+         padding: 3px top, 4px bottom, 6px sides
+         border-radius: 15px
+
+       Following state (toggled):
+         border: none
+         bg: #191919
+         text: "Following" in #f2f2f2
+    ─────────────────────────────────────────────────── */
+    .follow-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: auto; /* always right-aligned, even when timestamp is hidden */
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      /* Follow state defaults */
+      background: transparent;
+      border: 1px solid #a8a8a9; /* interactive.outlined-border-enabled */
+      padding: 3px 6px 4px 6px;
+    }
+    .follow-btn__label {
+      font-family: var(--font);
+      font-variation-settings: 'wght' 500, 'wdth' 100; /* Medium */
+      font-size: 12px;   /* utility/text/text-size/utility-sm */
+      line-height: 1.2;
+      color: #191919;    /* interactive.outlined-label */
+      font-style: normal;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    /* Following state */
+    .follow-btn.is-following {
+      background: #191919;  /* neutral.900 */
+      border-color: #191919;
+    }
+    .follow-btn.is-following .follow-btn__label {
+      color: #f2f2f2; /* neutral.200 */
+    }
+
+    /* ── Headline + Thumbnail row ───────────────────────
+       gap: 12px (size-12)
+    ─────────────────────────────────────────────────── */
+    .alert__body {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--size-12); /* 12px */
+      width: 100%;
+    }
+
+    /* Headline: AP Var SemiCondensed Medium, 16px, #191919, lh 1.3 */
+    .alert__headline {
+      flex: 1;
+      min-width: 0;
+      font-family: var(--font);
+      font-variation-settings: 'wght' 550, 'wdth' 87.5; /* SemiCondensed Medium */
+      font-size: 16px;   /* responsive/sm/text-size/x-base */
+      line-height: 1.3;
+      color: #191919;    /* text.primary */
+      font-style: normal;
+    }
+
+    /* Thumbnail: 78×51px, border-radius 3px */
+    .alert__thumbnail {
+      width: 78px;
+      height: 51px;
+      border-radius: 3px; /* radius-sm */
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .alert__thumbnail img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 3px;
+    }
+
+    /* Follow button — always right-aligned via space-between,
+       position stays consistent whether dot is present or not */
+  </style>
+</head>
+<body>
+  <div class="notification-panel">
+
+    <!-- ══════════════════════════════════════════════
+         HEADER
+    ══════════════════════════════════════════════ -->
+    <div class="section-header">
+      <div class="section-divider"></div>
+      <p class="section-heading">Todays Alerts</p>
+    </div>
+
+    <!-- ══════════════════════════════════════════════
+         ALERT LIST
+    ══════════════════════════════════════════════ -->
+    <div class="alert-list">
+
+      <!-- Alert 1: LIVE · 29 mins · red dot — NO top divider (first story under section header) -->
+      <div class="alert">
+        <div class="alert__content">
+          <div class="alert__eyebrow">
+            <div class="alert__dot alert__dot--red"></div>
+            <div class="alert__meta">
+              <!-- No category on LIVE breaking alert -->
+              <div class="alert__time-follow">
+                <div class="alert__time-group">
+                  <div class="live-badge">
+                    <span class="live-badge__text">Live</span>
+                  </div>
+                  <span class="alert__timestamp alert__timestamp--red">29 mins ago</span>
+                </div>
+                <button class="follow-btn" onclick="toggleFollow(this)">
+                  <span class="follow-btn__label">Follow +</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="alert__body">
+            <p class="alert__headline">2 federal officers fired shots during encounter that killed Alex Pretti, DHS tells Congress</p>
+            <div class="alert__thumbnail">
+              <img src="https://www.figma.com/api/mcp/asset/75ced48c-e9a5-4d48-9d9f-7dbba8026466" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert 2: POLITICS · 46 mins · red dot -->
+      <div class="alert">
+        <div class="alert__top-divider"></div>
+        <div class="alert__content">
+          <div class="alert__eyebrow">
+            <div class="alert__dot alert__dot--red"></div>
+            <div class="alert__meta">
+              <span class="alert__category">Politics</span>
+              <div class="alert__time-follow">
+                <span class="alert__timestamp alert__timestamp--red">46 mins ago</span>
+                <button class="follow-btn" onclick="toggleFollow(this)">
+                  <span class="follow-btn__label">Follow +</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="alert__body">
+            <p class="alert__headline">Police arrest protesters at Minneapolis federal building on 1-month anniversary of woman's death</p>
+            <div class="alert__thumbnail">
+              <img src="https://www.figma.com/api/mcp/asset/75ced48c-e9a5-4d48-9d9f-7dbba8026466" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert 3: U.S. NEWS · 2 hrs · red dot -->
+      <div class="alert">
+        <div class="alert__top-divider"></div>
+        <div class="alert__content">
+          <div class="alert__eyebrow">
+            <div class="alert__dot alert__dot--red"></div>
+            <div class="alert__meta">
+              <span class="alert__category">U.S. News</span>
+              <div class="alert__time-follow">
+                <span class="alert__timestamp alert__timestamp--red">2 hrs ago</span>
+                <button class="follow-btn" onclick="toggleFollow(this)">
+                  <span class="follow-btn__label">Follow +</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="alert__body">
+            <p class="alert__headline">Ghislaine Maxwell appeals for clemency from Trump as she declines to answer questions from lawmakers</p>
+            <div class="alert__thumbnail">
+              <img src="https://www.figma.com/api/mcp/asset/75ced48c-e9a5-4d48-9d9f-7dbba8026466" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert 4: WORLD · 5 hrs · no dot (read) -->
+      <div class="alert">
+        <div class="alert__top-divider"></div>
+        <div class="alert__content">
+          <div class="alert__eyebrow">
+            <div class="alert__meta">
+              <span class="alert__category">World</span>
+              <div class="alert__time-follow">
+                <span class="alert__timestamp alert__timestamp--gray">5 hrs ago</span>
+                <button class="follow-btn" onclick="toggleFollow(this)">
+                  <span class="follow-btn__label">Follow +</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="alert__body">
+            <p class="alert__headline">British PM Starmer vows to fight for his job after furor about former ambassador's Epstein ties</p>
+            <div class="alert__thumbnail">
+              <img src="https://www.figma.com/api/mcp/asset/75ced48c-e9a5-4d48-9d9f-7dbba8026466" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert 5: U.S. NEWS · 7 hrs · no dot (read) -->
+      <div class="alert">
+        <div class="alert__top-divider"></div>
+        <div class="alert__content">
+          <div class="alert__eyebrow">
+            <div class="alert__meta">
+              <span class="alert__category">U.S. News</span>
+              <div class="alert__time-follow">
+                <span class="alert__timestamp alert__timestamp--gray">7 hrs ago</span>
+                <button class="follow-btn" onclick="toggleFollow(this)">
+                  <span class="follow-btn__label">Follow +</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="alert__body">
+            <p class="alert__headline">What the Federal Reserve rate cut means for you</p>
+            <div class="alert__thumbnail">
+              <img src="https://www.figma.com/api/mcp/asset/75ced48c-e9a5-4d48-9d9f-7dbba8026466" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /alert-list -->
+  </div><!-- /notification-panel -->
+
+  <script>
+    function toggleFollow(btn) {
+      const label = btn.querySelector('.follow-btn__label');
+      if (btn.classList.contains('is-following')) {
+        btn.classList.remove('is-following');
+        label.textContent = 'Follow +';
+      } else {
+        btn.classList.add('is-following');
+        label.textContent = 'Following';
+      }
+    }
+  </script>
+</body>
+</html>
