@@ -43,36 +43,63 @@
       padding-bottom: var(--ap-spacing-200);
       border-bottom: 1px solid var(--ap-color-elements-border-subtle);
     }
-    .color-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: var(--ap-spacing-400);
+    .color-mode-panel {
+      margin-bottom: var(--ap-spacing-700);
     }
-    .color-swatch {
-      border-radius: var(--ap-layout-border-radius-sm);
-      overflow: hidden;
-      border: 1px solid var(--ap-color-elements-border-subtle);
-    }
-    .color-swatch-preview { height: 80px; }
-    .color-swatch-info {
-      padding: var(--ap-spacing-200);
-      font-size: var(--ap-text-size-x-2);
-      font-weight: var(--ap-font-weight-medium);
-      background: var(--ap-color-backgrounds-primary);
-      color: var(--ap-color-text-primary);
-    }
-    .color-swatch-var {
-      font-size: 0.65rem;
-      color: var(--ap-color-text-secondary);
-      word-break: break-all;
-      margin-top: 2px;
-    }
+    .color-mode-panel:last-of-type { margin-bottom: 0; }
     .mode-label {
       font-size: var(--ap-text-size-body-sm);
       font-weight: 700;
-      margin-bottom: var(--ap-spacing-300);
+      margin-bottom: var(--ap-spacing-400);
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      padding-bottom: var(--ap-spacing-200);
+      border-bottom: 2px solid var(--ap-color-elements-border-moderate);
+    }
+    .color-section {
+      margin-bottom: var(--ap-spacing-600);
+    }
+    .color-section h3 {
+      font-size: var(--ap-text-size-body-sm);
+      font-weight: 700;
+      margin-bottom: var(--ap-spacing-200);
+      color: var(--ap-color-text-primary);
+    }
+    .color-section h4 {
+      font-size: var(--ap-text-size-x-2);
+      font-weight: 600;
+      margin: var(--ap-spacing-400) 0 var(--ap-spacing-200);
+      color: var(--ap-color-text-secondary);
+    }
+    .color-section h4:first-of-type { margin-top: 0; }
+    .color-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--ap-text-size-body-sm);
+    }
+    .color-table th {
+      text-align: left;
+      font-weight: 600;
+      padding: var(--ap-spacing-200) var(--ap-spacing-300);
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+      color: var(--ap-color-text-secondary);
+    }
+    .color-table td {
+      padding: var(--ap-spacing-200) var(--ap-spacing-300);
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+      vertical-align: middle;
+    }
+    .color-table tr:last-child td { border-bottom: 0; }
+    .color-token-name { font-weight: 500; }
+    .color-hex { font-family: ui-monospace, monospace; font-size: 0.8125rem; }
+    .color-swatch-cell { width: 1%; white-space: nowrap; }
+    .color-swatch-inline {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.12);
+      vertical-align: middle;
     }
     .colors-dark-panel {
       margin-top: var(--ap-spacing-700);
@@ -80,10 +107,12 @@
       border-radius: var(--ap-layout-border-radius-md);
       background: #191919;
     }
-    .colors-dark-panel[data-theme="dark"] .color-swatch-info {
-      background: var(--ap-color-backgrounds-primary);
-      color: var(--ap-color-text-primary);
-    }
+    .colors-dark-panel .mode-label { border-bottom-color: #515151; color: #f2f2f2; }
+    .colors-dark-panel .color-section h3 { color: #ffffff; }
+    .colors-dark-panel .color-section h4 { color: #e6e6e7; }
+    .colors-dark-panel .color-table th { color: #a8a8a9; border-bottom-color: #515151; }
+    .colors-dark-panel .color-table td { border-bottom-color: #515151; color: #f2f2f2; }
+    .colors-dark-panel .color-hex { color: #c4c4c4; }
     .token-list { list-style: none; }
     .token-list li {
       display: flex;
@@ -130,199 +159,377 @@
       <p class="subtitle">Design tokens and text styles from Figma (AP News design system Maple). Font stretch: Condensed = 50%, SemiCondensed = 75%, Normal = 100%.</p>
     </header>
 
-    <!-- Colors: Light + Dark -->
+    <!-- Colors: Light + Dark with full structure -->
     <section>
       <h2 class="section-title">Colors</h2>
+      <p style="font-size: var(--ap-text-size-body-sm); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-600);">Each token shows Light and Dark mode hex values with swatches.</p>
 
-      <p class="mode-label">Light mode</p>
-      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Backgrounds</h3>
-      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-primary);"></div>
-          <div class="color-swatch-info">primary <span class="color-swatch-var">#ffffff</span></div>
+      <!-- Light mode -->
+      <div class="color-mode-panel">
+        <p class="mode-label">Light mode</p>
+
+        <div class="color-section">
+          <h3>Backgrounds</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">primary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">secondary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">tertiary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">elevated</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">header-primary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">header-secondary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">overlay</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#00000080"></span> <span class="color-hex">#00000080</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#00000080"></span> <span class="color-hex">#00000080</span></td></tr>
+              <tr><td class="color-token-name">ap-alert-blue</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0042a9"></span> <span class="color-hex">#0042a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0042a9"></span> <span class="color-hex">#0042a9</span></td></tr>
+              <tr><td class="color-token-name">ap-alert-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-secondary);"></div>
-          <div class="color-swatch-info">secondary <span class="color-swatch-var">#f2f2f2</span></div>
+
+        <div class="color-section">
+          <h3>Brand</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">ap-accent-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td></tr>
+              <tr><td class="color-token-name">ap-adaptive-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff5c58"></span> <span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">ap-brand-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td></tr>
+              <tr><td class="color-token-name">ap-solid-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-tertiary);"></div>
-          <div class="color-swatch-info">tertiary <span class="color-swatch-var">#efefef</span></div>
+
+        <div class="color-section">
+          <h3>Elements</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">border-bold</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">border-moderate</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">border-subtle</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">list-item-disc</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-elevated);"></div>
-          <div class="color-swatch-info">elevated <span class="color-swatch-var">#ffffff</span></div>
+
+        <div class="color-section">
+          <h3>Icons</h3>
+          <h4>Primary</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">active</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4f4f4"></span> <span class="color-hex">#f4f4f4</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Secondary</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4f4f4"></span> <span class="color-hex">#f4f4f4</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Inverse</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">hovered</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">active</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-primary);"></div>
-          <div class="color-swatch-info">header-primary <span class="color-swatch-var">#191919</span></div>
+
+        <div class="color-section">
+          <h3>Interactive</h3>
+          <h4>Filled (background)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">active-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Text link</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0042a9"></span> <span class="color-hex">#0042a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#8bc4fa"></span> <span class="color-hex">#8bc4fa</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#002860"></span> <span class="color-hex">#002860</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c8eeff"></span> <span class="color-hex">#c8eeff</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Text link subtle</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-secondary);"></div>
-          <div class="color-swatch-info">header-secondary <span class="color-swatch-var">#3a3a3a</span></div>
+
+        <div class="color-section">
+          <h3>Text</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">primary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">secondary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td></tr>
+              <tr><td class="color-token-name">primary-hover</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">header</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f2f2f2"></span> <span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">subheader</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">inverse-primary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">inverse-secondary</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td></tr>
+              <tr><td class="color-token-name">ap-adaptive-red</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff5c58"></span> <span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">error</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff5c58"></span> <span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">eyebrow-breaking</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff5c58"></span> <span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">eyebrow-default</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">infortmation</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0042a9"></span> <span class="color-hex">#0042a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#8bc4fa"></span> <span class="color-hex">#8bc4fa</span></td></tr>
+              <tr><td class="color-token-name">success</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#00945a"></span> <span class="color-hex">#00945a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#deffc4"></span> <span class="color-hex">#deffc4</span></td></tr>
+              <tr><td class="color-token-name">warning</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a0400c"></span> <span class="color-hex">#a0400c</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffac2c"></span> <span class="color-hex">#ffac2c</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-overlay);"></div>
-          <div class="color-swatch-info">overlay <span class="color-swatch-var">#00000080</span></div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-ap-alert-red);"></div>
-          <div class="color-swatch-info">ap-alert-red <span class="color-swatch-var">#da1026</span></div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-ap-alert-blue);"></div>
-          <div class="color-swatch-info">ap-alert-blue <span class="color-swatch-var">#0042a9</span></div>
-        </div>
-      </div>
-      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Brand</h3>
-      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-accent-red);"></div>
-          <div class="color-swatch-info">ap-accent-red</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-adaptive-red);"></div>
-          <div class="color-swatch-info">ap-adaptive-red</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-brand-red);"></div>
-          <div class="color-swatch-info">ap-brand-red</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-solid-red);"></div>
-          <div class="color-swatch-info">ap-solid-red</div>
-        </div>
-      </div>
-      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Text</h3>
-      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-primary);"></div>
-          <div class="color-swatch-info">primary</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-secondary);"></div>
-          <div class="color-swatch-info">secondary</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-primary-hover);"></div>
-          <div class="color-swatch-info">primary-hover</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-inverse-primary);"></div>
-          <div class="color-swatch-info">inverse-primary</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-inverse-secondary);"></div>
-          <div class="color-swatch-info">inverse-secondary</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-error);"></div>
-          <div class="color-swatch-info">error</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-text-success);"></div>
-          <div class="color-swatch-info">success</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-interactive-text-link-enabled);"></div>
-          <div class="color-swatch-info">link</div>
-        </div>
-      </div>
-      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Notification feedback</h3>
-      <div class="color-grid">
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-error-background); border: 2px solid var(--ap-color-notification-feedback-error-border);"></div>
-          <div class="color-swatch-info">feedback-error</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-info-background); border: 2px solid var(--ap-color-notification-feedback-info-border);"></div>
-          <div class="color-swatch-info">feedback-info</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-success-background); border: 2px solid var(--ap-color-notification-feedback-success-border);"></div>
-          <div class="color-swatch-info">feedback-success</div>
-        </div>
-        <div class="color-swatch">
-          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-warning-background); border: 2px solid var(--ap-color-notification-feedback-warning-border);"></div>
-          <div class="color-swatch-info">feedback-warning</div>
+
+        <div class="color-section">
+          <h3>Notification</h3>
+          <h4>Feedback</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">feedback-error background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#fff4f0"></span> <span class="color-hex">#fff4f0</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#fff4f0"></span> <span class="color-hex">#fff4f0</span></td></tr>
+              <tr><td class="color-token-name">feedback-error border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+              <tr><td class="color-token-name">feedback-info background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e0f0ff"></span> <span class="color-hex">#e0f0ff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e0f0ff"></span> <span class="color-hex">#e0f0ff</span></td></tr>
+              <tr><td class="color-token-name">feedback-info border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0081e1"></span> <span class="color-hex">#0081e1</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#0081e1"></span> <span class="color-hex">#0081e1</span></td></tr>
+              <tr><td class="color-token-name">feedback-success background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4fdee"></span> <span class="color-hex">#f4fdee</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4fdee"></span> <span class="color-hex">#f4fdee</span></td></tr>
+              <tr><td class="color-token-name">feedback-success border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#00945a"></span> <span class="color-hex">#00945a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#00945a"></span> <span class="color-hex">#00945a</span></td></tr>
+              <tr><td class="color-token-name">feedback-warning background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#fffcea"></span> <span class="color-hex">#fffcea</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#fffcea"></span> <span class="color-hex">#fffcea</span></td></tr>
+              <tr><td class="color-token-name">feedback-warning border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffba00"></span> <span class="color-hex">#ffba00</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffba00"></span> <span class="color-hex">#ffba00</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Status</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">status background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">status border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Announcement</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">announcement background</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">announcement border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#666666"></span> <span class="color-hex">#666666</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Other</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">icon-inverse</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">neutral-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">text</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">text-inverse</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Dark mode panel: uses data-theme="dark" so CSS variables switch -->
-      <div class="colors-dark-panel" data-theme="dark">
-        <p class="mode-label" style="color: #f2f2f2;">Dark mode</p>
-        <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300); color: var(--ap-color-text-primary);">Backgrounds</h3>
-        <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-primary);"></div>
-            <div class="color-swatch-info">primary <span class="color-swatch-var">#191919</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-secondary);"></div>
-            <div class="color-swatch-info">secondary <span class="color-swatch-var">#3a3a3a</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-tertiary);"></div>
-            <div class="color-swatch-info">tertiary <span class="color-swatch-var">#515151</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-elevated);"></div>
-            <div class="color-swatch-info">elevated</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-primary);"></div>
-            <div class="color-swatch-info">header-primary</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-secondary);"></div>
-            <div class="color-swatch-info">header-secondary</div>
-          </div>
+      <!-- Dark mode (same structure: Backgrounds, Brand, Elements, Icons, Interactive, Text, Notification) -->
+      <div class="colors-dark-panel">
+        <p class="mode-label">Dark mode</p>
+        <p style="font-size: var(--ap-text-size-x-2); color: #a8a8a9; margin-bottom: var(--ap-spacing-600);">Same sections as Light mode. Each row shows Light and Dark hex values.</p>
+
+        <div class="color-section">
+          <h3>Backgrounds</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">primary</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">secondary</td><td><span class="color-hex">#f2f2f2</span></td><td><span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">tertiary</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">elevated</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">header-primary</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">header-secondary</td><td><span class="color-hex">#3a3a3a</span></td><td><span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">overlay</td><td><span class="color-hex">#00000080</span></td><td><span class="color-hex">#00000080</span></td></tr>
+              <tr><td class="color-token-name">ap-alert-blue</td><td><span class="color-hex">#0042a9</span></td><td><span class="color-hex">#0042a9</span></td></tr>
+              <tr><td class="color-token-name">ap-alert-red</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#da1026</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300); color: var(--ap-color-text-primary);">Brand</h3>
-        <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-accent-red);"></div>
-            <div class="color-swatch-info">ap-accent-red</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-adaptive-red);"></div>
-            <div class="color-swatch-info">ap-adaptive-red <span class="color-swatch-var">#ff5c58</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-brand-red);"></div>
-            <div class="color-swatch-info">ap-brand-red</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-solid-red);"></div>
-            <div class="color-swatch-info">ap-solid-red</div>
-          </div>
+        <div class="color-section">
+          <h3>Brand</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">ap-accent-red</td><td><span class="color-hex">#ff1818</span></td><td><span class="color-hex">#ff1818</span></td></tr>
+              <tr><td class="color-token-name">ap-adaptive-red</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">ap-brand-red</td><td><span class="color-hex">#ff1818</span></td><td><span class="color-hex">#ff1818</span></td></tr>
+              <tr><td class="color-token-name">ap-solid-red</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#da1026</span></td></tr>
+            </tbody>
+          </table>
         </div>
-        <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300); color: var(--ap-color-text-primary);">Text</h3>
-        <div class="color-grid">
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-text-primary);"></div>
-            <div class="color-swatch-info">primary <span class="color-swatch-var">#ffffff</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-text-secondary);"></div>
-            <div class="color-swatch-info">secondary <span class="color-swatch-var">#e6e6e7</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-text-primary-hover);"></div>
-            <div class="color-swatch-info">primary-hover</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-text-error);"></div>
-            <div class="color-swatch-info">error <span class="color-swatch-var">#ff5c58</span></div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-text-success);"></div>
-            <div class="color-swatch-info">success</div>
-          </div>
-          <div class="color-swatch">
-            <div class="color-swatch-preview" style="background: var(--ap-color-interactive-text-link-enabled);"></div>
-            <div class="color-swatch-info">link <span class="color-swatch-var">#8bc4fa</span></div>
-          </div>
+        <div class="color-section">
+          <h3>Elements</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">border-bold</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">border-moderate</td><td><span class="color-hex">#c4c4c4</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">border-subtle</td><td><span class="color-hex">#e6e6e7</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">list-item-disc</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#191919</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="color-section">
+          <h3>Icons</h3>
+          <h4>Primary</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td><span class="color-hex">#a8a8a9</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">active</td><td><span class="color-hex">#515151</span></td><td><span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td><span class="color-hex">#a8a8a9</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td><span class="color-hex">#3a3a3a</span></td><td><span class="color-hex">#f4f4f4</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Secondary</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td><span class="color-hex">#666666</span></td><td><span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active</td><td><span class="color-hex">#515151</span></td><td><span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td><span class="color-hex">#a8a8a9</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td><span class="color-hex">#3a3a3a</span></td><td><span class="color-hex">#f4f4f4</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Inverse</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">hovered</td><td><span class="color-hex">#f2f2f2</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">active</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#3a3a3a</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td><span class="color-hex">#c4c4c4</span></td><td><span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#191919</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="color-section">
+          <h3>Interactive</h3>
+          <h4>Filled (background)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-bg</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-bg</td><td><span class="color-hex">#515151</span></td><td><span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">active-bg</td><td><span class="color-hex">#3a3a3a</span></td><td><span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled-bg</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-bg</td><td><span class="color-hex">#3a3a3a</span></td><td><span class="color-hex">#efefef</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Text link</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td><span class="color-hex">#0042a9</span></td><td><span class="color-hex">#8bc4fa</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td><span class="color-hex">#002860</span></td><td><span class="color-hex">#c8eeff</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td><span class="color-hex">#c4c4c4</span></td><td><span class="color-hex">#a8a8a9</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Text link subtle</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover</td><td><span class="color-hex">#a8a8a9</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">disabled</td><td><span class="color-hex">#c4c4c4</span></td><td><span class="color-hex">#a8a8a9</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="color-section">
+          <h3>Text</h3>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">primary</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">secondary</td><td><span class="color-hex">#666666</span></td><td><span class="color-hex">#e6e6e7</span></td></tr>
+              <tr><td class="color-token-name">primary-hover</td><td><span class="color-hex">#a8a8a9</span></td><td><span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">header</td><td><span class="color-hex">#f2f2f2</span></td><td><span class="color-hex">#f2f2f2</span></td></tr>
+              <tr><td class="color-token-name">subheader</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">inverse-primary</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">inverse-secondary</td><td><span class="color-hex">#e6e6e7</span></td><td><span class="color-hex">#e6e6e7</span></td></tr>
+              <tr><td class="color-token-name">ap-adaptive-red</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">error</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">eyebrow-breaking</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#ff5c58</span></td></tr>
+              <tr><td class="color-token-name">eyebrow-default</td><td><span class="color-hex">#666666</span></td><td><span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">infortmation</td><td><span class="color-hex">#0042a9</span></td><td><span class="color-hex">#8bc4fa</span></td></tr>
+              <tr><td class="color-token-name">success</td><td><span class="color-hex">#00945a</span></td><td><span class="color-hex">#deffc4</span></td></tr>
+              <tr><td class="color-token-name">warning</td><td><span class="color-hex">#a0400c</span></td><td><span class="color-hex">#ffac2c</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="color-section">
+          <h3>Notification</h3>
+          <h4>Feedback</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">feedback-error background</td><td><span class="color-hex">#fff4f0</span></td><td><span class="color-hex">#fff4f0</span></td></tr>
+              <tr><td class="color-token-name">feedback-error border</td><td><span class="color-hex">#da1026</span></td><td><span class="color-hex">#da1026</span></td></tr>
+              <tr><td class="color-token-name">feedback-info background</td><td><span class="color-hex">#e0f0ff</span></td><td><span class="color-hex">#e0f0ff</span></td></tr>
+              <tr><td class="color-token-name">feedback-info border</td><td><span class="color-hex">#0081e1</span></td><td><span class="color-hex">#0081e1</span></td></tr>
+              <tr><td class="color-token-name">feedback-success background</td><td><span class="color-hex">#f4fdee</span></td><td><span class="color-hex">#f4fdee</span></td></tr>
+              <tr><td class="color-token-name">feedback-success border</td><td><span class="color-hex">#00945a</span></td><td><span class="color-hex">#00945a</span></td></tr>
+              <tr><td class="color-token-name">feedback-warning background</td><td><span class="color-hex">#fffcea</span></td><td><span class="color-hex">#fffcea</span></td></tr>
+              <tr><td class="color-token-name">feedback-warning border</td><td><span class="color-hex">#ffba00</span></td><td><span class="color-hex">#ffba00</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Status</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">status background</td><td><span class="color-hex">#515151</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">status border</td><td><span class="color-hex">#666666</span></td><td><span class="color-hex">#666666</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Announcement</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">announcement background</td><td><span class="color-hex">#efefef</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">announcement border</td><td><span class="color-hex">#e6e6e7</span></td><td><span class="color-hex">#666666</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Other</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">icon</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">icon-inverse</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">neutral-bg</td><td><span class="color-hex">#515151</span></td><td><span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">text</td><td><span class="color-hex">#191919</span></td><td><span class="color-hex">#191919</span></td></tr>
+              <tr><td class="color-token-name">text-inverse</td><td><span class="color-hex">#ffffff</span></td><td><span class="color-hex">#ffffff</span></td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
