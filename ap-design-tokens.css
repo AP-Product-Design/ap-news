@@ -228,6 +228,127 @@
   --ap-color-text-warning: #a0400c;
 }
 
+/* ========== Dark mode (Surface Dark) ========== */
+[data-theme="dark"] {
+  --ap-color-backgrounds-primary: #191919;
+  --ap-color-backgrounds-secondary: #3a3a3a;
+  --ap-color-backgrounds-tertiary: #515151;
+  --ap-color-backgrounds-elevated: #3a3a3a;
+  --ap-color-backgrounds-header-primary: #191919;
+  --ap-color-backgrounds-header-secondary: #3a3a3a;
+  --ap-color-backgrounds-overlay: #00000080;
+  --ap-color-backgrounds-ap-alert-blue: #0042a9;
+  --ap-color-backgrounds-ap-alert-red: #da1026;
+
+  --ap-color-brand-ap-accent-red: #ff1818;
+  --ap-color-brand-ap-adaptive-red: #ff5c58;
+  --ap-color-brand-ap-brand-red: #ff1818;
+  --ap-color-brand-ap-solid-red: #da1026;
+
+  --ap-color-elements-border-bold: #ffffff;
+  --ap-color-elements-border-moderate: #c4c4c4;
+  --ap-color-elements-border-subtle: #515151;
+  --ap-color-elements-list-item-disc: #191919;
+
+  --ap-color-icons-primary-enabled: #ffffff;
+  --ap-color-icons-primary-hover: #c4c4c4;
+  --ap-color-icons-primary-active: #efefef;
+  --ap-color-icons-primary-disabled: #c4c4c4;
+  --ap-color-icons-primary-selected: #f4f4f4;
+  --ap-color-icons-primary-enabled-semi-trans-50: #ffffff80;
+  --ap-color-icons-secondary-enabled: #f2f2f2;
+  --ap-color-icons-secondary-hover: #ffffff;
+  --ap-color-icons-secondary-active: #efefef;
+  --ap-color-icons-secondary-disabled: #c4c4c4;
+  --ap-color-icons-secondary-selected: #f4f4f4;
+  --ap-color-icons-inverse-enabled: #191919;
+  --ap-color-icons-inverse-hovered: #515151;
+  --ap-color-icons-inverse-active: #3a3a3a;
+  --ap-color-icons-inverse-disabled: #a8a8a9;
+  --ap-color-icons-inverse-selected: #191919;
+
+  --ap-color-interactive-filled-background-enabled-bg: #ffffff;
+  --ap-color-interactive-filled-background-hover-bg: #f2f2f2;
+  --ap-color-interactive-filled-background-active-bg: #efefef;
+  --ap-color-interactive-filled-background-disabled-bg: #a8a8a9;
+  --ap-color-interactive-filled-background-selected-bg: #efefef;
+  --ap-color-interactive-filled-icon-enabled-icon: #191919;
+  --ap-color-interactive-filled-icon-hover-icon: #191919;
+  --ap-color-interactive-filled-icon-active-icon: #191919;
+  --ap-color-interactive-filled-icon-disabled-icon: #efefef;
+  --ap-color-interactive-filled-icon-selected-icon: #191919;
+  --ap-color-interactive-filled-label-enabled-label: #191919;
+  --ap-color-interactive-filled-label-hover-label: #191919;
+  --ap-color-interactive-filled-label-active-label: #191919;
+  --ap-color-interactive-filled-label-disabled-label: #c4c4c4;
+  --ap-color-interactive-filled-label-selected-label: #191919;
+
+  --ap-color-interactive-outlined-background-enabled-bg: #ffffff00;
+  --ap-color-interactive-outlined-background-hover-bg: #515151;
+  --ap-color-interactive-outlined-background-active-bg: #515151;
+  --ap-color-interactive-outlined-background-disabled-bg: #a8a8a9;
+  --ap-color-interactive-outlined-background-selected-bg: #515151;
+  --ap-color-interactive-outlined-border-enabled-border: #e6e6e7;
+  --ap-color-interactive-outlined-border-hover-border: #f4f4f4;
+  --ap-color-interactive-outlined-border-active-border: #efefef;
+  --ap-color-interactive-outlined-border-disabled-border: #a8a8a9;
+  --ap-color-interactive-outlined-border-selected-border: #efefef;
+  --ap-color-interactive-outlined-icon-enabled-icon: #ffffff;
+  --ap-color-interactive-outlined-icon-hover-icon: #ffffff;
+  --ap-color-interactive-outlined-icon-active-icon: #ffffff;
+  --ap-color-interactive-outlined-icon-disabled-icon: #a8a8a9;
+  --ap-color-interactive-outlined-icon-selected-icon: #ffffff;
+  --ap-color-interactive-outlined-label-enabled-label: #ffffff;
+  --ap-color-interactive-outlined-label-hover-label: #ffffff;
+  --ap-color-interactive-outlined-label-active-label: #ffffff;
+  --ap-color-interactive-outlined-label-disabled-label: #a8a8a9;
+  --ap-color-interactive-outlined-label-selected-label: #ffffff;
+
+  --ap-color-interactive-text-link-enabled: #8bc4fa;
+  --ap-color-interactive-text-link-hover: #c8eeff;
+  --ap-color-interactive-text-link-active: #8bc4fa;
+  --ap-color-interactive-text-link-disabled: #a8a8a9;
+  --ap-color-interactive-text-link-selected: #c8eeff;
+  --ap-color-interactive-text-link-subtle-enabled: #ffffff;
+  --ap-color-interactive-text-link-subtle-hover: #c4c4c4;
+  --ap-color-interactive-text-link-subtle-active: #ffffff;
+  --ap-color-interactive-text-link-subtle-disabled: #a8a8a9;
+  --ap-color-interactive-text-link-subtle-selected: #ffffff;
+
+  --ap-color-notification-icon: #191919;
+  --ap-color-notification-icon-inverse: #ffffff;
+  --ap-color-notification-neutral-bg: #515151;
+  --ap-color-notification-text: #191919;
+  --ap-color-notification-text-inverse: #ffffff;
+  --ap-color-notification-announcement-background: #515151;
+  --ap-color-notification-announcement-border: #666666;
+  --ap-color-notification-feedback-error-background: #fff4f0;
+  --ap-color-notification-feedback-error-border: #da1026;
+  --ap-color-notification-feedback-info-background: #e0f0ff;
+  --ap-color-notification-feedback-info-border: #0081e1;
+  --ap-color-notification-feedback-success-background: #f4fdee;
+  --ap-color-notification-feedback-success-border: #00945a;
+  --ap-color-notification-feedback-warning-background: #fffcea;
+  --ap-color-notification-feedback-warning-border: #ffba00;
+  --ap-color-notification-status-background: #515151;
+  --ap-color-notification-status-border: #666666;
+
+  --ap-color-text-primary: #ffffff;
+  --ap-color-text-secondary: #e6e6e7;
+  --ap-color-text-primary-hover: #c4c4c4;
+  --ap-color-text-header: #f2f2f2;
+  --ap-color-text-subheader: #efefef;
+  --ap-color-text-inverse-primary: #ffffff;
+  --ap-color-text-inverse-secondary: #e6e6e7;
+  --ap-color-text-ap-adaptive-red: #ff5c58;
+  --ap-color-text-error: #ff5c58;
+  --ap-color-text-eyebrow-breaking: #ff5c58;
+  --ap-color-text-eyebrow-default: #efefef;
+  --ap-color-text-infortmation: #8bc4fa;
+  --ap-color-text-success: #deffc4;
+  --ap-color-text-warning: #ffac2c;
+}
+
 /* Legacy / shorthand aliases */
 :root {
   --ap-color-background-primary: var(--ap-color-backgrounds-primary);
