@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP Design System — Styleguide</title>
+  <link rel="stylesheet" href="ap-design-tokens.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--ap-font-family);
+      background: var(--ap-color-backgrounds-secondary);
+      color: var(--ap-color-text-primary);
+      line-height: 1.5;
+      padding: var(--ap-spacing-700) var(--ap-spacing-screen-margins);
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: var(--ap-font-weight-bold);
+      font-stretch: var(--ap-font-stretch-semi-condensed);
+      margin-bottom: var(--ap-spacing-100);
+    }
+    .subtitle {
+      font-size: var(--ap-text-size-body-base);
+      color: var(--ap-color-text-secondary);
+      margin-bottom: var(--ap-spacing-800);
+    }
+    section {
+      background: var(--ap-color-backgrounds-primary);
+      border: 1px solid var(--ap-color-elements-border-subtle);
+      border-radius: var(--ap-layout-border-radius-md);
+      padding: var(--ap-spacing-700);
+      margin-bottom: var(--ap-spacing-700);
+    }
+    .section-title {
+      font-size: var(--ap-text-size-fixed-sm);
+      font-weight: var(--ap-font-weight-bold);
+      text-transform: uppercase;
+      letter-spacing: var(--ap-letter-spacing-wide);
+      color: var(--ap-color-text-secondary);
+      margin-bottom: var(--ap-spacing-600);
+      padding-bottom: var(--ap-spacing-200);
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+    }
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--ap-spacing-400);
+    }
+    .color-swatch {
+      border-radius: var(--ap-layout-border-radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--ap-color-elements-border-subtle);
+    }
+    .color-swatch-preview {
+      height: 80px;
+    }
+    .color-swatch-info {
+      padding: var(--ap-spacing-200);
+      font-size: var(--ap-text-size-x-2);
+      font-weight: var(--ap-font-weight-medium);
+      background: var(--ap-color-backgrounds-primary);
+      color: var(--ap-color-text-primary);
+    }
+    .color-swatch-var {
+      font-size: 0.65rem;
+      color: var(--ap-color-text-secondary);
+      word-break: break-all;
+      margin-top: 2px;
+    }
+    .token-list {
+      list-style: none;
+    }
+    .token-list li {
+      display: flex;
+      align-items: baseline;
+      gap: var(--ap-spacing-400);
+      padding: var(--ap-spacing-200) 0;
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+      font-size: var(--ap-text-size-body-sm);
+    }
+    .token-list li:last-child { border-bottom: 0; }
+    .token-name { font-weight: var(--ap-font-weight-medium); min-width: 220px; }
+    .token-value { color: var(--ap-color-text-secondary); font-family: ui-monospace, monospace; }
+    .text-style-row {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--ap-spacing-600);
+      align-items: baseline;
+      padding: var(--ap-spacing-400) 0;
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+      font-size: var(--ap-text-size-body-sm);
+    }
+    .text-style-row:last-child { border-bottom: 0; }
+    .text-style-meta {
+      color: var(--ap-color-text-secondary);
+      font-size: var(--ap-text-size-x-2);
+    }
+    .text-style-sample { overflow: hidden; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header style="margin-bottom: var(--ap-spacing-800);">
+      <h1>AP Design System</h1>
+      <p class="subtitle">Design tokens and text styles from Figma (AP News design system Maple)</p>
+    </header>
+
+    <!-- Colors -->
+    <section>
+      <h2 class="section-title">Colors (Surface Light)</h2>
+
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Backgrounds</h3>
+      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-primary);"></div>
+          <div class="color-swatch-info">primary <span class="color-swatch-var">#ffffff</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-secondary);"></div>
+          <div class="color-swatch-info">secondary <span class="color-swatch-var">#f2f2f2</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-tertiary);"></div>
+          <div class="color-swatch-info">tertiary <span class="color-swatch-var">#efefef</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-elevated);"></div>
+          <div class="color-swatch-info">elevated <span class="color-swatch-var">#ffffff</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-primary);"></div>
+          <div class="color-swatch-info">header-primary <span class="color-swatch-var">#191919</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-header-secondary);"></div>
+          <div class="color-swatch-info">header-secondary <span class="color-swatch-var">#3a3a3a</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-overlay);"></div>
+          <div class="color-swatch-info">overlay <span class="color-swatch-var">#00000080</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-ap-alert-red);"></div>
+          <div class="color-swatch-info">ap-alert-red <span class="color-swatch-var">#da1026</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-backgrounds-ap-alert-blue);"></div>
+          <div class="color-swatch-info">ap-alert-blue <span class="color-swatch-var">#0042a9</span></div>
+        </div>
+      </div>
+
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Brand</h3>
+      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-accent-red);"></div>
+          <div class="color-swatch-info">ap-accent-red <span class="color-swatch-var">#ff1818</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-adaptive-red);"></div>
+          <div class="color-swatch-info">ap-adaptive-red <span class="color-swatch-var">#da1026</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-brand-red);"></div>
+          <div class="color-swatch-info">ap-brand-red <span class="color-swatch-var">#ff1818</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-brand-ap-solid-red);"></div>
+          <div class="color-swatch-info">ap-solid-red <span class="color-swatch-var">#da1026</span></div>
+        </div>
+      </div>
+
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Text</h3>
+      <div class="color-grid" style="margin-bottom: var(--ap-spacing-600);">
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-primary);"></div>
+          <div class="color-swatch-info">primary <span class="color-swatch-var">#191919</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-secondary);"></div>
+          <div class="color-swatch-info">secondary <span class="color-swatch-var">#666666</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-primary-hover);"></div>
+          <div class="color-swatch-info">primary-hover <span class="color-swatch-var">#a8a8a9</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-inverse-primary);"></div>
+          <div class="color-swatch-info">inverse-primary <span class="color-swatch-var">#ffffff</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-inverse-secondary);"></div>
+          <div class="color-swatch-info">inverse-secondary <span class="color-swatch-var">#e6e6e7</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-error);"></div>
+          <div class="color-swatch-info">error <span class="color-swatch-var">#da1026</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-success);"></div>
+          <div class="color-swatch-info">success <span class="color-swatch-var">#00945a</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-text-warning);"></div>
+          <div class="color-swatch-info">warning <span class="color-swatch-var">#a0400c</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-interactive-text-link-enabled);"></div>
+          <div class="color-swatch-info">link <span class="color-swatch-var">#0042a9</span></div>
+        </div>
+      </div>
+
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Notification feedback</h3>
+      <div class="color-grid">
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-error-background); border: 2px solid var(--ap-color-notification-feedback-error-border);"></div>
+          <div class="color-swatch-info">feedback-error <span class="color-swatch-var">bg #fff4f0</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-info-background); border: 2px solid var(--ap-color-notification-feedback-info-border);"></div>
+          <div class="color-swatch-info">feedback-info <span class="color-swatch-var">bg #e0f0ff</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-success-background); border: 2px solid var(--ap-color-notification-feedback-success-border);"></div>
+          <div class="color-swatch-info">feedback-success <span class="color-swatch-var">bg #f4fdee</span></div>
+        </div>
+        <div class="color-swatch">
+          <div class="color-swatch-preview" style="background: var(--ap-color-notification-feedback-warning-background); border: 2px solid var(--ap-color-notification-feedback-warning-border);"></div>
+          <div class="color-swatch-info">feedback-warning <span class="color-swatch-var">bg #fffcea</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography — Text styles (Figma) -->
+    <section>
+      <h2 class="section-title">Text styles (Figma)</h2>
+      <p style="font-size: var(--ap-text-size-body-sm); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-600);">All styles use AP Var. Font stretch: Condensed = 50%, SemiCondensed = 75%, Normal = 100%.</p>
+
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Breaking heading · 40px · Condensed Bold · UPPER</div>
+        <div class="text-style-sample" style="font-size: 40px; font-weight: 700; font-stretch: 50%; text-transform: uppercase;">Breaking heading</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Display XL · 48px · SemiCondensed Medium · -0.5px</div>
+        <div class="text-style-sample" style="font-size: 48px; font-weight: 500; font-stretch: 75%; letter-spacing: -0.5px;">Display XL</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Display LG · 40px · SemiCondensed Medium · -0.5px</div>
+        <div class="text-style-sample" style="font-size: 40px; font-weight: 500; font-stretch: 75%; letter-spacing: -0.5px;">Display LG</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Section heading 1 · 32px · Condensed Bold · UPPER</div>
+        <div class="text-style-sample" style="font-size: 32px; font-weight: 700; font-stretch: 50%; text-transform: uppercase;">Section heading 1</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Section heading 2 · 24px · Condensed Bold · UPPER</div>
+        <div class="text-style-sample" style="font-size: 24px; font-weight: 700; font-stretch: 50%; text-transform: uppercase;">Section heading 2</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Section heading 3 · 20px · Condensed Bold · UPPER</div>
+        <div class="text-style-sample" style="font-size: 20px; font-weight: 700; font-stretch: 50%; text-transform: uppercase;">Section heading 3</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Headings / Eyebrow · 12px · SemiCondensed Medium · UPPER</div>
+        <div class="text-style-sample" style="font-size: 12px; font-weight: 500; font-stretch: 75%; text-transform: uppercase;">Eyebrow</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Story links / Story link bold title 1 · 32px · SemiCondensed Bold</div>
+        <div class="text-style-sample" style="font-size: 32px; font-weight: 700; font-stretch: 75%;">Story link title 1</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Story links / Story link bold title 2 · 24px · SemiCondensed Bold</div>
+        <div class="text-style-sample" style="font-size: 24px; font-weight: 700; font-stretch: 75%;">Story link title 2</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Story links / Story link medium title 3 · 20px · SemiCondensed Medium</div>
+        <div class="text-style-sample" style="font-size: 20px; font-weight: 500; font-stretch: 75%;">Story link title 3</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Article / Story page headline LG · 32px · SemiCondensed Bold · -0.5px</div>
+        <div class="text-style-sample" style="font-size: 32px; font-weight: 700; font-stretch: 75%; letter-spacing: -0.5px;">Story page headline LG</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Article / Body LG · 20px · Regular</div>
+        <div class="text-style-sample" style="font-size: 20px; font-weight: 400;">Body LG — The quick brown fox jumps over the lazy dog.</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Article / Body Base · 16px · Regular</div>
+        <div class="text-style-sample" style="font-size: 16px; font-weight: 400;">Body Base — The quick brown fox jumps over the lazy dog.</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Article / Body SM · 14px · Regular</div>
+        <div class="text-style-sample" style="font-size: 14px; font-weight: 400;">Body SM — The quick brown fox jumps over the lazy dog.</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Article / Byline · 14px · Condensed Medium</div>
+        <div class="text-style-sample" style="font-size: 14px; font-weight: 500; font-stretch: 50%;">By John Doe</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Main nav link · 14px · SemiCondensed Bold · UPPER</div>
+        <div class="text-style-sample" style="font-size: 14px; font-weight: 700; font-stretch: 75%; text-transform: uppercase;">Main nav link</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Timestamp · 12px · Medium · 1px · UPPER</div>
+        <div class="text-style-sample" style="font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">2 hours ago</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Metadata Reg · 12px · Regular · 1px</div>
+        <div class="text-style-sample" style="font-size: 12px; font-weight: 400; letter-spacing: 1px;">Metadata regular</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Label XL · 24px · Bold</div>
+        <div class="text-style-sample" style="font-size: 24px; font-weight: 700;">Label XL</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Label LG · 20px · Bold</div>
+        <div class="text-style-sample" style="font-size: 20px; font-weight: 700;">Label LG</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Label Base · 16px · Bold</div>
+        <div class="text-style-sample" style="font-size: 16px; font-weight: 700;">Label Base</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Utility / Label SM · 14px · Bold</div>
+        <div class="text-style-sample" style="font-size: 14px; font-weight: 700;">Label SM</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Forms / Form title · 32px · SemiCondensed Medium</div>
+        <div class="text-style-sample" style="font-size: 32px; font-weight: 500; font-stretch: 75%;">Form title</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Forms / Button text (default) · 16px · Medium · -0.5px</div>
+        <div class="text-style-sample" style="font-size: 16px; font-weight: 500; letter-spacing: -0.5px;">Button text</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Core / Body base · 16px · Regular · -0.5%</div>
+        <div class="text-style-sample" style="font-size: 16px; font-weight: 400; letter-spacing: -0.005em;">Core body base</div>
+      </div>
+      <div class="text-style-row">
+        <div class="text-style-meta">Core / Heading Bold XL · 32px · Bold</div>
+        <div class="text-style-sample" style="font-size: 32px; font-weight: 700;">Heading XL</div>
+      </div>
+    </section>
+
+    <!-- Spacing -->
+    <section>
+      <h2 class="section-title">Spacing (Responsive SM)</h2>
+      <ul class="token-list">
+        <li><span class="token-name">spacing-0</span><span class="token-value">var(--ap-spacing-0)</span> 0</li>
+        <li><span class="token-name">spacing-100</span><span class="token-value">var(--ap-spacing-100)</span> 0.25rem</li>
+        <li><span class="token-name">spacing-200</span><span class="token-value">var(--ap-spacing-200)</span> 0.5rem</li>
+        <li><span class="token-name">spacing-300</span><span class="token-value">var(--ap-spacing-300)</span> 0.75rem</li>
+        <li><span class="token-name">spacing-400</span><span class="token-value">var(--ap-spacing-400)</span> 1rem</li>
+        <li><span class="token-name">spacing-500</span><span class="token-value">var(--ap-spacing-500)</span> 1.25rem</li>
+        <li><span class="token-name">spacing-600</span><span class="token-value">var(--ap-spacing-600)</span> 1.5rem</li>
+        <li><span class="token-name">spacing-700</span><span class="token-value">var(--ap-spacing-700)</span> 2rem</li>
+        <li><span class="token-name">spacing-800</span><span class="token-value">var(--ap-spacing-800)</span> 3rem</li>
+        <li><span class="token-name">spacing-900</span><span class="token-value">var(--ap-spacing-900)</span> 4rem</li>
+        <li><span class="token-name">screen-margins</span><span class="token-value">var(--ap-spacing-screen-margins)</span> 1.25rem</li>
+      </ul>
+      <div style="margin-top: var(--ap-spacing-600); display: flex; flex-wrap: wrap; gap: var(--ap-spacing-200); align-items: center;">
+        <div style="width: var(--ap-spacing-100); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-100"></div>
+        <div style="width: var(--ap-spacing-200); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-200"></div>
+        <div style="width: var(--ap-spacing-300); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-300"></div>
+        <div style="width: var(--ap-spacing-400); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-400"></div>
+        <div style="width: var(--ap-spacing-500); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-500"></div>
+        <div style="width: var(--ap-spacing-600); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;" title="spacing-600"></div>
+      </div>
+    </section>
+
+    <!-- Layout -->
+    <section>
+      <h2 class="section-title">Layout</h2>
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Border radius</h3>
+      <ul class="token-list" style="margin-bottom: var(--ap-spacing-600);">
+        <li><span class="token-name">border-radius-sm</span><span class="token-value">var(--ap-layout-border-radius-sm)</span> 0.1875rem</li>
+        <li><span class="token-name">border-radius-md</span><span class="token-value">var(--ap-layout-border-radius-md)</span> 0.5rem</li>
+        <li><span class="token-name">border-radius-lg</span><span class="token-value">var(--ap-layout-border-radius-lg)</span> 1.5rem</li>
+        <li><span class="token-name">border-radius-xl</span><span class="token-value">var(--ap-layout-border-radius-xl)</span> 2rem</li>
+      </ul>
+      <div style="display: flex; gap: var(--ap-spacing-600); flex-wrap: wrap;">
+        <div style="width: 80px; height: 80px; background: var(--ap-color-backgrounds-tertiary); border-radius: var(--ap-layout-border-radius-sm);"></div>
+        <div style="width: 80px; height: 80px; background: var(--ap-color-backgrounds-tertiary); border-radius: var(--ap-layout-border-radius-md);"></div>
+        <div style="width: 80px; height: 80px; background: var(--ap-color-backgrounds-tertiary); border-radius: var(--ap-layout-border-radius-lg);"></div>
+        <div style="width: 80px; height: 80px; background: var(--ap-color-backgrounds-tertiary); border-radius: var(--ap-layout-border-radius-xl);"></div>
+      </div>
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin: var(--ap-spacing-600) 0 var(--ap-spacing-300);">Stroke</h3>
+      <ul class="token-list">
+        <li><span class="token-name">stroke-01</span><span class="token-value">var(--ap-layout-stroke-01)</span> 0.0625rem</li>
+        <li><span class="token-name">stroke-02</span><span class="token-value">var(--ap-layout-stroke-02)</span> 0.125rem</li>
+        <li><span class="token-name">stroke-03</span><span class="token-value">var(--ap-layout-stroke-03)</span> 0.1875rem</li>
+        <li><span class="token-name">stroke-05</span><span class="token-value">var(--ap-layout-stroke-05)</span> 0.3125rem</li>
+        <li><span class="token-name">stroke-07</span><span class="token-value">var(--ap-layout-stroke-07)</span> 0.4375rem</li>
+        <li><span class="token-name">stroke-10</span><span class="token-value">var(--ap-layout-stroke-10)</span> 0.625rem</li>
+      </ul>
+    </section>
+
+    <!-- Text sizes -->
+    <section>
+      <h2 class="section-title">Text sizes (type scale)</h2>
+      <ul class="token-list">
+        <li><span class="token-name">x-3</span><span class="token-value">var(--ap-text-size-x-3)</span> 0.625rem</li>
+        <li><span class="token-name">x-2 / metadata</span><span class="token-value">var(--ap-text-size-x-2)</span> 0.75rem</li>
+        <li><span class="token-name">x-1 / body-sm</span><span class="token-value">var(--ap-text-size-x-1)</span> 0.875rem</li>
+        <li><span class="token-name">x-base / body-base</span><span class="token-value">var(--ap-text-size-x-base)</span> 1rem</li>
+        <li><span class="token-name">x1 / body-lg</span><span class="token-value">var(--ap-text-size-x1)</span> 1.25rem</li>
+        <li><span class="token-name">x2</span><span class="token-value">var(--ap-text-size-x2)</span> 1.5rem</li>
+        <li><span class="token-name">x3</span><span class="token-value">var(--ap-text-size-x3)</span> 2rem</li>
+        <li><span class="token-name">x4</span><span class="token-value">var(--ap-text-size-x4)</span> 2.5rem</li>
+        <li><span class="token-name">x5</span><span class="token-value">var(--ap-text-size-x5)</span> 3rem</li>
+        <li><span class="token-name">breaking-heading</span><span class="token-value">var(--ap-text-size-breaking-heading)</span> 2.5rem</li>
+      </ul>
+      <div style="margin-top: var(--ap-spacing-600);">
+        <p style="font-size: var(--ap-text-size-x-2); margin-bottom: var(--ap-spacing-200);">Sample at x-2 (0.75rem)</p>
+        <p style="font-size: var(--ap-text-size-x-1); margin-bottom: var(--ap-spacing-200);">Sample at x-1 (0.875rem)</p>
+        <p style="font-size: var(--ap-text-size-x-base); margin-bottom: var(--ap-spacing-200);">Sample at x-base (1rem)</p>
+        <p style="font-size: var(--ap-text-size-x1); margin-bottom: var(--ap-spacing-200);">Sample at x1 (1.25rem)</p>
+        <p style="font-size: var(--ap-text-size-x2);">Sample at x2 (1.5rem)</p>
+      </div>
+    </section>
+
+    <!-- Font weight & stretch -->
+    <section>
+      <h2 class="section-title">Font weight & stretch</h2>
+      <ul class="token-list">
+        <li><span class="token-name">font-weight-regular</span><span class="token-value">var(--ap-font-weight-regular)</span> 400</li>
+        <li><span class="token-name">font-weight-medium</span><span class="token-value">var(--ap-font-weight-medium)</span> 500</li>
+        <li><span class="token-name">font-weight-bold</span><span class="token-value">var(--ap-font-weight-bold)</span> 700</li>
+        <li><span class="token-name">font-stretch-condensed</span><span class="token-value">var(--ap-font-stretch-condensed)</span> 50%</li>
+        <li><span class="token-name">font-stretch-semi-condensed</span><span class="token-value">var(--ap-font-stretch-semi-condensed)</span> 75%</li>
+        <li><span class="token-name">font-stretch-normal</span><span class="token-value">var(--ap-font-stretch-normal)</span> 100%</li>
+        <li><span class="token-name">letter-spacing-tight</span><span class="token-value">var(--ap-letter-spacing-tight)</span> -0.0313rem</li>
+        <li><span class="token-name">letter-spacing-wide</span><span class="token-value">var(--ap-letter-spacing-wide)</span> 0.0625rem</li>
+      </ul>
+      <div style="margin-top: var(--ap-spacing-600);">
+        <p style="font-size: 1.5rem; font-weight: var(--ap-font-weight-regular); margin-bottom: var(--ap-spacing-200);">Regular 400</p>
+        <p style="font-size: 1.5rem; font-weight: var(--ap-font-weight-medium); margin-bottom: var(--ap-spacing-200);">Medium 500</p>
+        <p style="font-size: 1.5rem; font-weight: var(--ap-font-weight-bold); margin-bottom: var(--ap-spacing-400);">Bold 700</p>
+        <p style="font-size: 1.5rem; font-stretch: var(--ap-font-stretch-condensed); font-weight: 700; margin-bottom: var(--ap-spacing-200);">Condensed Bold (50%)</p>
+        <p style="font-size: 1.5rem; font-stretch: var(--ap-font-stretch-semi-condensed); font-weight: 500;">SemiCondensed Medium (75%)</p>
+      </div>
+    </section>
+
+    <footer style="margin-top: var(--ap-spacing-800); padding-top: var(--ap-spacing-600); border-top: 1px solid var(--ap-color-elements-border-subtle); font-size: var(--ap-text-size-x-2); color: var(--ap-color-text-secondary);">
+      AP Design System styleguide — tokens from ap_news-design-tokens.json, styles from Figma (Maple).
+    </footer>
+  </div>
+</body>
+</html>

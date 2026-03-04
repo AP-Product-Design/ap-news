@@ -1120,30 +1120,6 @@
             "rootAlias": "color/neutral/900"
           },
           {
-            "name": "color/error/background",
-            "value": "#fff4f0",
-            "var": "color/red/100",
-            "rootAlias": "color/red/100"
-          },
-          {
-            "name": "color/error/border",
-            "value": "#da1026",
-            "var": "color/red/600",
-            "rootAlias": "color/red/600"
-          },
-          {
-            "name": "color/error/icon",
-            "value": "#191919",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/900"
-          },
-          {
-            "name": "color/error/text",
-            "value": "#191919",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/900"
-          },
-          {
             "name": "color/icons/inverse/inverse-active",
             "value": "#efefef",
             "var": "color/neutral/300",
@@ -1238,30 +1214,6 @@
             "value": "#3a3a3a",
             "var": "color/neutral/800",
             "rootAlias": "color/neutral/800"
-          },
-          {
-            "name": "color/information/background",
-            "value": "#e0f0ff",
-            "var": "color/blue/100",
-            "rootAlias": "color/blue/100"
-          },
-          {
-            "name": "color/information/border",
-            "value": "#0081e1",
-            "var": "color/cyan/600",
-            "rootAlias": "color/cyan/600"
-          },
-          {
-            "name": "color/information/icon",
-            "value": "#191919",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/900"
-          },
-          {
-            "name": "color/information/text",
-            "value": "#191919",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/900"
           },
           {
             "name": "color/interactive/filled/background/active-bg",
@@ -1540,28 +1492,106 @@
             "rootAlias": "color/neutral/900"
           },
           {
-            "name": "color/success/background",
+            "name": "color/notification/icon",
+            "value": "#191919",
+            "var": "color/neutral/900",
+            "rootAlias": "color/neutral/900"
+          },
+          {
+            "name": "color/notification/icon-inverse",
+            "value": "#ffffff",
+            "var": "color/neutral/white",
+            "rootAlias": "color/neutral/white"
+          },
+          {
+            "name": "color/notification/neutral-bg",
+            "value": "#515151",
+            "var": "color/neutral/700",
+            "rootAlias": "color/neutral/700"
+          },
+          {
+            "name": "color/notification/text",
+            "value": "#191919",
+            "var": "color/neutral/900",
+            "rootAlias": "color/neutral/900"
+          },
+          {
+            "name": "color/notification/text-inverse",
+            "value": "#ffffff",
+            "var": "color/neutral/white",
+            "rootAlias": "color/neutral/white"
+          },
+          {
+            "name": "color/notification/announcement/background",
+            "value": "#efefef",
+            "var": "color/neutral/300",
+            "rootAlias": "color/neutral/300"
+          },
+          {
+            "name": "color/notification/announcement/border",
+            "value": "#e6e6e7",
+            "var": "color/neutral/400",
+            "rootAlias": "color/neutral/400"
+          },
+          {
+            "name": "color/notification/feedback-error/background",
+            "value": "#fff4f0",
+            "var": "color/red/100",
+            "rootAlias": "color/red/100"
+          },
+          {
+            "name": "color/notification/feedback-error/border",
+            "value": "#da1026",
+            "var": "color/red/600",
+            "rootAlias": "color/red/600"
+          },
+          {
+            "name": "color/notification/feedback-info/background",
+            "value": "#e0f0ff",
+            "var": "color/blue/100",
+            "rootAlias": "color/blue/100"
+          },
+          {
+            "name": "color/notification/feedback-info/border",
+            "value": "#0081e1",
+            "var": "color/cyan/600",
+            "rootAlias": "color/cyan/600"
+          },
+          {
+            "name": "color/notification/feedback-success/background",
             "value": "#f4fdee",
             "var": "color/green/100",
             "rootAlias": "color/green/100"
           },
           {
-            "name": "color/success/border",
+            "name": "color/notification/feedback-success/border",
             "value": "#00945a",
             "var": "color/green/600",
             "rootAlias": "color/green/600"
           },
           {
-            "name": "color/success/icon",
-            "value": "#191919",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/900"
+            "name": "color/notification/feedback-warning/background",
+            "value": "#fffcea",
+            "var": "color/yellow-orange/100",
+            "rootAlias": "color/yellow-orange/100"
           },
           {
-            "name": "color/success/text",
-            "value": "#191919",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/900"
+            "name": "color/notification/feedback-warning/border",
+            "value": "#ffba00",
+            "var": "color/yellow-orange/500",
+            "rootAlias": "color/yellow-orange/500"
+          },
+          {
+            "name": "color/notification/status/background",
+            "value": "#515151",
+            "var": "color/neutral/700",
+            "rootAlias": "color/neutral/700"
+          },
+          {
+            "name": "color/notification/status/border",
+            "value": "#666666",
+            "var": "color/neutral/650",
+            "rootAlias": "color/neutral/650"
           },
           {
             "name": "color/text/ap-adaptive-red",
@@ -1607,9 +1637,9 @@
           },
           {
             "name": "color/text/inverse-secondary",
-            "value": "#f2f2f2",
-            "var": "color/neutral/200",
-            "rootAlias": "color/neutral/200"
+            "value": "#e6e6e7",
+            "var": "color/neutral/400",
+            "rootAlias": "color/neutral/400"
           },
           {
             "name": "color/text/primary",
@@ -1646,30 +1676,6 @@
             "value": "#a0400c",
             "var": "color/orange/700",
             "rootAlias": "color/orange/700"
-          },
-          {
-            "name": "color/warning/background",
-            "value": "#fffcea",
-            "var": "color/yellow-orange/100",
-            "rootAlias": "color/yellow-orange/100"
-          },
-          {
-            "name": "color/warning/border",
-            "value": "#fbd206",
-            "var": "color/yellow/600",
-            "rootAlias": "color/yellow/600"
-          },
-          {
-            "name": "color/warning/icon",
-            "value": "#191919",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/900"
-          },
-          {
-            "name": "color/warning/text",
-            "value": "#191919",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/900"
           }
         ],
         "number": [],
@@ -1784,30 +1790,6 @@
             "rootAlias": "color/neutral/900"
           },
           {
-            "name": "color/error/background",
-            "value": "#da1026",
-            "var": "color/red/600",
-            "rootAlias": "color/red/600"
-          },
-          {
-            "name": "color/error/border",
-            "value": "#ffcac6",
-            "var": "color/red/200",
-            "rootAlias": "color/red/200"
-          },
-          {
-            "name": "color/error/icon",
-            "value": "#ffffff",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/white"
-          },
-          {
-            "name": "color/error/text",
-            "value": "#ffffff",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/white"
-          },
-          {
             "name": "color/icons/inverse/inverse-active",
             "value": "#3a3a3a",
             "var": "color/neutral/800",
@@ -1902,30 +1884,6 @@
             "value": "#f4f4f4",
             "var": "color/neutral/100",
             "rootAlias": "color/neutral/100"
-          },
-          {
-            "name": "color/information/background",
-            "value": "#0042a9",
-            "var": "color/cyan/700",
-            "rootAlias": "color/cyan/700"
-          },
-          {
-            "name": "color/information/border",
-            "value": "#e0f0ff",
-            "var": "color/blue/100",
-            "rootAlias": "color/blue/100"
-          },
-          {
-            "name": "color/information/icon",
-            "value": "#ffffff",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/white"
-          },
-          {
-            "name": "color/information/text",
-            "value": "#ffffff",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/white"
           },
           {
             "name": "color/interactive/filled/background/active-bg",
@@ -2204,28 +2162,106 @@
             "rootAlias": "color/neutral/white"
           },
           {
-            "name": "color/success/background",
-            "value": "#00573c",
-            "var": "color/green/700",
-            "rootAlias": "color/green/700"
+            "name": "color/notification/icon",
+            "value": "#191919",
+            "var": "color/neutral/900",
+            "rootAlias": "color/neutral/900"
           },
           {
-            "name": "color/success/border",
+            "name": "color/notification/icon-inverse",
+            "value": "#ffffff",
+            "var": "color/neutral/white",
+            "rootAlias": "color/neutral/white"
+          },
+          {
+            "name": "color/notification/neutral-bg",
+            "value": "#515151",
+            "var": "color/neutral/700",
+            "rootAlias": "color/neutral/700"
+          },
+          {
+            "name": "color/notification/text",
+            "value": "#191919",
+            "var": "color/neutral/900",
+            "rootAlias": "color/neutral/900"
+          },
+          {
+            "name": "color/notification/text-inverse",
+            "value": "#ffffff",
+            "var": "color/neutral/white",
+            "rootAlias": "color/neutral/white"
+          },
+          {
+            "name": "color/notification/announcement/background",
+            "value": "#515151",
+            "var": "color/neutral/700",
+            "rootAlias": "color/neutral/700"
+          },
+          {
+            "name": "color/notification/announcement/border",
+            "value": "#666666",
+            "var": "color/neutral/650",
+            "rootAlias": "color/neutral/650"
+          },
+          {
+            "name": "color/notification/feedback-error/background",
+            "value": "#fff4f0",
+            "var": "color/red/100",
+            "rootAlias": "color/red/100"
+          },
+          {
+            "name": "color/notification/feedback-error/border",
+            "value": "#da1026",
+            "var": "color/red/600",
+            "rootAlias": "color/red/600"
+          },
+          {
+            "name": "color/notification/feedback-info/background",
+            "value": "#e0f0ff",
+            "var": "color/blue/100",
+            "rootAlias": "color/blue/100"
+          },
+          {
+            "name": "color/notification/feedback-info/border",
+            "value": "#0081e1",
+            "var": "color/cyan/600",
+            "rootAlias": "color/cyan/600"
+          },
+          {
+            "name": "color/notification/feedback-success/background",
             "value": "#f4fdee",
             "var": "color/green/100",
             "rootAlias": "color/green/100"
           },
           {
-            "name": "color/success/icon",
-            "value": "#ffffff",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/white"
+            "name": "color/notification/feedback-success/border",
+            "value": "#00945a",
+            "var": "color/green/600",
+            "rootAlias": "color/green/600"
           },
           {
-            "name": "color/success/text",
-            "value": "#ffffff",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/white"
+            "name": "color/notification/feedback-warning/background",
+            "value": "#fffcea",
+            "var": "color/yellow-orange/100",
+            "rootAlias": "color/yellow-orange/100"
+          },
+          {
+            "name": "color/notification/feedback-warning/border",
+            "value": "#ffba00",
+            "var": "color/yellow-orange/500",
+            "rootAlias": "color/yellow-orange/500"
+          },
+          {
+            "name": "color/notification/status/background",
+            "value": "#515151",
+            "var": "color/neutral/700",
+            "rootAlias": "color/neutral/700"
+          },
+          {
+            "name": "color/notification/status/border",
+            "value": "#666666",
+            "var": "color/neutral/650",
+            "rootAlias": "color/neutral/650"
           },
           {
             "name": "color/text/ap-adaptive-red",
@@ -2271,9 +2307,9 @@
           },
           {
             "name": "color/text/inverse-secondary",
-            "value": "#f2f2f2",
-            "var": "color/neutral/200",
-            "rootAlias": "color/neutral/200"
+            "value": "#e6e6e7",
+            "var": "color/neutral/400",
+            "rootAlias": "color/neutral/400"
           },
           {
             "name": "color/text/primary",
@@ -2289,9 +2325,9 @@
           },
           {
             "name": "color/text/secondary",
-            "value": "#f2f2f2",
-            "var": "color/neutral/200",
-            "rootAlias": "color/neutral/200"
+            "value": "#e6e6e7",
+            "var": "color/neutral/400",
+            "rootAlias": "color/neutral/400"
           },
           {
             "name": "color/text/subheader",
@@ -2310,30 +2346,6 @@
             "value": "#ffac2c",
             "var": "color/orange/300",
             "rootAlias": "color/orange/300"
-          },
-          {
-            "name": "color/warning/background",
-            "value": "#cd9800",
-            "var": "color/yellow/700",
-            "rootAlias": "color/yellow/700"
-          },
-          {
-            "name": "color/warning/border",
-            "value": "#fdfde8",
-            "var": "color/yellow/100",
-            "rootAlias": "color/yellow/100"
-          },
-          {
-            "name": "color/warning/icon",
-            "value": "#ffffff",
-            "var": "color/icons/primary/enabled",
-            "rootAlias": "color/neutral/white"
-          },
-          {
-            "name": "color/warning/text",
-            "value": "#ffffff",
-            "var": "color/text/primary",
-            "rootAlias": "color/neutral/white"
           }
         ],
         "number": [],
