@@ -138,6 +138,45 @@
       padding-bottom: var(--ap-spacing-200);
       border-bottom: 1px solid var(--ap-color-elements-border-subtle);
     }
+    .responsive-intro {
+      font-size: var(--ap-text-size-body-sm);
+      color: var(--ap-color-text-secondary);
+      margin-bottom: var(--ap-spacing-600);
+      max-width: 60ch;
+    }
+    .breakpoint-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--ap-text-size-body-sm);
+      margin-bottom: var(--ap-spacing-600);
+    }
+    .breakpoint-table:last-of-type { margin-bottom: 0; }
+    .breakpoint-table th {
+      text-align: left;
+      font-weight: 600;
+      padding: var(--ap-spacing-200) var(--ap-spacing-300);
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+      color: var(--ap-color-text-secondary);
+    }
+    .breakpoint-table th.breakpoint-col { text-align: center; }
+    .breakpoint-table td {
+      padding: var(--ap-spacing-200) var(--ap-spacing-300);
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+    }
+    .breakpoint-table td.breakpoint-col {
+      font-family: ui-monospace, monospace;
+      font-size: 0.8125rem;
+      text-align: center;
+      color: var(--ap-color-text-secondary);
+    }
+    .breakpoint-table tr:last-child td { border-bottom: 0; }
+    .scale-group-title {
+      font-size: var(--ap-text-size-body-sm);
+      font-weight: 700;
+      margin: var(--ap-spacing-500) 0 var(--ap-spacing-200);
+      color: var(--ap-color-text-primary);
+    }
+    .scale-group-title:first-of-type { margin-top: 0; }
   </style>
 </head>
 <body>
@@ -414,6 +453,7 @@
     <!-- Typography — All text styles -->
     <section>
       <h2 class="section-title">Text styles (Figma)</h2>
+      <p class="responsive-intro">Many text styles use the <strong>responsive type scale</strong> (x-base, x1, x2, etc.): they render smaller at SM/MD and larger at LG/XL. Styles in the <strong>Special</strong> group (e.g. Breaking heading, Story page headline SM/MD/LG, List item mobile priority) can have a different font size at each breakpoint—see the &quot;Text sizes (type scale)&quot; section below for SM / MD / LG / XL values.</p>
 
       <div class="text-styles-group">
         <h3>Headings</h3>
@@ -734,16 +774,16 @@
       <div class="text-styles-group">
         <h3>Core</h3>
         <div class="text-style-row">
-          <div class="text-style-meta">Body base · 16px · Regular · -0.5%</div>
-          <div class="text-style-sample" style="font-size: 16px; font-weight: 400; letter-spacing: -0.005em;">Core body base</div>
+          <div class="text-style-meta">Body base · 16px · Regular</div>
+          <div class="text-style-sample" style="font-size: 16px; font-weight: 400;">Core body base</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Body SM · 14px · Regular · -0.5%</div>
-          <div class="text-style-sample" style="font-size: 14px; font-weight: 400; letter-spacing: -0.005em;">Core body SM</div>
+          <div class="text-style-meta">Body SM · 14px · Regular</div>
+          <div class="text-style-sample" style="font-size: 14px; font-weight: 400;">Core body SM</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Metadata · 12px · Regular · -0.5%</div>
-          <div class="text-style-sample" style="font-size: 12px; font-weight: 400; letter-spacing: -0.005em;">Core metadata</div>
+          <div class="text-style-meta">Metadata · 12px · Regular</div>
+          <div class="text-style-sample" style="font-size: 12px; font-weight: 400; text-transform: uppercase;">Core metadata</div>
         </div>
         <div class="text-style-row">
           <div class="text-style-meta">Heading Bold XL · 32px · Bold</div>
@@ -857,21 +897,58 @@
       </ul>
     </section>
 
-    <!-- Text sizes -->
+    <!-- Text sizes (responsive by breakpoint) -->
     <section>
       <h2 class="section-title">Text sizes (type scale)</h2>
-      <ul class="token-list">
-        <li><span class="token-name">x-3</span><span class="token-value">var(--ap-text-size-x-3)</span> 0.625rem</li>
-        <li><span class="token-name">x-2 / metadata</span><span class="token-value">var(--ap-text-size-x-2)</span> 0.75rem</li>
-        <li><span class="token-name">x-1 / body-sm</span><span class="token-value">var(--ap-text-size-x-1)</span> 0.875rem</li>
-        <li><span class="token-name">x-base / body-base</span><span class="token-value">var(--ap-text-size-x-base)</span> 1rem</li>
-        <li><span class="token-name">x1 / body-lg</span><span class="token-value">var(--ap-text-size-x1)</span> 1.25rem</li>
-        <li><span class="token-name">x2</span><span class="token-value">var(--ap-text-size-x2)</span> 1.5rem</li>
-        <li><span class="token-name">x3</span><span class="token-value">var(--ap-text-size-x3)</span> 2rem</li>
-        <li><span class="token-name">x4</span><span class="token-value">var(--ap-text-size-x4)</span> 2.5rem</li>
-        <li><span class="token-name">x5</span><span class="token-value">var(--ap-text-size-x5)</span> 3rem</li>
-        <li><span class="token-name">breaking-heading</span><span class="token-value">var(--ap-text-size-breaking-heading)</span> 2.5rem</li>
-      </ul>
+      <p class="responsive-intro">Text sizes are <strong>responsive</strong>: smaller at SM and MD breakpoints, larger at LG and XL. Styles that use the <strong>x-scale</strong> (x-base, x1, x2, etc.) follow this two-tier scale. Styles in the <strong>Special</strong> group can have a different size at each of the four breakpoints (SM, MD, LG, XL).</p>
+
+      <p class="scale-group-title">X-scale (responsive)</p>
+      <p style="font-size: var(--ap-text-size-x-2); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-300);">Smaller at SM/MD, larger at LG/XL. Use <code>var(--ap-text-size-x-base)</code> etc.; in production these resolve per breakpoint via media/container queries.</p>
+      <table class="breakpoint-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th class="breakpoint-col">SM</th>
+            <th class="breakpoint-col">MD</th>
+            <th class="breakpoint-col">LG</th>
+            <th class="breakpoint-col">XL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>x-3</td><td class="breakpoint-col">0.625rem</td><td class="breakpoint-col">0.625rem</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.75rem</td></tr>
+          <tr><td>x-2 / metadata</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">0.875rem</td></tr>
+          <tr><td>x-1 / body-sm</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td></tr>
+          <tr><td>x-base / body-base</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1.125rem</td><td class="breakpoint-col">1.125rem</td></tr>
+          <tr><td>x1 / body-lg</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.4375rem</td><td class="breakpoint-col">1.4375rem</td></tr>
+          <tr><td>x2</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">1.6875rem</td><td class="breakpoint-col">1.6875rem</td></tr>
+          <tr><td>x3</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2.25rem</td><td class="breakpoint-col">2.25rem</td></tr>
+          <tr><td>x4</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.8125rem</td><td class="breakpoint-col">2.8125rem</td></tr>
+          <tr><td>x5</td><td class="breakpoint-col">3rem</td><td class="breakpoint-col">3rem</td><td class="breakpoint-col">3.375rem</td><td class="breakpoint-col">3.375rem</td></tr>
+        </tbody>
+      </table>
+
+      <p class="scale-group-title">Special (per-breakpoint sizes)</p>
+      <p style="font-size: var(--ap-text-size-x-2); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-300);">Each token can have a different value at SM, MD, LG, and XL.</p>
+      <table class="breakpoint-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th class="breakpoint-col">SM</th>
+            <th class="breakpoint-col">MD</th>
+            <th class="breakpoint-col">LG</th>
+            <th class="breakpoint-col">XL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>mobile-priority-sm</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.75rem</td></tr>
+          <tr><td>mobile-priority-md</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">0.875rem</td><td class="breakpoint-col">0.875rem</td></tr>
+          <tr><td>mobile-priority-lg</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td></tr>
+          <tr><td>story-page-headline-sm</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">1.6875rem</td><td class="breakpoint-col">2.25rem</td></tr>
+          <tr><td>story-page-headline-md</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2.25rem</td><td class="breakpoint-col">2.8125rem</td></tr>
+          <tr><td>story-page-headline-lg</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.8125rem</td><td class="breakpoint-col">3.375rem</td></tr>
+          <tr><td>breaking-heading</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">3.375rem</td><td class="breakpoint-col">3.375rem</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <!-- Font weight & stretch -->
