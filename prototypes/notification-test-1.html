@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Notification Test 1 — AP News</title>
+  <link rel="stylesheet" href="../ap-design-tokens.css" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+      font-family: var(--ap-font-family);
+    }
+
+    /* ════════════════════════════════════════════════════
+       PANEL
+    ════════════════════════════════════════════════════ */
+    .notification-panel {
+      width: 350px;
+      background: var(--ap-color-backgrounds-secondary);
+      padding: 0 var(--ap-spacing-500); /* 20px side padding */
+    }
+
+    /* ════════════════════════════════════════════════════
+       SECTION HEADER
+    ════════════════════════════════════════════════════ */
+    .section-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-spacing-300); /* 12px divider → heading */
+      padding-top: var(--ap-spacing-300);
+    }
+
+    .divider--moderate {
+      height: 1px;
+      background: var(--ap-color-elements-border-moderate);
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .divider--subtle {
+      height: 1px;
+      background: var(--ap-color-elements-border-subtle);
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .section-heading {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 724, 'wdth' 75; /* Condensed Bold */
+      font-size: var(--ap-text-size-x1); /* 20px */
+      line-height: 1.2;
+      color: var(--ap-color-text-primary, #191919);
+      text-transform: uppercase;
+      letter-spacing: 0;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    /* ════════════════════════════════════════════════════
+       YOUR ALERTS — SIGN-UP STATE
+    ════════════════════════════════════════════════════ */
+    .your-alerts-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--ap-spacing-400); /* 16px */
+      padding-bottom: var(--ap-spacing-400);
+    }
+
+    /* Bell icon circle */
+    .bell-icon-wrap {
+      width: 60px;
+      height: 60px;
+      background: var(--ap-color-interactive-filled-background-enabled-bg); /* #191919 */
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .bell-icon-wrap svg {
+      width: 28px;
+      height: 28px;
+      fill: #ffffff;
+    }
+
+    /* Notification dot on bell */
+    .bell-dot {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 8px;
+      height: 8px;
+      background: var(--ap-color-brand-ap-solid-red);
+      border-radius: 50%;
+      border: 1.5px solid var(--ap-color-interactive-filled-background-enabled-bg);
+    }
+
+    /* Signup messaging */
+    .signup-messaging {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-spacing-200);
+      align-items: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .signup-messaging__title {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 530, 'wdth' 100; /* Medium */
+      font-size: var(--ap-text-size-fixed-md); /* 16px */
+      line-height: 1.3;
+      color: var(--ap-color-text-primary, #191919);
+      letter-spacing: var(--ap-letter-spacing-tight);
+    }
+
+    .signup-messaging__subtitle {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 530, 'wdth' 100; /* Medium */
+      font-size: var(--ap-text-size-fixed-sm); /* 14px */
+      line-height: 1.3;
+      color: var(--ap-color-text-primary, #191919);
+      letter-spacing: var(--ap-letter-spacing-tight);
+    }
+
+    /* Sign up CTA button */
+    .btn-signup {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ap-color-interactive-filled-background-enabled-bg); /* #191919 */
+      color: var(--ap-color-interactive-filled-label-enabled-label); /* white */
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: var(--ap-text-size-fixed-md); /* 16px */
+      line-height: 1.3;
+      letter-spacing: var(--ap-letter-spacing-tight);
+      font-style: normal;
+      border: none;
+      border-radius: var(--ap-layout-size-24); /* 24px — pill */
+      padding: var(--ap-layout-size-08) var(--ap-layout-size-16); /* 8px 16px */
+      height: 40px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* ════════════════════════════════════════════════════
+       OTHER ALERTS — STORY LIST
+    ════════════════════════════════════════════════════ */
+    .other-alerts-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-spacing-300); /* 12px */
+      padding-top: var(--ap-spacing-0);
+    }
+
+    .alert-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-spacing-300); /* 12px between items */
+    }
+
+    /* Single alert item */
+    .alert {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-spacing-300); /* 12px */
+    }
+
+    .alert__content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--ap-layout-size-04); /* 4px — eyebrow to body */
+    }
+
+    /* ── Eyebrow row ─────────────────────────────────── */
+    .alert__eyebrow {
+      display: flex;
+      align-items: center;
+      gap: var(--ap-spacing-200); /* 8px */
+      width: 100%;
+    }
+
+    .alert__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: var(--ap-color-elements-border-moderate); /* gray dot */
+    }
+
+    .alert__meta {
+      display: flex;
+      align-items: center;
+      gap: var(--ap-spacing-200); /* 8px */
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert__category {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 550, 'wdth' 87.5; /* SemiCondensed Medium */
+      font-size: var(--ap-text-size-metadata); /* 12px */
+      line-height: 1.2;
+      color: var(--ap-color-text-secondary, #666666);
+      text-transform: uppercase;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    .alert__time-follow {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .alert__time-group {
+      display: flex;
+      align-items: center;
+      gap: var(--ap-layout-size-08); /* 8px */
+    }
+
+    /* LIVE badge */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--ap-color-brand-ap-solid-red);
+      padding: 4px 8px;
+      flex-shrink: 0;
+    }
+
+    .live-badge__text {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 700, 'wdth' 100;
+      font-size: var(--ap-text-size-metadata); /* 12px */
+      line-height: 1.2;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-style: normal;
+    }
+
+    .alert__timestamp {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 530, 'wdth' 100;
+      font-size: var(--ap-text-size-metadata); /* 12px */
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-style: normal;
+      white-space: nowrap;
+    }
+
+    .alert__timestamp--red  { color: var(--ap-color-brand-ap-adaptive-red); }
+    .alert__timestamp--gray { color: var(--ap-color-text-secondary, #666666); }
+
+    /* Follow button */
+    .follow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 15px;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-left: auto;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      background: transparent;
+      border: 1px solid var(--ap-color-interactive-outlined-border-enabled-border); /* #a8a8a9 */
+      padding: 3px 6px 4px 6px;
+    }
+
+    .follow-btn__label {
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 500, 'wdth' 100;
+      font-size: var(--ap-text-size-x-2); /* 12px */
+      line-height: 1.2;
+      color: var(--ap-color-interactive-outlined-label-enabled-label); /* #191919 */
+      white-space: nowrap;
+    }
+
+    .follow-btn__icon {
+      width: 10px;
+      height: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .follow-btn__icon svg {
+      width: 10px;
+      height: 10px;
+      transform: rotate(90deg);
+    }
+
+    .follow-btn:hover {
+      border-color: var(--ap-color-interactive-outlined-border-hover-border);
+    }
+
+    /* ── Story body: headline + image ──────────────────── */
+    .alert__body {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .alert__headline {
+      flex: 1;
+      font-family: var(--ap-font-family);
+      font-variation-settings: 'wght' 550, 'wdth' 87.5; /* SemiCondensed Medium */
+      font-size: var(--ap-text-size-x-1); /* 16px */
+      line-height: 1.3;
+      color: var(--ap-color-text-primary, #191919);
+      font-style: normal;
+    }
+
+    .alert__thumbnail {
+      width: 78px;
+      height: 51px;
+      border-radius: var(--ap-layout-border-radius-sm); /* 3px */
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #3a4a5a 0%, #5a6a7a 40%, #2a3a4a 100%);
+      overflow: hidden;
+    }
+
+    .alert__thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--ap-layout-border-radius-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="notification-panel">
+
+    <!-- ═══════════════ YOUR ALERTS ═══════════════ -->
+    <div class="your-alerts-section">
+      <div class="section-header" style="width:100%">
+        <div class="divider--moderate"></div>
+        <span class="section-heading">Your Alerts</span>
+      </div>
+
+      <!-- Bell icon -->
+      <div class="bell-icon-wrap">
+        <span class="bell-dot"></span>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6V11c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5S10.5 3.17 10.5 4v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+        </svg>
+      </div>
+
+      <!-- Signup messaging -->
+      <div class="signup-messaging">
+        <p class="signup-messaging__title">You're not signed up for push notifications yet</p>
+        <p class="signup-messaging__subtitle">Get news alerts delivered directly to your device</p>
+      </div>
+
+      <!-- CTA -->
+      <button class="btn-signup">Sign up for notifications</button>
+
+      <div class="divider--subtle" style="width:100%"></div>
+    </div>
+
+    <!-- ═══════════════ OTHER ALERTS ═══════════════ -->
+    <div class="other-alerts-section">
+      <div class="section-header" style="width:100%">
+        <div class="divider--moderate"></div>
+        <span class="section-heading">Other Alerts</span>
+      </div>
+
+      <div class="alert-list">
+
+        <!-- Story 1 — LIVE -->
+        <div class="alert">
+          <div class="alert__content">
+            <div class="alert__eyebrow">
+              <div class="alert__dot" style="background: var(--ap-color-brand-ap-adaptive-red);"></div>
+              <div class="alert__meta">
+                <div class="alert__time-follow">
+                  <div class="alert__time-group">
+                    <div class="live-badge"><span class="live-badge__text">Live</span></div>
+                    <span class="alert__timestamp alert__timestamp--red">33 mins ago</span>
+                  </div>
+                  <button class="follow-btn">
+                    <span class="follow-btn__label">Follow</span>
+                    <span class="follow-btn__icon">
+                      <svg viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert__body">
+              <p class="alert__headline">New study shows benefits of daily meditation on mental health</p>
+              <div class="alert__thumbnail"></div>
+            </div>
+          </div>
+          <div class="divider--subtle"></div>
+        </div>
+
+        <!-- Story 2 — World -->
+        <div class="alert">
+          <div class="alert__content">
+            <div class="alert__eyebrow">
+              <div class="alert__dot"></div>
+              <div class="alert__meta">
+                <span class="alert__category">World</span>
+                <div class="alert__time-follow">
+                  <span class="alert__timestamp alert__timestamp--red">1 hr ago</span>
+                  <button class="follow-btn">
+                    <span class="follow-btn__label">Follow</span>
+                    <span class="follow-btn__icon">
+                      <svg viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert__body">
+              <p class="alert__headline">Tensions rise as diplomats meet to discuss the crisis in Baltia</p>
+              <div class="alert__thumbnail"></div>
+            </div>
+          </div>
+          <div class="divider--subtle"></div>
+        </div>
+
+        <!-- Story 3 — U.S. News -->
+        <div class="alert">
+          <div class="alert__content">
+            <div class="alert__eyebrow">
+              <div class="alert__dot"></div>
+              <div class="alert__meta">
+                <span class="alert__category">U.S. News</span>
+                <div class="alert__time-follow">
+                  <span class="alert__timestamp alert__timestamp--gray">2 hrs ago</span>
+                  <button class="follow-btn">
+                    <span class="follow-btn__label">Follow</span>
+                    <span class="follow-btn__icon">
+                      <svg viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert__body">
+              <p class="alert__headline">Federal Reserve announces new measures to combat inflation</p>
+              <div class="alert__thumbnail"></div>
+            </div>
+          </div>
+          <div class="divider--subtle"></div>
+        </div>
+
+        <!-- Story 4 — Business -->
+        <div class="alert">
+          <div class="alert__content">
+            <div class="alert__eyebrow">
+              <div class="alert__dot"></div>
+              <div class="alert__meta">
+                <span class="alert__category">Business</span>
+                <div class="alert__time-follow">
+                  <span class="alert__timestamp alert__timestamp--gray">3 hrs ago</span>
+                  <button class="follow-btn">
+                    <span class="follow-btn__label">Follow</span>
+                    <span class="follow-btn__icon">
+                      <svg viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert__body">
+              <p class="alert__headline">Tech company unveils groundbreaking AI technology</p>
+              <div class="alert__thumbnail"></div>
+            </div>
+          </div>
+          <div class="divider--subtle"></div>
+        </div>
+
+        <!-- Story 5 — Politics -->
+        <div class="alert">
+          <div class="alert__content">
+            <div class="alert__eyebrow">
+              <div class="alert__dot"></div>
+              <div class="alert__meta">
+                <span class="alert__category">Politics</span>
+                <div class="alert__time-follow">
+                  <span class="alert__timestamp alert__timestamp--gray">7 min read</span>
+                  <button class="follow-btn">
+                    <span class="follow-btn__label">Follow</span>
+                    <span class="follow-btn__icon">
+                      <svg viewBox="0 0 12 12" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="alert__body">
+              <p class="alert__headline">Government officials debate new environmental regulations</p>
+              <div class="alert__thumbnail"></div>
+            </div>
+          </div>
+          <div class="divider--subtle"></div>
+        </div>
+
+      </div><!-- /alert-list -->
+    </div><!-- /other-alerts-section -->
+
+  </div><!-- /notification-panel -->
+
+</body>
+</html>
