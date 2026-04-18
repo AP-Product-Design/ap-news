@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Image Containers</title>
+<link rel="stylesheet" href="../ap-design-tokens.css" />
+<link rel="stylesheet" href="../ap-text-styles.css" />
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-regular);
+    background: var(--ap-color-backgrounds-secondary);
+    color: var(--ap-color-text-primary);
+    min-height: 100vh;
+  }
+
+  /* Responsive screen margins */
+  @media (min-width: 1024px) {
+    :root { --ap-spacing-screen-margins: var(--ap-layout-size-40); }
+  }
+
+  /* Content area — constrained to breakpoint width, centered, primary bg */
+  .content-area {
+    background: var(--ap-color-backgrounds-primary);
+    margin: 0 auto;
+    padding: var(--ap-spacing-600) var(--ap-spacing-screen-margins) var(--ap-layout-size-96);
+    width: 100%;
+    max-width: 390px;
+  }
+
+  @media (min-width: 768px) {
+    .content-area { max-width: 768px; }
+  }
+
+  @media (min-width: 1024px) {
+    .content-area { max-width: 1024px; }
+  }
+
+  @media (min-width: 1440px) {
+    .content-area { max-width: 1440px; }
+  }
+
+  /* Page label */
+  .page-title {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-600);
+  }
+
+  /* Page layout — single column by default, 70/30 at 1024px+ */
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-24);
+  }
+
+  @media (min-width: 1024px) {
+    .layout {
+      grid-template-columns: 7fr 3fr;
+    }
+  }
+
+  .layout-divider {
+    border: none;
+    border-top: var(--ap-layout-stroke-01) solid var(--ap-color-elements-border-moderate);
+    margin: var(--ap-spacing-800) 0;
+  }
+
+  /* Sidebar */
+  .col-sidebar {
+  }
+
+  /* 4-column Narrow List A row */
+  .narrow-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-24);
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .narrow-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .narrow-row {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Narrow List A */
+  .narrow-list-a {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+  }
+
+  .narrow-list-a .story-headline {
+    line-height: 1.2;
+    color: var(--ap-color-text-primary);
+  }
+
+  /* ============================================================
+     MODULE — Lead story left (50%) + 2×2 story grid right (50%)
+  ============================================================ */
+
+  .module {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-24);
+  }
+
+  @media (min-width: 768px) {
+    .module {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* 3:2 image container */
+  .img-wrap {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--ap-color-backgrounds-tertiary);
+    border-radius: var(--ap-layout-border-radius-sm);
+  }
+
+  .img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+
+  /* Vertical/panoramic image variant — bg-secondary in pillarbox/letterbox areas */
+  .img-wrap--contain {
+    background: var(--ap-color-backgrounds-secondary);
+  }
+
+  .img-wrap--contain img {
+    object-fit: contain;
+    object-position: center;
+    background: var(--ap-color-backgrounds-secondary);
+  }
+
+  /* Natural height — no aspect-ratio lock, no background; height follows the image */
+  .img-wrap--auto {
+    aspect-ratio: auto;
+    background: none;
+  }
+
+  .img-wrap--auto img {
+    height: auto;
+    object-fit: initial;
+  }
+
+  /* Vertical image variant — bg-primary, for Narrow List A */
+  .img-wrap--contain-primary {
+    background: var(--ap-color-backgrounds-primary);
+  }
+
+  .img-wrap--contain-primary img {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  /* Lead story */
+  .lead-story {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+  }
+
+  .lead-story .story-eyebrow {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-eyebrow-default);
+  }
+
+  .lead-story .story-headline {
+    line-height: 1.2;
+    color: var(--ap-color-text-primary);
+  }
+
+  .lead-story .story-dek {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.5;
+  }
+
+  /* 2×2 story grid */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-16);
+  }
+
+  @media (min-width: 768px) {
+    .story-grid {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+    }
+  }
+
+  .story-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-08);
+  }
+
+  .story-card .story-eyebrow {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-eyebrow-default);
+  }
+
+  .story-card .story-headline {
+    line-height: 1.25;
+    color: var(--ap-color-text-primary);
+  }
+
+  /* ============================================================
+     ASPECT RATIO KEY
+  ============================================================ */
+  .aspect-key {
+    background: var(--ap-color-backgrounds-secondary);
+    border-radius: var(--ap-layout-border-radius-md);
+    padding: var(--ap-spacing-600);
+    margin-bottom: var(--ap-spacing-800);
+  }
+
+  .aspect-key-tag {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-200);
+  }
+
+  .aspect-key-title {
+    font-size: var(--ap-text-size-x4);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    letter-spacing: var(--ap-letter-spacing-tight);
+    color: var(--ap-color-text-primary);
+    line-height: 1.1;
+    margin-bottom: var(--ap-spacing-300);
+  }
+
+  .aspect-key-desc {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: var(--ap-spacing-600);
+  }
+
+  .aspect-key-desc code,
+  .aspect-key-caption code {
+    font-family: monospace;
+    font-size: var(--ap-text-size-utility-sm);
+    background: var(--ap-color-backgrounds-primary);
+    color: var(--ap-color-text-primary);
+    padding: 0.15em 0.4em;
+    border-radius: var(--ap-layout-border-radius-sm);
+    border: var(--ap-layout-stroke-01) solid var(--ap-color-elements-border-moderate);
+  }
+
+  .aspect-key-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-16);
+  }
+
+  @media (min-width: 768px) {
+    .aspect-key-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .aspect-key-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+    background: var(--ap-color-backgrounds-primary);
+    border-radius: var(--ap-layout-border-radius-md);
+    padding: var(--ap-layout-size-16);
+  }
+
+  .aspect-key-ratio-label {
+    display: block;
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-100);
+  }
+
+  .aspect-key-name {
+    display: block;
+    font-size: var(--ap-text-size-x2);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    letter-spacing: var(--ap-letter-spacing-tight);
+    color: var(--ap-color-text-primary);
+    line-height: 1.2;
+    margin-bottom: var(--ap-spacing-200);
+  }
+
+  .aspect-key-caption {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .aspect-key-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-32);
+  }
+
+  .aspect-key-row-label {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    padding-bottom: var(--ap-layout-size-08);
+    margin-bottom: var(--ap-layout-size-12);
+    border-bottom: var(--ap-layout-stroke-01) solid var(--ap-color-elements-border-subtle);
+  }
+
+  .aspect-key-item--bare {
+    background: none;
+    padding: 0;
+  }
+</style>
+</head>
+<body>
+
+  <div class="content-area">
+
+    <p class="page-title">Image Containers</p>
+
+    <!-- Aspect Ratio Key -->
+    <section class="aspect-key">
+      <p class="aspect-key-tag">Reference</p>
+      <h2 class="aspect-key-title">Image Aspect Ratio Key</h2>
+      <p class="aspect-key-desc">All images render inside a fixed <strong>3:2 container</strong>. Standard 3:2 photos use <code>object-fit: cover</code> to fill the frame edge-to-edge. Non-standard aspect ratios — vertical and panoramic — use <code>object-fit: contain</code> so no portion of the image is cropped; the secondary background color fills any empty pillarbox or letterbox area. This approach keeps grid layouts stable regardless of what the photo desk delivers.</p>
+      <div class="aspect-key-rows">
+
+        <!-- Row 1 — Lead Story -->
+        <div>
+          <p class="aspect-key-row-label">Lead Story Images</p>
+          <div class="aspect-key-grid">
+
+            <div class="aspect-key-item">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Standard 3:2 landscape lead story image" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — 3 : 2</span>
+                <strong class="aspect-key-name">Standard Landscape</strong>
+                <p class="aspect-key-caption"><code>object-fit: cover</code> fills the 3:2 frame edge-to-edge. No empty space, no layout shift.</p>
+              </div>
+            </div>
+
+            <div class="aspect-key-item">
+              <div class="img-wrap img-wrap--contain-primary">
+                <img src="../images/vert-img-portrait.webp" alt="Vertical portrait lead story image on white background" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — Taller than 3 : 2</span>
+                <strong class="aspect-key-name">Vertical / Portrait</strong>
+                <p class="aspect-key-caption"><code>object-fit: contain</code> within the 3:2 frame. Pillarbox areas use a white background so they blend into the page.</p>
+              </div>
+            </div>
+
+            <div class="aspect-key-item">
+              <div class="img-wrap img-wrap--auto">
+                <img src="../images/panoramic-img.webp" alt="Panoramic lead story image at natural height" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — Wider than 3 : 2</span>
+                <strong class="aspect-key-name">Panoramic / Wide</strong>
+                <p class="aspect-key-caption">No fixed container. Height follows the image's natural dimensions — no letterbox fill needed.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Row 2 — Grid / Story Cards -->
+        <div>
+          <p class="aspect-key-row-label">Grid / Story Card Images</p>
+          <div class="aspect-key-grid">
+
+            <div class="aspect-key-item">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Standard 3:2 landscape grid image" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — 3 : 2</span>
+                <strong class="aspect-key-name">Standard Landscape</strong>
+                <p class="aspect-key-caption"><code>object-fit: cover</code> fills the 3:2 frame edge-to-edge. No empty space, no layout shift.</p>
+              </div>
+            </div>
+
+            <div class="aspect-key-item">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/vert-img-portrait.webp" alt="Vertical portrait image in a 3:2 container with secondary background" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — Taller than 3 : 2</span>
+                <strong class="aspect-key-name">Vertical / Portrait</strong>
+                <p class="aspect-key-caption"><code>object-fit: contain</code> within the 3:2 frame. Pillarbox areas filled with the secondary background to preserve grid alignment.</p>
+              </div>
+            </div>
+
+            <div class="aspect-key-item">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/panoramic-img.webp" alt="Panoramic wide image in a 3:2 container with secondary background" />
+              </div>
+              <div>
+                <span class="aspect-key-ratio-label">Ratio — Wider than 3 : 2</span>
+                <strong class="aspect-key-name">Panoramic / Wide</strong>
+                <p class="aspect-key-caption"><code>object-fit: contain</code> within the 3:2 frame. Letterbox areas filled with the secondary background to preserve grid alignment.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="layout">
+
+      <!-- 70% main column -->
+      <div class="col-main">
+        <div class="module">
+
+          <!-- Lead story — left 50% -->
+          <div class="lead-story">
+            <div class="img-wrap">
+              <img src="../images/3-2-img.webp" alt="Lead story image" />
+            </div>
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+          </div>
+
+          <!-- 2×2 story grid — right 50% -->
+          <div class="story-grid">
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Duis aute irure dolor in reprehenderit voluptate</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/vert-img-portrait.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Excepteur sint occaecat cupidatat non proident deserunt</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/panoramic-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Sunt in culpa qui officia mollit anim id est laborum</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Pellentesque habitant morbi tristique senectus netus</h3>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap">
+            <img src="../images/3-2-img.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <!-- Second layout — Narrow List A with vertical image -->
+    <div class="layout">
+
+      <!-- 70% main column — List H (same) -->
+      <div class="col-main">
+        <div class="module">
+
+          <div class="lead-story">
+            <div class="img-wrap img-wrap--contain-primary">
+              <img src="../images/vert-img-portrait.webp" alt="Lead story image" />
+            </div>
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+          </div>
+
+          <div class="story-grid">
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Duis aute irure dolor in reprehenderit voluptate</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/vert-img-portrait.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Excepteur sint occaecat cupidatat non proident deserunt</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/panoramic-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Sunt in culpa qui officia mollit anim id est laborum</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Pellentesque habitant morbi tristique senectus netus</h3>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A with vertical image -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap img-wrap--contain">
+            <img src="../images/vert-img-portrait.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <!-- Third layout — Narrow List A with panoramic image -->
+    <div class="layout">
+
+      <!-- 70% main column — List H (same) -->
+      <div class="col-main">
+        <div class="module">
+
+          <div class="lead-story">
+            <div class="img-wrap img-wrap--auto">
+              <img src="../images/panoramic-img.webp" alt="Lead story image" />
+            </div>
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+          </div>
+
+          <div class="story-grid">
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Duis aute irure dolor in reprehenderit voluptate</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/vert-img-portrait.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Excepteur sint occaecat cupidatat non proident deserunt</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap img-wrap--contain">
+                <img src="../images/panoramic-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Sunt in culpa qui officia mollit anim id est laborum</h3>
+            </div>
+
+            <div class="story-card">
+              <div class="img-wrap">
+                <img src="../images/3-2-img.webp" alt="Story image" />
+              </div>
+              <h3 class="story-headline ap-story-link-medium-5">Pellentesque habitant morbi tristique senectus netus</h3>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A with panoramic image -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap img-wrap--contain">
+            <img src="../images/panoramic-img.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <!-- 4-column Narrow List A row -->
+    <div class="narrow-row">
+
+      <div class="narrow-list-a">
+        <div class="img-wrap">
+          <img src="../images/3-2-img.webp" alt="Story image" />
+        </div>
+        <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit</h2>
+      </div>
+
+      <div class="narrow-list-a">
+        <div class="img-wrap img-wrap--contain">
+          <img src="../images/vert-img-portrait.webp" alt="Story image" />
+        </div>
+        <h2 class="story-headline ap-story-link-bold-3">Duis aute irure dolor in reprehenderit voluptate velit</h2>
+      </div>
+
+      <div class="narrow-list-a">
+        <div class="img-wrap img-wrap--contain">
+          <img src="../images/panoramic-img.webp" alt="Story image" />
+        </div>
+        <h2 class="story-headline ap-story-link-bold-3">Excepteur sint occaecat cupidatat non proident sunt</h2>
+      </div>
+
+      <div class="narrow-list-a">
+        <div class="img-wrap">
+          <img src="../images/3-2-img.webp" alt="Story image" />
+        </div>
+        <h2 class="story-headline ap-story-link-bold-3">Pellentesque habitant morbi tristique senectus netus</h2>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+  </div>
+
+</body>
+</html>
