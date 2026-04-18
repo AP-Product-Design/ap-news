@@ -47,6 +47,17 @@
     .content-area { max-width: 1440px; }
   }
 
+  /* Container label */
+  .container-label {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    text-transform: uppercase;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-600);
+  }
+
   /* Page label */
   .page-title {
     font-size: var(--ap-text-size-utility-sm);
@@ -111,6 +122,60 @@
   .narrow-list-a .story-headline {
     line-height: 1.2;
     color: var(--ap-color-text-primary);
+  }
+
+  /* ============================================================
+     LIST E — Text left (40%) + Image right (60%), 16px gutter
+  ============================================================ */
+
+  .list-e {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--ap-layout-size-16);
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .list-e {
+      grid-template-columns: 2fr 3fr;
+    }
+  }
+
+  .list-e-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+  }
+
+  .list-e-text .story-headline {
+    line-height: 1.2;
+    color: var(--ap-color-text-primary);
+  }
+
+  .list-e-text .story-dek {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.5;
+  }
+
+  .list-e-divider {
+    border: none;
+    border-top: var(--ap-layout-stroke-01) solid var(--ap-color-elements-border-subtle);
+  }
+
+  .list-e-more {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+  }
+
+  .list-e-more-heading {
+    color: var(--ap-color-text-secondary);
+  }
+
+  .list-e-more-item {
+    color: var(--ap-color-text-primary);
+    line-height: 1.3;
   }
 
   /* ============================================================
@@ -457,6 +522,125 @@
       </div>
     </section>
 
+    <p class="container-label">Container 1</p>
+    <div class="layout">
+
+      <!-- 70% main column — List E -->
+      <div class="col-main">
+        <div class="list-e">
+          <div class="list-e-text">
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+            <hr class="list-e-divider" />
+            <div class="list-e-more">
+              <h3 class="list-e-more-heading ap-heading-section-5">More coverage</h3>
+              <p class="list-e-more-item ap-list-item-md">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <p class="list-e-more-item ap-list-item-md">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia</p>
+              <p class="list-e-more-item ap-list-item-md">Pellentesque habitant morbi tristique senectus et netus malesuada fames</p>
+            </div>
+          </div>
+          <div class="list-e-image">
+            <div class="img-wrap">
+              <img src="../images/3-2-img.webp" alt="Story image" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap">
+            <img src="../images/3-2-img.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <p class="container-label">Container 2</p>
+    <div class="layout">
+
+      <!-- 70% main column — List E, vertical lead image -->
+      <div class="col-main">
+        <hr class="list-e-divider" style="margin-bottom: var(--ap-spacing-300);" />
+        <div class="list-e">
+          <div class="list-e-text">
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+            <hr class="list-e-divider" />
+            <div class="list-e-more">
+              <h3 class="list-e-more-heading ap-heading-section-5">More coverage</h3>
+              <p class="list-e-more-item ap-list-item-md">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <p class="list-e-more-item ap-list-item-md">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia</p>
+              <p class="list-e-more-item ap-list-item-md">Pellentesque habitant morbi tristique senectus et netus malesuada fames</p>
+            </div>
+          </div>
+          <div class="list-e-image">
+            <div class="img-wrap img-wrap--contain-primary">
+              <img src="../images/vert-img-portrait.webp" alt="Story image" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap">
+            <img src="../images/3-2-img.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <p class="container-label">Container 3</p>
+    <div class="layout">
+
+      <!-- 70% main column — List E, panoramic lead image -->
+      <div class="col-main">
+        <div class="list-e">
+          <div class="list-e-text">
+            <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+            <p class="story-dek ap-utility-desc-md">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute irure.</p>
+            <hr class="list-e-divider" />
+            <div class="list-e-more">
+              <h3 class="list-e-more-heading ap-heading-section-5">More coverage</h3>
+              <p class="list-e-more-item ap-list-item-md">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+              <p class="list-e-more-item ap-list-item-md">Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia</p>
+              <p class="list-e-more-item ap-list-item-md">Pellentesque habitant morbi tristique senectus et netus malesuada fames</p>
+            </div>
+          </div>
+          <div class="list-e-image">
+            <div class="img-wrap img-wrap--auto">
+              <img src="../images/panoramic-img.webp" alt="Story image" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 30% sidebar — Narrow List A -->
+      <div class="col-sidebar">
+        <div class="narrow-list-a">
+          <div class="img-wrap">
+            <img src="../images/3-2-img.webp" alt="Story image" />
+          </div>
+          <h2 class="story-headline ap-story-link-bold-3">Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod</h2>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="layout-divider" />
+
+    <p class="container-label">Container 4</p>
     <div class="layout">
 
       <!-- 70% main column -->
@@ -522,11 +706,13 @@
 
     <hr class="layout-divider" />
 
+    <p class="container-label">Container 5</p>
     <!-- Second layout — Narrow List A with vertical image -->
     <div class="layout">
 
       <!-- 70% main column — List H (same) -->
       <div class="col-main">
+        <hr class="list-e-divider" style="margin-bottom: var(--ap-spacing-300);" />
         <div class="module">
 
           <div class="lead-story">
@@ -586,6 +772,7 @@
 
     <hr class="layout-divider" />
 
+    <p class="container-label">Container 6</p>
     <!-- Third layout — Narrow List A with panoramic image -->
     <div class="layout">
 
@@ -650,6 +837,7 @@
 
     <hr class="layout-divider" />
 
+    <p class="container-label">Container 7</p>
     <!-- 4-column Narrow List A row -->
     <div class="narrow-row">
 
