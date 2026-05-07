@@ -178,6 +178,50 @@
     }
     .scale-group-title:first-of-type { margin-top: 0; }
 
+    /* Changelog */
+    .changelog-intro {
+      font-size: var(--ap-text-size-body-sm);
+      color: var(--ap-color-text-secondary);
+      margin-bottom: var(--ap-spacing-600);
+      max-width: 60ch;
+    }
+    .changelog-entry {
+      padding: var(--ap-spacing-400) 0;
+      border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+    }
+    .changelog-entry:first-of-type { padding-top: 0; }
+    .changelog-entry:last-of-type { border-bottom: 0; padding-bottom: 0; }
+    .changelog-date {
+      font-size: var(--ap-text-size-x-2);
+      font-weight: var(--ap-font-weight-bold);
+      color: var(--ap-color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: var(--ap-letter-spacing-wide);
+      margin-bottom: var(--ap-spacing-100);
+    }
+    .changelog-title {
+      font-size: var(--ap-text-size-body-base);
+      font-weight: var(--ap-font-weight-bold);
+      margin-bottom: var(--ap-spacing-100);
+    }
+    .changelog-desc {
+      font-size: var(--ap-text-size-body-sm);
+      color: var(--ap-color-text-secondary);
+      max-width: 70ch;
+    }
+    .changelog-desc code {
+      font-family: ui-monospace, monospace;
+      font-size: 0.8125rem;
+      background: var(--ap-color-backgrounds-tertiary);
+      padding: 0.05em 0.35em;
+      border-radius: 3px;
+      color: var(--ap-color-text-primary);
+    }
+    .changelog-desc a {
+      color: var(--ap-color-interactive-text-link-enabled);
+      text-decoration: underline;
+    }
+
     /* Page nav */
     .page-nav {
       display: flex;
@@ -258,6 +302,7 @@
       <p class="subtitle">Design tokens and text styles from Figma</p>
     </header>
     <nav class="page-nav" aria-label="Page sections">
+      <a href="#changelog">What's new</a>
       <a href="#colors">Colors</a>
       <a href="#typography">Typography</a>
       <a href="#spacing">Spacing</a>
@@ -266,6 +311,42 @@
       <a href="#font-weight">Font weight &amp; stretch</a>
       <a href="#grids">Grids</a>
     </nav>
+
+    <!-- What's new / Changelog -->
+    <section id="changelog">
+      <h2 class="section-title">What's new</h2>
+      <p class="changelog-intro">Recent additions and changes synced from Figma.</p>
+
+      <article class="changelog-entry">
+        <p class="changelog-date">2026-05-07</p>
+        <h3 class="changelog-title">Line-height tokens added</h3>
+        <p class="changelog-desc">Five new line-height tokens are now part of the typography utility set: <code>tight</code> (1.1), <code>heading-120</code> (1.2), <code>heading-130</code> (1.3), <code>body</code> (1.5), and <code>relaxed</code> (1.8). Documented under <a href="#font-weight">Font weight &amp; stretch → Line height</a>.</p>
+      </article>
+
+      <article class="changelog-entry">
+        <p class="changelog-date">2026-05-07</p>
+        <h3 class="changelog-title">Spacing scale is now responsive</h3>
+        <p class="changelog-desc">All spacing tokens (<code>spacing-100</code> through <code>spacing-900</code> and <code>screen-margins</code>) resolve to larger values at the LG and XL breakpoints. The <a href="#spacing">Spacing</a> section now shows values at every breakpoint instead of just SM.</p>
+      </article>
+
+      <article class="changelog-entry">
+        <p class="changelog-date">2026-05-07</p>
+        <h3 class="changelog-title">Interactive — Overlay color group added</h3>
+        <p class="changelog-desc">A new <code>interactive/overlay</code> variant joins Filled, Outlined, Text link, and Text link subtle. It includes <code>background</code>, <code>border</code>, <code>icon</code>, and <code>label</code> tables for use on overlays sitting above media or imagery (e.g. play buttons, hero scrims). See <a href="#colors">Colors → Interactive → Overlay</a>.</p>
+      </article>
+
+      <article class="changelog-entry">
+        <p class="changelog-date">2026-05-07</p>
+        <h3 class="changelog-title">Text-style token mappings audited</h3>
+        <p class="changelog-desc">Every <a href="#typography">Typography</a> row was cross-checked against the variables JSON. Corrections:</p>
+        <ul class="changelog-desc" style="margin-top: var(--ap-spacing-200); padding-left: 1.25em; list-style: disc;">
+          <li><strong>Utility/Description LG, MD, SM</strong> → <code>fixed-lg</code>, <code>fixed-md</code>, <code>fixed-sm</code> (non-responsive). Description LG also resizes from 20px to <strong>18px</strong>.</li>
+          <li><strong>Story links/List item LG, MD, SM</strong> → <code>fixed-lg</code>, <code>fixed-md</code>, <code>fixed-sm</code> (List item LG was incorrectly labelled <code>x-base</code> at 18px — <code>x-base</code> is 16px).</li>
+          <li><strong>Utility nav links</strong> (Main, Trending, Section, Storyline) → <code>nav-link</code>, the dedicated fixed 14px token.</li>
+          <li><strong>Utility/Timestamp, Metadata Reg, Metadata Bold</strong> → <code>metadata</code>, the dedicated fixed 12px token.</li>
+        </ul>
+      </article>
+    </section>
 
     <!-- Colors: Themes (Light + Dark values in one section) -->
     <section id="colors">
@@ -435,6 +516,50 @@
               <tr><td class="color-token-name">active-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#3a3a3a"></span> <span class="color-hex">#3a3a3a</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
               <tr><td class="color-token-name">disabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
               <tr><td class="color-token-name">selected-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Overlay (background)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919b2"></span> <span class="color-hex">#191919b2</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919b2"></span> <span class="color-hex">#191919b2</span></td></tr>
+              <tr><td class="color-token-name">hover-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">active-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+              <tr><td class="color-token-name">disabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#515151"></span> <span class="color-hex">#515151</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Overlay (border)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#e6e6e7"></span> <span class="color-hex">#e6e6e7</span></td></tr>
+              <tr><td class="color-token-name">hover-border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4f4f4"></span> <span class="color-hex">#f4f4f4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#f4f4f4"></span> <span class="color-hex">#f4f4f4</span></td></tr>
+              <tr><td class="color-token-name">active-border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">disabled-border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-border</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Overlay (icon)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">disabled-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Overlay (label)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">disabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
             </tbody>
           </table>
           <h4>Text link</h4>
@@ -639,15 +764,15 @@
       <div class="text-styles-group">
         <h3>Story links — List items</h3>
         <div class="text-style-row">
-          <div class="text-style-meta">List item LG · x-base (18px) · SemiCondensed Medium</div>
+          <div class="text-style-meta">List item LG · fixed-lg (18px) · SemiCondensed Medium</div>
           <div class="text-style-sample" style="font-size: 18px; font-weight: 500; font-stretch: 75%;">List item LG</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">List item MD · x-base (16px) · SemiCondensed Medium</div>
+          <div class="text-style-meta">List item MD · fixed-md (16px) · SemiCondensed Medium</div>
           <div class="text-style-sample" style="font-size: 16px; font-weight: 500; font-stretch: 75%;">List item MD</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">List item SM · x-1 (14px) · SemiCondensed Medium</div>
+          <div class="text-style-meta">List item SM · fixed-sm (14px) · SemiCondensed Medium</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 500; font-stretch: 75%;">List item SM</div>
         </div>
         <div class="text-style-row">
@@ -783,19 +908,19 @@
       <div class="text-styles-group">
         <h3>Utility</h3>
         <div class="text-style-row">
-          <div class="text-style-meta">Main nav link · x-1 (14px) · SemiCondensed Bold · UPPER</div>
+          <div class="text-style-meta">Main nav link · nav-link (14px) · SemiCondensed Bold · UPPER</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 700; font-stretch: 75%; text-transform: uppercase;">Main nav link</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Trending nav link · x-1 (14px) · SemiCondensed Medium</div>
+          <div class="text-style-meta">Trending nav link · nav-link (14px) · SemiCondensed Medium</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 500; font-stretch: 75%;">Trending nav link</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Section nav link · x-1 (14px) · SemiCondensed Bold · UPPER</div>
+          <div class="text-style-meta">Section nav link · nav-link (14px) · SemiCondensed Bold · UPPER</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 700; font-stretch: 75%; text-transform: uppercase;">Section nav link</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Storyline nav link · x-1 (14px) · SemiCondensed</div>
+          <div class="text-style-meta">Storyline nav link · nav-link (14px) · SemiCondensed</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 400; font-stretch: 75%;">Storyline nav link</div>
         </div>
         <div class="text-style-row">
@@ -827,27 +952,27 @@
           <div class="text-style-sample" style="font-size: 12px; font-weight: 700;">Label XS</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Description LG · x1 (20px) · Regular</div>
-          <div class="text-style-sample" style="font-size: 20px; font-weight: 400;">Description LG</div>
+          <div class="text-style-meta">Description LG · fixed-lg (18px) · Regular</div>
+          <div class="text-style-sample" style="font-size: 18px; font-weight: 400;">Description LG</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Description MD · x-base (16px) · Regular</div>
+          <div class="text-style-meta">Description MD · fixed-md (16px) · Regular</div>
           <div class="text-style-sample" style="font-size: 16px; font-weight: 400;">Description MD</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Description SM · x-1 (14px) · Regular</div>
+          <div class="text-style-meta">Description SM · fixed-sm (14px) · Regular</div>
           <div class="text-style-sample" style="font-size: 14px; font-weight: 400;">Description SM</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Timestamp · x-2 (12px) · Medium · 1px · UPPER</div>
+          <div class="text-style-meta">Timestamp · metadata (12px) · Medium · 1px · UPPER</div>
           <div class="text-style-sample" style="font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">2 hours ago</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Metadata Reg · x-2 (12px) · Regular · 1px</div>
+          <div class="text-style-meta">Metadata Reg · metadata (12px) · Regular · 1px</div>
           <div class="text-style-sample" style="font-size: 12px; font-weight: 400; letter-spacing: 1px;">Metadata regular</div>
         </div>
         <div class="text-style-row">
-          <div class="text-style-meta">Metadata Bold · x-2 (12px) · Bold · 1px · UPPER</div>
+          <div class="text-style-meta">Metadata Bold · metadata (12px) · Bold · 1px · UPPER</div>
           <div class="text-style-sample" style="font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;">Metadata bold</div>
         </div>
       </div>
@@ -927,20 +1052,32 @@
 
     <!-- Spacing -->
     <section id="spacing">
-      <h2 class="section-title">Spacing (Responsive SM)</h2>
-      <ul class="token-list">
-        <li><span class="token-name">spacing-0</span><span class="token-value">var(--ap-spacing-0)</span> 0</li>
-        <li><span class="token-name">spacing-100</span><span class="token-value">var(--ap-spacing-100)</span> 0.25rem</li>
-        <li><span class="token-name">spacing-200</span><span class="token-value">var(--ap-spacing-200)</span> 0.5rem</li>
-        <li><span class="token-name">spacing-300</span><span class="token-value">var(--ap-spacing-300)</span> 0.75rem</li>
-        <li><span class="token-name">spacing-400</span><span class="token-value">var(--ap-spacing-400)</span> 1rem</li>
-        <li><span class="token-name">spacing-500</span><span class="token-value">var(--ap-spacing-500)</span> 1.25rem</li>
-        <li><span class="token-name">spacing-600</span><span class="token-value">var(--ap-spacing-600)</span> 1.5rem</li>
-        <li><span class="token-name">spacing-700</span><span class="token-value">var(--ap-spacing-700)</span> 2rem</li>
-        <li><span class="token-name">spacing-800</span><span class="token-value">var(--ap-spacing-800)</span> 3rem</li>
-        <li><span class="token-name">spacing-900</span><span class="token-value">var(--ap-spacing-900)</span> 4rem</li>
-        <li><span class="token-name">screen-margins</span><span class="token-value">var(--ap-spacing-screen-margins)</span> 1.25rem</li>
-      </ul>
+      <h2 class="section-title">Spacing</h2>
+      <p class="responsive-intro">Spacing tokens are <strong>responsive</strong>: values are smaller at SM and MD breakpoints and step up at LG and XL.</p>
+      <table class="breakpoint-table">
+        <thead>
+          <tr>
+            <th>Token</th>
+            <th class="breakpoint-col">SM</th>
+            <th class="breakpoint-col">MD</th>
+            <th class="breakpoint-col">LG</th>
+            <th class="breakpoint-col">XL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>spacing-0</td><td class="breakpoint-col">0</td><td class="breakpoint-col">0</td><td class="breakpoint-col">0</td><td class="breakpoint-col">0</td></tr>
+          <tr><td>spacing-100</td><td class="breakpoint-col">0.25rem</td><td class="breakpoint-col">0.25rem</td><td class="breakpoint-col">0.5rem</td><td class="breakpoint-col">0.5rem</td></tr>
+          <tr><td>spacing-200</td><td class="breakpoint-col">0.5rem</td><td class="breakpoint-col">0.5rem</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.75rem</td></tr>
+          <tr><td>spacing-300</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">0.75rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td></tr>
+          <tr><td>spacing-400</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1rem</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">1.5rem</td></tr>
+          <tr><td>spacing-500</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2rem</td></tr>
+          <tr><td>screen-margins</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">1.25rem</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.5rem</td></tr>
+          <tr><td>spacing-600</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">1.5rem</td><td class="breakpoint-col">2.5rem</td><td class="breakpoint-col">2.5rem</td></tr>
+          <tr><td>spacing-700</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">2rem</td><td class="breakpoint-col">3rem</td><td class="breakpoint-col">3rem</td></tr>
+          <tr><td>spacing-800</td><td class="breakpoint-col">3rem</td><td class="breakpoint-col">3rem</td><td class="breakpoint-col">4rem</td><td class="breakpoint-col">4rem</td></tr>
+          <tr><td>spacing-900</td><td class="breakpoint-col">4rem</td><td class="breakpoint-col">4rem</td><td class="breakpoint-col">5rem</td><td class="breakpoint-col">5rem</td></tr>
+        </tbody>
+      </table>
       <div style="margin-top: var(--ap-spacing-600); display: flex; flex-wrap: wrap; gap: var(--ap-spacing-200); align-items: center;">
         <div style="width: var(--ap-spacing-100); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;"></div>
         <div style="width: var(--ap-spacing-200); height: var(--ap-spacing-400); background: var(--ap-color-text-secondary); border-radius: 2px;"></div>
@@ -1035,7 +1172,8 @@
     <!-- Font weight & stretch -->
     <section id="font-weight">
       <h2 class="section-title">Font weight & stretch</h2>
-      <ul class="token-list">
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Weight, stretch &amp; letter-spacing</h3>
+      <ul class="token-list" style="margin-bottom: var(--ap-spacing-600);">
         <li><span class="token-name">font-weight-regular</span><span class="token-value">400</span></li>
         <li><span class="token-name">font-weight-medium</span><span class="token-value">500</span></li>
         <li><span class="token-name">font-weight-bold</span><span class="token-value">700</span></li>
@@ -1044,6 +1182,16 @@
         <li><span class="token-name">font-stretch-normal</span><span class="token-value">100%</span></li>
         <li><span class="token-name">letter-spacing-tight</span><span class="token-value">-0.0313rem</span></li>
         <li><span class="token-name">letter-spacing-wide</span><span class="token-value">0.0625rem</span></li>
+      </ul>
+
+      <h3 style="font-size: var(--ap-text-size-body-sm); font-weight: 700; margin-bottom: var(--ap-spacing-300);">Line height</h3>
+      <p style="font-size: var(--ap-text-size-x-2); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-300);">Unitless multipliers, applied as <code style="font-family: ui-monospace, monospace;">line-height</code>. Use <strong>tight</strong> for display headings, <strong>heading-120/130</strong> for section headings, <strong>body</strong> for running text, and <strong>relaxed</strong> for spacious blocks.</p>
+      <ul class="token-list">
+        <li><span class="token-name">line-height-tight</span><span class="token-value">1.1</span></li>
+        <li><span class="token-name">line-height-heading-120</span><span class="token-value">1.2</span></li>
+        <li><span class="token-name">line-height-heading-130</span><span class="token-value">1.3</span></li>
+        <li><span class="token-name">line-height-body</span><span class="token-value">1.5</span></li>
+        <li><span class="token-name">line-height-relaxed</span><span class="token-value">1.8</span></li>
       </ul>
     </section>
 
