@@ -1,0 +1,1721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP News — Article Page Redesign Research Synthesis</title>
+<link rel="stylesheet" href="../ap-design-tokens.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--ap-font-family);
+    background: var(--ap-color-backgrounds-primary);
+    color: var(--ap-color-text-primary);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-backgrounds-primary);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid var(--ap-color-backgrounds-header-secondary);
+  }
+  .header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--ap-spacing-700);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .header-logo {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-elements-border-subtle);
+  }
+  .header-logo span { color: var(--ap-color-brand-ap-solid-red); }
+  .header-nav {
+    display: flex;
+    gap: 0;
+    list-style: none;
+  }
+  .header-nav a {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-icons-inverse-disabled);
+    text-decoration: none;
+    padding: 0 var(--ap-spacing-400);
+    height: 56px;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid var(--ap-color-backgrounds-header-secondary);
+    transition: color 0.2s, background 0.2s;
+  }
+  .header-nav a:hover { color: var(--ap-color-backgrounds-primary); background: var(--ap-color-backgrounds-header-secondary); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-backgrounds-primary);
+    padding: 5rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.03) 39px,
+      rgba(255,255,255,0.03) 40px
+    );
+  }
+  .hero-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-kicker {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-brand-ap-solid-red);
+    margin-bottom: var(--ap-spacing-600);
+    display: flex;
+    align-items: center;
+    gap: var(--ap-spacing-300);
+  }
+  .hero-kicker::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 2px;
+    background: var(--ap-color-brand-ap-solid-red);
+  }
+  .hero h1 {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    margin-bottom: var(--ap-spacing-600);
+    letter-spacing: var(--ap-letter-spacing-tight);
+  }
+  .hero-meta {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-icons-inverse-disabled);
+    display: flex;
+    gap: var(--ap-spacing-700);
+    flex-wrap: wrap;
+    margin-top: var(--ap-spacing-700);
+    padding-top: var(--ap-spacing-600);
+    border-top: 1px solid var(--ap-color-backgrounds-header-secondary);
+  }
+  .hero-meta span { color: var(--ap-color-elements-border-subtle); }
+  .hero-meta strong { color: var(--ap-color-backgrounds-primary); font-weight: var(--ap-font-weight-bold); }
+
+  /* ── LAYOUT ── */
+  .page-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 var(--ap-spacing-700);
+  }
+
+  /* ── SECTION ── */
+  section {
+    padding: var(--ap-spacing-900) 0;
+    border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+  }
+  section:last-child { border-bottom: none; }
+
+  .section-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-400);
+    display: flex;
+    align-items: center;
+    gap: var(--ap-spacing-300);
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 2px;
+    background: var(--ap-color-text-primary);
+  }
+
+  h2 {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    line-height: 1.15;
+    margin-bottom: var(--ap-spacing-600);
+    letter-spacing: var(--ap-letter-spacing-tight);
+    color: var(--ap-color-text-primary);
+  }
+
+  h3 {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 1.25rem;
+    margin-bottom: var(--ap-spacing-200);
+    color: var(--ap-color-text-primary);
+  }
+
+  p { margin-bottom: var(--ap-spacing-400); color: var(--ap-color-text-primary); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── EXECUTIVE SUMMARY ── */
+  .exec-intro {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--ap-color-text-primary);
+    max-width: 720px;
+    margin-bottom: var(--ap-spacing-800);
+  }
+
+  .headline-findings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: var(--ap-color-elements-border-subtle);
+    border: 1px solid var(--ap-color-elements-border-subtle);
+    margin-bottom: var(--ap-spacing-800);
+  }
+  .finding-card {
+    background: var(--ap-color-backgrounds-primary);
+    padding: 1.75rem;
+  }
+  .finding-number {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: 2.5rem;
+    color: var(--ap-color-text-primary);
+    line-height: 1;
+    margin-bottom: var(--ap-spacing-300);
+    display: block;
+  }
+  .finding-card h3 {
+    font-size: 1rem;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    color: var(--ap-color-text-primary);
+    margin-bottom: var(--ap-spacing-200);
+  }
+  .finding-card p {
+    font-size: var(--ap-text-size-body-sm);
+    line-height: 1.6;
+    color: var(--ap-color-text-secondary);
+  }
+
+  /* ── CHALLENGES ── */
+  .challenges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1px;
+    background: var(--ap-color-elements-border-subtle);
+    border: 1px solid var(--ap-color-elements-border-subtle);
+  }
+  .challenge-item {
+    background: var(--ap-color-backgrounds-primary);
+    padding: 1.5rem;
+    display: flex;
+    gap: var(--ap-spacing-400);
+  }
+  .challenge-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: var(--ap-color-backgrounds-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+  }
+  .challenge-content h3 {
+    font-size: 0.95rem;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    color: var(--ap-color-text-primary);
+    margin-bottom: var(--ap-spacing-100);
+  }
+  .challenge-content p {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--ap-color-text-secondary);
+    margin: 0;
+  }
+
+  /* ── CLUSTER TABS ── */
+  .cluster-nav {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--ap-color-elements-border-subtle);
+    margin-bottom: var(--ap-spacing-800);
+  }
+  .cluster-tab {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    padding: 0.6rem 1.1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--ap-color-text-secondary);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .cluster-tab.active {
+    color: var(--ap-color-text-primary);
+    border-bottom-color: var(--ap-color-text-primary);
+  }
+  .cluster-tab:hover:not(.active) { color: var(--ap-color-text-primary); }
+
+  .cluster-panel { display: none; }
+  .cluster-panel.active { display: block; }
+
+  .cluster-description {
+    font-size: 0.95rem;
+    color: var(--ap-color-text-secondary);
+    max-width: 640px;
+    margin-bottom: var(--ap-spacing-700);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── INSIGHT CARDS ── */
+  .cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--ap-color-elements-border-subtle);
+    border: 1px solid var(--ap-color-elements-border-subtle);
+  }
+
+  .insight-card {
+    background: var(--ap-color-backgrounds-primary);
+    padding: 0;
+    display: grid;
+    grid-template-columns: 4px 1fr;
+  }
+  .card-accent {
+    background: var(--ap-color-text-primary);
+  }
+  .card-body {
+    padding: 1.75rem 2rem;
+  }
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--ap-spacing-400);
+    margin-bottom: var(--ap-spacing-300);
+    flex-wrap: wrap;
+  }
+  .card-id {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ap-color-text-secondary);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .card-tags {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 0.65rem;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--ap-layout-border-radius-sm);
+  }
+  .tag-user { background: var(--ap-color-notification-feedback-info-background); color: var(--ap-color-notification-feedback-info-border); }
+  .tag-stakeholder { background: var(--ap-color-notification-feedback-success-background); color: var(--ap-color-notification-feedback-success-border); }
+  .tag-both { background: var(--ap-color-backgrounds-tertiary); color: var(--ap-color-text-primary); }
+
+  .card-insight {
+    font-size: 1.05rem;
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    color: var(--ap-color-text-primary);
+    line-height: 1.5;
+    margin-bottom: var(--ap-spacing-400);
+    font-family: var(--ap-font-family);
+  }
+
+  .card-evidence {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--ap-spacing-400);
+    padding-left: var(--ap-spacing-400);
+    border-left: 2px solid var(--ap-color-elements-border-moderate);
+    font-style: italic;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ap-spacing-600);
+    flex-wrap: wrap;
+  }
+  .card-implication {
+    flex: 1;
+    min-width: 200px;
+  }
+  .card-implication-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-100);
+  }
+  .card-implication p {
+    font-size: var(--ap-text-size-body-sm);
+    line-height: 1.6;
+    color: var(--ap-color-text-primary);
+    margin: 0;
+  }
+  .card-source {
+    flex-shrink: 0;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-secondary);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    padding-top: 0.1rem;
+  }
+
+  /* ── ACTIONS / TIMELINE ── */
+  .actions-intro {
+    max-width: 640px;
+    margin-bottom: var(--ap-spacing-800);
+    font-size: 0.95rem;
+    color: var(--ap-color-text-primary);
+    line-height: 1.7;
+  }
+
+  .action-tier {
+    margin-bottom: var(--ap-spacing-800);
+  }
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: var(--ap-spacing-400);
+    margin-bottom: var(--ap-spacing-400);
+    padding-bottom: var(--ap-spacing-300);
+    border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+  }
+  .tier-badge {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--ap-layout-border-radius-sm);
+  }
+  .tier-badge.quick { background: var(--ap-color-notification-feedback-success-background); color: var(--ap-color-notification-feedback-success-border); }
+  .tier-badge.near { background: var(--ap-color-notification-feedback-warning-background); color: var(--ap-color-text-warning); }
+  .tier-badge.long { background: var(--ap-color-notification-feedback-info-background); color: var(--ap-color-notification-feedback-info-border); }
+  .tier-timeframe {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-secondary);
+    letter-spacing: var(--ap-letter-spacing-wide);
+  }
+
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--ap-color-elements-border-subtle);
+    border: 1px solid var(--ap-color-elements-border-subtle);
+  }
+  .action-item {
+    background: var(--ap-color-backgrounds-primary);
+    padding: 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--ap-spacing-500);
+    align-items: start;
+  }
+  .action-num {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-secondary);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    padding-top: 0.1rem;
+  }
+  .action-content h4 {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 0.97rem;
+    color: var(--ap-color-text-primary);
+    margin-bottom: var(--ap-spacing-100);
+  }
+  .action-content p {
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--ap-color-text-secondary);
+    margin: 0;
+  }
+  .action-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--ap-spacing-100);
+    flex-shrink: 0;
+  }
+  .action-owner {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 0.65rem;
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+    background: var(--ap-color-backgrounds-secondary);
+    padding: 0.15rem 0.4rem;
+    white-space: nowrap;
+  }
+  .action-cards-ref {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 0.6rem;
+    color: var(--ap-color-elements-border-moderate);
+    letter-spacing: var(--ap-letter-spacing-wide);
+  }
+
+  /* ── CROSS-REFERENCE ── */
+  .xref-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--ap-spacing-600);
+  }
+  @media (max-width: 700px) { .xref-grid { grid-template-columns: 1fr; } }
+  .xref-block {
+    padding: 1.5rem;
+    border: 1px solid var(--ap-color-elements-border-subtle);
+  }
+  .xref-block.confirm { border-left: 3px solid var(--ap-color-notification-feedback-success-border); }
+  .xref-block.tension { border-left: 3px solid var(--ap-color-brand-ap-solid-red); }
+  .xref-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    margin-bottom: var(--ap-spacing-300);
+  }
+  .xref-label.confirm { color: var(--ap-color-notification-feedback-success-border); }
+  .xref-label.tension { color: var(--ap-color-brand-ap-solid-red); }
+  .xref-block h4 {
+    font-size: 0.92rem;
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    margin-bottom: var(--ap-spacing-200);
+    font-family: var(--ap-font-family);
+    color: var(--ap-color-text-primary);
+  }
+  .xref-block p {
+    font-size: 0.83rem;
+    line-height: 1.6;
+    color: var(--ap-color-text-secondary);
+    margin: 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-icons-inverse-disabled);
+    padding: var(--ap-spacing-700);
+    text-align: center;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+  footer span { color: var(--ap-color-brand-ap-solid-red); }
+
+  /* ── UTILS ── */
+  @media (max-width: 640px) {
+    .action-item { grid-template-columns: auto 1fr; }
+    .action-meta { display: none; }
+    .hero-meta { flex-direction: column; gap: 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo"><span>AP</span> News · Research Synthesis</div>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="#summary">Summary</a></li>
+        <li><a href="#challenges">Challenges</a></li>
+        <li><a href="#insights">Insights</a></li>
+        <li><a href="#actions">Actions</a></li>
+        <li><a href="#appendix">Appendix</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Article Page Redesign · Qualitative Research</div>
+    <h1>What Users and Stakeholders Told Us</h1>
+    <div class="hero-meta">
+      <div><strong>16</strong> <span>interviews total</span></div>
+      <div><strong>6</strong> <span>user interviews</span></div>
+      <div><strong>10</strong> <span>stakeholder interviews</span></div>
+      <div><strong>5</strong> <span>insight clusters</span></div>
+      <div><strong>Spring 2025</strong> <span>fieldwork</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<section id="summary">
+  <div class="page-wrap">
+    <div class="section-label">01 · Executive Summary</div>
+    <h2>Four Headline Findings</h2>
+    <p class="exec-intro">Across 6 user interviews and 10 stakeholder interviews, four findings emerge with consistent, cross-source signal. These are not isolated complaints — they represent structural issues that affect reader experience, editorial quality, and business outcomes simultaneously.</p>
+
+    <div class="headline-findings">
+      <div class="finding-card">
+        <span class="finding-number">01</span>
+        <h3>The article page is trying to do too much</h3>
+        <p>Ads, donation prompts, recirculation modules, newsletter sign-ups, and editorial content compete for the same space. Users and editors both describe this as the dominant problem. On a large desktop monitor, one stakeholder showed two sentences of article text visible above the fold.</p>
+      </div>
+      <div class="finding-card">
+        <span class="finding-number">02</span>
+        <h3>Recirculation is placed where users never reach</h3>
+        <p>Most users stop reading after a few paragraphs. Related stories, Taboola, and newsletter prompts are concentrated at the bottom. The gap between where users leave and where recirculation lives is a direct drag on pages-per-session — the squad's core metric.</p>
+      </div>
+      <div class="finding-card">
+        <span class="finding-number">03</span>
+        <h3>AP's strongest asset — its journalism — is undersold</h3>
+        <p>Users consistently cited AP's writing quality, fact-checking rigor, and reporter credibility as the reason they chose AP over competitors. None of these qualities are surfaced prominently in the article page design. Bylines, beat assignments, and in-text fact checks are buried or incidental.</p>
+      </div>
+      <div class="finding-card">
+        <span class="finding-number">04</span>
+        <h3>Editorial tooling creates quality ceilings</h3>
+        <p>CMS limitations — blind stacking, no scheduled publishing, broken preview, no duplicate image detection, and a broken pull quote component — mean editors cannot reliably produce the visual quality they intend. Better reader experience requires better author experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHALLENGES -->
+<section id="challenges">
+  <div class="page-wrap">
+    <div class="section-label">02 · Key Challenges</div>
+    <h2>What Is Getting in the Way</h2>
+    <p style="max-width:640px; margin-bottom:2rem; color:var(--ap-color-text-primary); font-size:0.95rem; line-height:1.7;">These eight challenges were surfaced across both user and stakeholder interviews. They represent root causes, not symptoms — addressing surface-level design without resolving these will produce limited improvement.</p>
+
+    <div class="challenges-grid">
+      <div class="challenge-item">
+        <div class="challenge-icon">⚡</div>
+        <div class="challenge-content">
+          <h3>No governance over article element injection</h3>
+          <p>Ads, editorial modules, donations, and recirculation are injected by separate teams with no coordination. The result is articles where injected content outweighs editorial content on screen.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">👁</div>
+        <div class="challenge-content">
+          <h3>Preview doesn't reflect production</h3>
+          <p>Editors make layout decisions based on a preview that doesn't show real ads or injected modules. Layout problems are discovered only after publication.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">📐</div>
+        <div class="challenge-content">
+          <h3>The featured template barely differs from standard</h3>
+          <p>Centered content and a larger hero are the only differences. There are no full-bleed options, no text overlay, no configurable carousel or pull quote. Editors seeking more must go to the immersive team, which has limited capacity.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">🔇</div>
+        <div class="challenge-content">
+          <h3>Push notifications are broadly rejected</h3>
+          <p>The majority of interviewed users have disabled all push notifications — not just news. Email newsletters are the preferred communication channel for this cohort.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">🎯</div>
+        <div class="challenge-content">
+          <h3>Donors are shown the same prompts as non-donors</h3>
+          <p>Registered donors experience the same donation pop-ups as anonymous visitors. This is a recognition failure that actively frustrates the users most likely to advocate for AP.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">🗺</div>
+        <div class="challenge-content">
+          <h3>Article optimization has no clear owner</h3>
+          <p>Tasks like adding a video that publishes hours after a story, or ensuring related stories are accurate, fall in the gap between editorial, digital, and product — with no systematic process to catch them.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">🔖</div>
+        <div class="challenge-content">
+          <h3>Save and bookmark is invisible to users</h3>
+          <p>Users have built their own workarounds — emailing articles to themselves, keeping browser tabs open — because in-app save features are either unknown or untrusted. The feature exists but has low discoverability.</p>
+        </div>
+      </div>
+      <div class="challenge-item">
+        <div class="challenge-icon">📱</div>
+        <div class="challenge-content">
+          <h3>Mobile/desktop is a more useful lens than web/app</h3>
+          <p>Platform decisions are framed as web vs. app, but mobile web and mobile app share a form factor. Decisions like hub peak placement should apply to both mobile contexts, not just one platform.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="page-wrap">
+    <div class="section-label">03 · Insight Clusters</div>
+    <h2>What We Heard, Organized</h2>
+    <p style="max-width:640px; margin-bottom:1.5rem; color:var(--ap-color-text-primary); font-size:0.95rem; line-height:1.7;">Insights are integrated across user and stakeholder sources. Source tags indicate the origin of each card.</p>
+
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2rem; font-family:var(--ap-font-family); font-weight:var(--ap-font-weight-medium); font-stretch:var(--ap-font-stretch-semi-condensed); font-size:var(--ap-text-size-utility-sm); letter-spacing:var(--ap-letter-spacing-wide);">
+      <span style="display:flex;align-items:center;gap:0.4rem;"><span class="tag tag-user">User</span> from user interviews</span>
+      <span style="display:flex;align-items:center;gap:0.4rem;"><span class="tag tag-stakeholder">Stakeholder</span> from stakeholder interviews</span>
+      <span style="display:flex;align-items:center;gap:0.4rem;"><span class="tag tag-both">Both</span> confirmed across both sources</span>
+    </div>
+
+    <div class="cluster-nav">
+      <button class="cluster-tab active" onclick="showCluster('reading')">A · Reading Experience</button>
+      <button class="cluster-tab" onclick="showCluster('discovery')">B · Discovery & Navigation</button>
+      <button class="cluster-tab" onclick="showCluster('editorial')">C · Editorial Tooling</button>
+      <button class="cluster-tab" onclick="showCluster('monetization')">D · Ads & Monetization</button>
+      <button class="cluster-tab" onclick="showCluster('personalization')">E · Personalization & Notifications</button>
+    </div>
+
+    <!-- CLUSTER A: Reading Experience -->
+    <div class="cluster-panel active" id="cluster-reading">
+      <p class="cluster-description">How users engage with article content, what they value in the writing, and how the visual and typographic presentation shapes that experience. Includes both user perceptions and editorial/CMS constraints that directly affect output quality.</p>
+      <div class="cards-grid">
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A1</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">Users prefer full narrative journalism over bullet points or executive summaries. AP's writing quality is its primary differentiator and users name it unprompted.</div>
+            <div class="card-evidence">"I prefer an actual story as opposed to a series of bullet points... that stuff kind of leaves me feeling a little bit uninformed." — User interview<br><br>"AP towards the latter end [of quality]. The quality of the writing is pretty high." — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Article pages should be optimized for long-form reading as the default experience. Summary formats should be additive, not substitutes. Any "TLDR" treatment should come after — not instead of — the full story.</p>
+              </div>
+              <div class="card-source">U1, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A2</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Users scroll to the byline and reporter beat as a credibility signal — it reinforces AP as "capital J journalism."</div>
+            <div class="card-evidence">"I go down to the bottom to see who — this person is assigned to the DHS, this person is assigned to cover Capitol Hill. It gets to credibility in fact-based journalism." — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Byline and reporter beat assignment carry more weight than assumed. Strengthen byline presentation visually — move beat/assignment context up, not buried at article end.</p>
+              </div>
+              <div class="card-source">U1</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A3</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">In-article hyperlinks to related stories and source documents are among the most valued engagement mechanics for engaged readers — they actively pursue them.</div>
+            <div class="card-evidence">"One thing I find very appealing in articles everywhere is when there are hot links to other articles, the text of a court case, related articles published days earlier — I often pursue those." — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>In-article contextual linking is a high-value engagement mechanic confirmed by both user preference and stakeholder data showing strong desktop performance. Should be a consistent editorial standard, supported by better hyperlinking tooling in Pronto.</p>
+              </div>
+              <div class="card-source">U3 + S9 data</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A4</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">The visual "busyness" of the article page is perceived as chaotic — everything looks like breaking news, creating a hierarchy that signals nothing.</div>
+            <div class="card-evidence">"There's a uniformity in large size headline fonts for everything, even the most trivial story. It's so busy it doesn't make visual sense." — User interview<br><br>"I have two sentences of article text on a big monitor. Everything else is ads or Chrome. That's just ridiculous." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Visual hierarchy across article types needs deliberate differentiation by story importance. The design system's work reducing type sizes (30+ to 9) is the right direction — it needs to extend to layout and element weighting.</p>
+              </div>
+              <div class="card-source">U3, S6, S3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A5</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Pull quote design is functionally broken — automated red quote marks can't be controlled, attribution text is too small to change, and all available options look wrong. Editors have stopped using it.</div>
+            <div class="card-evidence">"The pull quote — hideous. I've tried to find ways to get around using it because it's so frustrating. It just looks bad." / "You're left with this choice: one quote or three quotes. I think all of them look bad." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Pull quote is a widely used editorial tool with a completely broken implementation. Redesign is high impact and relatively contained: controllable quote marks, readable attribution sizing, balanced typographic hierarchy.</p>
+              </div>
+              <div class="card-source">S7 (Alyssa)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A6</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Lead images on desktop frequently exceed the viewport — the full photo is never visible without scrolling — defeating the purpose of a large hero image.</div>
+            <div class="card-evidence">"We have all these great photos, but oftentimes they're outside the browser window. You can't see the entire photo." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Image sizing logic must account for viewport height, not just width. A fixed header compounds this. Options include animating the header away on scroll, or constraining image height to viewport minus header height.</p>
+              </div>
+              <div class="card-source">S6 (Jason), S3 (Dave)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">A7</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Full-bleed lead images are not supported in the current featured template, despite being standard practice across peer publications. This has been flagged internally for years.</div>
+            <div class="card-evidence">"I wish I could make photos full bleed on the lead. I have been told for years: if you put a full bleed lead image, it'll bug the whole website. I'm sorry, then why can't everyone else and their mom do it but the Associated Press?" — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Full-bleed lead image capability should be included in the featured template redesign as a supported, tested option. It is a baseline visual storytelling feature, not a luxury.</p>
+              </div>
+              <div class="card-source">S7 (Alyssa)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /cluster-reading -->
+
+    <!-- CLUSTER B: Discovery & Navigation -->
+    <div class="cluster-panel" id="cluster-discovery">
+      <p class="cluster-description">How users find content, move between stories, and what structures help or hinder that journey. Includes findings about recirculation, related content, trending navigation, and the article-as-homepage dynamic.</p>
+      <div class="cards-grid">
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B1</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">Users look for related stories before finishing — or sometimes before starting — the article they landed on. They are "multiple choice readers" who scan options first.</div>
+            <div class="card-evidence">"I would scroll down to the two stories beneath this to see which of the top three are interesting to me. I'm a little bit of a multiple choice guy." — User interview<br><br>"Sometimes the first thing they did was look for related stories." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Related stories should move significantly higher in the article — not buried below the fold. The current placement misses the moment users are most likely to engage with them.</p>
+              </div>
+              <div class="card-source">U1, S9</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B2</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">A persistent related content carousel that followed users as they scrolled achieved 20–30% engagement at CNN — attributed specifically to its persistent visibility requiring no scroll-back to access.</div>
+            <div class="card-evidence">"That carousel had like a 20 or 30% engagement rate. It was something insane. I think it's because it was pinned to the very top. It followed you as you were reading. You could read the whole story and the related content is right there." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>A sticky or persistent related content module — near the top, following the reader — is the highest-confidence recirculation opportunity supported by direct evidence. Worth A/B testing on mobile.</p>
+              </div>
+              <div class="card-source">S9 (Sophia)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B3</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">The trending topics bar is highly valued precisely because it is not personalized — it exposes users to stories they wouldn't have sought, and users recognize this as a feature, not a gap.</div>
+            <div class="card-evidence">"The not-personalized aspect of that is actually really important to me. I would never have seen that article if it wasn't up there." / "I want to trust AP to tell me what are the most important things I need to see." — User interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>The trending topics bar has strong user advocacy as an editorial-curated, non-personalized zone. Any redesign should preserve this as a prominent, editorially-controlled element — it is a differentiator against algorithmic news feeds.</p>
+              </div>
+              <div class="card-source">U6, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B4</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">Most users enter via newsletter or external link, read a single story, and leave — the article page is effectively the homepage for 80% of visits, yet carries no brand orientation or ecosystem entry-point design.</div>
+            <div class="card-evidence">"It's relatively rare that I ever just click on the app and open it. I'm always kicked there through something I clicked on in a newsletter." — User interview<br><br>"I think of the article page as a homepage. They might not even know we're AP News." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Article pages need to carry AP brand orientation for first-time visitors. The moment a user finishes a story is a critical conversion point for registration, newsletter sign-up, and return behavior — it needs intentional design, not an afterthought placement.</p>
+              </div>
+              <div class="card-source">U6, S9</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B5</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Most users stop reading after just a few paragraphs — meaning modules placed at the bottom of articles are likely reached by a small minority of readers.</div>
+            <div class="card-evidence">"I'd bet my house on it that people don't read the entire article." / "Where do we put this so that it's not annoying to users, but does the thing we need — get them to keep engaging?" — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Recirculation, newsletter, and donation prompts should move into the top third of articles. The current bottom-loading model wastes the engagement window. Placement should be tested against scroll depth data.</p>
+              </div>
+              <div class="card-source">S9, S2</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">B6</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">The photo carousel at the top of articles has invisible navigation affordances and often contains loosely related or repetitive images — a low-engagement element adding visual noise.</div>
+            <div class="card-evidence">"I bet most people don't even realize they don't see these buttons." / "Those photos are chosen somewhat at random. Who, why, why do we need that?" — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Consider replacing the default top carousel with a single strong lead image. If a photo gallery is warranted, link it within the story body rather than the lead. If the carousel stays, navigation affordances need a significant redesign.</p>
+              </div>
+              <div class="card-source">S3 (Dave)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /cluster-discovery -->
+
+    <!-- CLUSTER C: Editorial Tooling -->
+    <div class="cluster-panel" id="cluster-editorial">
+      <p class="cluster-description">How the CMS and editorial workflow shape article quality — and where the current tooling creates ceilings on what editors can produce. Invisible to readers, but directly determining what readers experience.</p>
+      <div class="cards-grid">
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C1</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">There are effectively three article tiers — standard, featured, immersive — but featured barely differentiates from standard. The gap between featured and immersive is too large, and immersive capacity is extremely limited.</div>
+            <div class="card-evidence">"Featured can only go so far because it's really just a big hero image and then centering the content. It doesn't visually distinguish itself as differently as the standard article layout." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>The featured tier needs a meaningful expansion of configuration options: full-bleed lead, text overlay, flexible carousel, pull quote variants, before/after modules. This would allow editors to produce enhanced articles without requiring the immersive team.</p>
+              </div>
+              <div class="card-source">S4 (Kim), S3 (Dave)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C2</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Timeline articles are among the most frequently used content types, but render identically to standard "what to know" articles — H2 headings with no visual treatment conveying temporal sequence.</div>
+            <div class="card-evidence">"This doesn't really look like a timeline. But we're calling it a timeline. The Guardian uses vertical gray lines and red dots for key dates — I look at that and think: I wish we could do this." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Timeline is a high-frequency content type with a clear, achievable visual treatment. Requires differentiated Pronto template ingestion — a two-step fix (Pronto template + frontend treatment). High value for relatively contained scope.</p>
+              </div>
+              <div class="card-source">S4 (Kim)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C3</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Audio embeds are easy to miss, positioned mid-story, use repetitive language ("AP Audio"), and are assumed by users to be AI-generated — actively undermining confidence in real human audio journalism.</div>
+            <div class="card-evidence">"If I wanted to listen instead of read, wouldn't I want to see this at the top?" / "One user said, I don't click these because I just assume they're AI." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Redesign audio as a top-of-article CTA: "Listen to this article" with visible human attribution, play controls, and speed adjustment. Texas Tribune cited as reference. This bridges AP's radio journalism legacy with modern digital audio expectations.</p>
+              </div>
+              <div class="card-source">S4 (Kim), confirmed U1</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C4</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">The CMS preview does not reflect production — ads, pop-ups, and injected modules appear as placeholders in preview, so editors make layout decisions blind and discover problems only after publishing.</div>
+            <div class="card-evidence">"You might think, oh, this is fine. But then when you look at it in production, there is more going on. Some of the pop-ups don't show up in the preview." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Preview accuracy is a root cause of many layout problems. A production-representative preview — showing real ad sizes, injected modules, and pop-up positions — is a high-value infrastructure improvement that would reduce post-publish firefighting.</p>
+              </div>
+              <div class="card-source">S6 (Jason)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C5</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Dario has built an extensive library of custom embed solutions — before/after comparisons, accordion lists, scrollytelling, enhanced audio players, photo grid with modal — representing unmet demand for CMS components that don't exist natively.</div>
+            <div class="card-evidence">"If we had that accordion component already in the toolkit, that would be great. And then it's available to a lot of other people, not just me." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Dario's embed archive is a real-usage backlog for CMS component prioritization. Accordion, before/after, photo grid with modal, and enhanced audio are highest frequency. These should be productized into the featured template toolkit.</p>
+              </div>
+              <div class="card-source">S8 (Dario)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">C6</span>
+              <div class="card-tags"><span class="tag tag-stakeholder">Stakeholder</span></div>
+            </div>
+            <div class="card-insight">Hyperlinking is cumbersome — editors must open a separate browser window to find URLs — resulting in fewer and lower-quality in-article links, despite hyperlinking being identified as a top engagement driver.</div>
+            <div class="card-evidence">"We would absolutely love integration between AP News and Pronto — search for a story or something — because this happens all the time." — Stakeholder interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>An internal story search tool within Pronto would directly improve one of the highest-performing engagement mechanics (inline links). A workflow fix with a direct reader-facing quality output.</p>
+              </div>
+              <div class="card-source">S1 (Christina)</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /cluster-editorial -->
+
+    <!-- CLUSTER D: Ads & Monetization -->
+    <div class="cluster-panel" id="cluster-monetization">
+      <p class="cluster-description">How advertising and donation mechanics shape — and often degrade — the reader experience, and where there are opportunities to improve both revenue and reader trust simultaneously.</p>
+      <div class="cards-grid">
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">D1</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">Ads are accepted as the cost of free content, but video ads and ads styled to mimic editorial content generate the strongest negative reactions and actively erode trust.</div>
+            <div class="card-evidence">"The video ads just drive me nuts." / "A lot of ads look like stories we've done. It's the same exact font. Obviously it says advertisement, but I just don't love the way it looks." — User and stakeholder interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Full-width ads with a distinct color background (NYT-style) would reduce visual confusion while maintaining revenue. Video ads in article bodies should be deprioritized or made easier to dismiss. Ad visual differentiation is a trust issue, not just aesthetic.</p>
+              </div>
+              <div class="card-source">U1, U6, S1, S3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">D2</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Existing donors are repeatedly shown donation prompts — this creates frustration and signals that AP does not recognize them as supporters. It is the single most specific complaint from registered users.</div>
+            <div class="card-evidence">"The big pop-ups to donate — I find them frustrating because I do donate. I think donating to AP is really important. But if it knew I was a donor, would it keep giving me these pop-ups?" — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Suppressing donation prompts for verified donors is table-stakes. This is both a technical (account state recognition) and UX (experience coherence) problem. The most vocal advocates for AP are being shown the same prompts as anonymous visitors.</p>
+              </div>
+              <div class="card-source">U6 (Anna)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">D3</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Multiple donors expressed willingness to pay more — or donate at all — specifically to reduce or remove ads. This is an untested but plausible revenue lever.</div>
+            <div class="card-evidence">"I do think I would consider donating more to get rid of the ads. I don't know how much, but I do." / "I pay extra for The Atlantic to not get ads. I love it." — User interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>An ad-reduced or ad-free donor tier is a plausible revenue lever with demonstrated user appetite. Worth exploring as a donation incentive — "support AP and read without interruption."</p>
+              </div>
+              <div class="card-source">U6, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">D4</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">The donate button's purpose is unclear to new users — it's not immediately obvious that the donation goes directly to AP rather than a third party or cause AP is covering.</div>
+            <div class="card-evidence">"Is AP a not-for-profit? Maybe people don't really understand why they have to donate to AP." / "Who are we donating to, right?" — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>A single copy change — "Donate to AP" or "Support AP Journalism" — and a brief contextual explanation would reduce ambiguity. The donation conversion path also needs streamlining; at least one user described it as "a bit awkward."</p>
+              </div>
+              <div class="card-source">U4, U3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">D5</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Users have a mental price anchor for news subscriptions of $5–$30/month; one-time donations tend toward ~$30. Pre-selected default amounts may be undershooting for some segments.</div>
+            <div class="card-evidence">"I would pay five bucks a month." / "Anytime I'm doing a single donation I tend to be like a $30 type of person." — User interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Test donation default amounts against user price anchors. Pre-selecting $10 monthly may be undershooting for engaged users. Consider tiered options that map to different commitment levels and associated benefits.</p>
+              </div>
+              <div class="card-source">U1, U5</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /cluster-monetization -->
+
+    <!-- CLUSTER E: Personalization & Notifications -->
+    <div class="cluster-panel" id="cluster-personalization">
+      <p class="cluster-description">How users want to customize their experience, what they fear about personalization, how they prefer to be notified, and what would compel them to register or deepen their relationship with AP.</p>
+      <div class="cards-grid">
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">E1</span>
+              <div class="card-tags"><span class="tag tag-both">Both</span></div>
+            </div>
+            <div class="card-insight">Push notifications are broadly rejected — most engaged users have disabled all app notifications as part of deliberate digital hygiene, not because of AP specifically. Email newsletters are the preferred channel.</div>
+            <div class="card-evidence">"None of them. No notifications on my phone." / "I've really been trying to limit the things that pop up at me... I help myself to stay more deliberate about what I'm taking in." — User interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Push notification strategy needs rethinking. A meaningful segment of high-value users has opted out entirely — frequency targeting won't reach them. Email-based personalization and notification alternatives (digest, alerts) should be the primary channel investment.</p>
+              </div>
+              <div class="card-source">U4, U6, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">E2</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Users want personalization but fear the filter bubble — several explicitly worried that personalization would mean missing important stories they didn't know to look for.</div>
+            <div class="card-evidence">"When I hear personalization, it makes me a little nervous. One of the things that's great about the paper is that you have to see everything they think is important. If you get too personalized, you don't know what's happening." — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Personalization should be additive — a layer beneath editorial curation, not a replacement for it. The message to users should be explicit: "We'll still show you the important stuff. This just helps us surface more of what matters to you."</p>
+              </div>
+              <div class="card-source">U6, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">E3</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Users want control over the volume of content they receive, not just its topics — some articulated this as a daily article count or digest length preference.</div>
+            <div class="card-evidence">"I have the capacity to read like 10 articles... could you select articles — even a number — so you get here are the topics we think would be of interest based on your selections." — User interview</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>A personalized digest with user-controlled volume ("send me 5 articles" vs "send me 10") reframes personalization as respecting attention, not maximizing it. This is a strong differentiator concept worth prototyping.</p>
+              </div>
+              <div class="card-source">U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">E4</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Registration value is unclear to users — "what do I get if I register?" is not answered by current prompts, suppressing sign-ups from people who would otherwise be willing.</div>
+            <div class="card-evidence">"What would be the purpose of the understanding of it?" / "Currently there aren't a lot of feature benefits yet." — User interview and interviewer</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Registration prompts need an explicit value proposition tied to real features. "Create an account to comment" is weak. "Save articles, follow topics, and support AP" is stronger. Social sign-in (Google, Apple) should be prominent — it is the primary driver of registration in comparable apps.</p>
+              </div>
+              <div class="card-source">U2, U5</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="insight-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <div class="card-header">
+              <span class="card-id">E5</span>
+              <div class="card-tags"><span class="tag tag-user">User</span></div>
+            </div>
+            <div class="card-insight">Save/bookmark is a feature users want but can't find — they've built their own workarounds (emailing articles, keeping browser tabs open) because they've given up on in-app options.</div>
+            <div class="card-evidence">"I just email it to myself... it's sort of like a squirrel that buries nuts and you have to remember where you buried them." / "To my knowledge, offline reading doesn't exist as a feature." — User interviews</div>
+            <div class="card-footer">
+              <div class="card-implication">
+                <div class="card-implication-label">Design Implication</div>
+                <p>Save/bookmark needs a visibility and reliability overhaul. Offline article saving — for travelers and commuters — is a specific, articulable use case with no current solution. Both are registration-gated features that could drive sign-up if the value is clear.</p>
+              </div>
+              <div class="card-source">U3, U5</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /cluster-personalization -->
+
+  </div>
+</section>
+
+<!-- ACTIONS -->
+<section id="actions">
+  <div class="page-wrap">
+    <div class="section-label">04 · Prioritized Actions</div>
+    <h2>What to Do and When</h2>
+    <p class="actions-intro">Actions are organized by implementation horizon and ranked within each tier by estimated impact-to-effort ratio. Owner suggestions indicate which team is best positioned to lead — most will require cross-functional coordination.</p>
+
+    <!-- QUICK WINS -->
+    <div class="action-tier">
+      <div class="tier-header">
+        <span class="tier-badge quick">⚡ Quick Wins</span>
+        <span class="tier-timeframe">0 – 4 weeks</span>
+      </div>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">01</div>
+          <div class="action-content">
+            <h4>Suppress donation prompts for verified donors</h4>
+            <p>Donors are being shown the same prompts as anonymous visitors. This is a recognition failure that frustrates AP's most loyal advocates. Fix requires account-state awareness in the prompt logic.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Engineering</span>
+            <span class="action-cards-ref">D2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">02</div>
+          <div class="action-content">
+            <h4>Fix ad close button tap target size</h4>
+            <p>Ad dismiss buttons are too small on mobile, causing accidental ad clicks. A specific, reproducible UX failure with a small engineering fix that will measurably improve reading experience.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering</span>
+            <span class="action-cards-ref">D1</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">03</div>
+          <div class="action-content">
+            <h4>Fix "read more" desktop div space reservation bug</h4>
+            <p>The mobile "read more" div is reserving space on desktop even when not displayed, creating an unexplained empty gap. Just surfaced — small fix with visible impact.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering</span>
+            <span class="action-cards-ref">F2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">04</div>
+          <div class="action-content">
+            <h4>Update donate button copy to clarify recipient</h4>
+            <p>Change "Donate" to "Donate to AP" or "Support AP Journalism." A single-line copy change that reduces ambiguity for new users who don't understand that funds go directly to the AP.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Editorial + Design</span>
+            <span class="action-cards-ref">D4</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">05</div>
+          <div class="action-content">
+            <h4>Strengthen byline and reporter beat presentation</h4>
+            <p>Users cite reporter credentials as a primary trust signal. Move beat/assignment context up in the article hierarchy — a layout change that reinforces AP's core differentiator at no cost.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design</span>
+            <span class="action-cards-ref">A2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">06</div>
+          <div class="action-content">
+            <h4>Add duplicate image detection to CMS stacking workflow</h4>
+            <p>Editors can accidentally stack the same image multiple times with no warning. The old CMS grayed out used images — restoring this signal is a small engineering lift that prevents visible quality errors.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering (CMS)</span>
+            <span class="action-cards-ref">C4 (CMS)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NEAR TERM -->
+    <div class="action-tier">
+      <div class="tier-header">
+        <span class="tier-badge near">📅 Near-Term</span>
+        <span class="tier-timeframe">1 – 3 months</span>
+      </div>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">07</div>
+          <div class="action-content">
+            <h4>Define article element roles and establish injection governance</h4>
+            <p>Ads, editorial modules, donations, and recirculation are injected by separate teams without coordination. This is the root cause of page clutter. Requires a cross-functional working session to define roles, positions, and ownership before any redesign can hold.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Ad Ops + Editorial</span>
+            <span class="action-cards-ref">C4, A4</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">08</div>
+          <div class="action-content">
+            <h4>Move related stories significantly higher in the article — test sticky variant</h4>
+            <p>Most users don't reach the bottom. Related stories placed there are largely unseen. Test moving them into the top third, and A/B test a persistent/sticky variant modeled on the CNN pattern (20–30% engagement rate cited by stakeholder).</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Engineering</span>
+            <span class="action-cards-ref">B1, B2, B5</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">09</div>
+          <div class="action-content">
+            <h4>Redesign pull quote component</h4>
+            <p>Broken implementation has caused editors to stop using a standard storytelling tool. Fix: controllable quote marks, readable attribution sizing, balanced typographic hierarchy. High impact, relatively contained scope.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Engineering</span>
+            <span class="action-cards-ref">A5</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">10</div>
+          <div class="action-content">
+            <h4>Redesign audio embed as a top-of-article CTA</h4>
+            <p>Users assume audio embeds are AI-generated and skip them. Rename to "Listen to this article," move to top of relevant articles, add human attribution and play controls. Bridges AP's radio legacy with digital audio expectations.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Editorial</span>
+            <span class="action-cards-ref">C3</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">11</div>
+          <div class="action-content">
+            <h4>Apply distinct visual treatment to ads (full-width, color-backed)</h4>
+            <p>Ads that mimic editorial content erode trust. Full-width ads with a distinct background color (NYT pattern) reduce visual confusion, set clearer editorial/advertising boundary, and produce a cleaner page without reducing ad visibility.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Ad Ops</span>
+            <span class="action-cards-ref">D1, A2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">12</div>
+          <div class="action-content">
+            <h4>Design and implement Timeline article template</h4>
+            <p>One of the most frequently used content types currently renders identically to standard articles. A differentiated visual treatment (Guardian-style vertical line + date markers) requires a Pronto template change + frontend treatment. High value for contained scope.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Engineering + Editorial</span>
+            <span class="action-cards-ref">C2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">13</div>
+          <div class="action-content">
+            <h4>Document page-level templates in Zeroheight</h4>
+            <p>Component-level design system documentation exists but page-level templates (standard, featured, immersive compositions) are not written down. This is a prerequisite for team alignment and editorial training on when to use which template.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design (Mike, Eitan)</span>
+            <span class="action-cards-ref">E2</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">14</div>
+          <div class="action-content">
+            <h4>Fix lead image sizing to fit within desktop viewport</h4>
+            <p>Hero images frequently extend beyond the viewport on desktop due to fixed header height. Constrain image height to viewport minus header, or animate header away on scroll. Stakeholder-confirmed issue with clear solutions to test.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Engineering</span>
+            <span class="action-cards-ref">A6</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">15</div>
+          <div class="action-content">
+            <h4>Redesign save/bookmark for visibility and reliability</h4>
+            <p>Users have built workarounds (emailing articles, browser tabs) because they've given up on in-app save. Improve icon discoverability, add explicit label on first use, and tie to registration value proposition.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Design</span>
+            <span class="action-cards-ref">E5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LONG TERM -->
+    <div class="action-tier">
+      <div class="tier-header">
+        <span class="tier-badge long">🔭 Long-Term</span>
+        <span class="tier-timeframe">3 – 12 months</span>
+      </div>
+      <div class="action-list">
+        <div class="action-item">
+          <div class="action-num">16</div>
+          <div class="action-content">
+            <h4>Build configurable featured article template suite</h4>
+            <p>Full-bleed lead, text overlay, flexible carousels, accordion, before/after, photo grid with modal. Would allow editors to produce enhanced articles without immersive team involvement — and bring those articles into the monetized CMS environment. Highest editorial demand item.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Design + Engineering + Editorial</span>
+            <span class="action-cards-ref">C1, A7, C5</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">17</div>
+          <div class="action-content">
+            <h4>Implement native scrollytelling in featured template</h4>
+            <p>Top priority from visual editors, currently achieved only through hacked Flourish embeds with significant limitations. Native support — even templated — would unlock a storytelling mode currently reserved for immersive team projects.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering + Design</span>
+            <span class="action-cards-ref">C5</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">18</div>
+          <div class="action-content">
+            <h4>Explore ad-reduced donor perk tier</h4>
+            <p>Multiple donors expressed willingness to pay more specifically to reduce ads. An "ad-light" experience for donors at a higher monthly tier has demonstrated user appetite and could increase average donation value without requiring a full subscription model.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Revenue + Design</span>
+            <span class="action-cards-ref">D3</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">19</div>
+          <div class="action-content">
+            <h4>Build AP News story search integration in Pronto</h4>
+            <p>Inline hyperlinking is a top engagement driver but editors must manually search in a separate window. An internal story search surfaced within the Pronto editor would directly improve one of the highest-performing reader-facing mechanics.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering (CMS)</span>
+            <span class="action-cards-ref">C6, A3</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">20</div>
+          <div class="action-content">
+            <h4>Introduce scheduled publishing in Dash CMS</h4>
+            <p>A fundamental feature gap causing editors to stack stories at 11pm to hit optimal publish windows. Scheduled publishing is a standard CMS capability — its absence has real workflow and article quality consequences.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering (CMS)</span>
+            <span class="action-cards-ref">C4 (CMS)</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">21</div>
+          <div class="action-content">
+            <h4>Design personalization as an additive layer — not a filter</h4>
+            <p>Users want topic-based surfacing but fear missing important stories they didn't anticipate wanting. The product framing must be "we'll still show you the important stuff" — personalization supplements editorial curation, it doesn't replace it. Includes email digest volume controls.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Product + Design</span>
+            <span class="action-cards-ref">E2, E3, B3</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">22</div>
+          <div class="action-content">
+            <h4>Offline article saving for app</h4>
+            <p>A specific, articulable use case — pre-loading articles before flights or offline periods — with no current solution. High-value for a loyal, travel-oriented segment. Likely registration-gated, which gives it double value as a sign-up driver.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Engineering + Product</span>
+            <span class="action-cards-ref">E5</span>
+          </div>
+        </div>
+        <div class="action-item">
+          <div class="action-num">23</div>
+          <div class="action-content">
+            <h4>Define article-level optimization ownership</h4>
+            <p>Who ensures a video is added to a story published 4 hours later? Who fixes a related stories module pulling irrelevant content? Currently a "jump ball." Organizational design question that design can support with better tooling, defaults, and documentation — but someone must own it.</p>
+          </div>
+          <div class="action-meta">
+            <span class="action-owner">Editorial + Product leadership</span>
+            <span class="action-cards-ref">C6 (org)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- APPENDIX -->
+<section id="appendix">
+  <div class="page-wrap">
+    <div class="section-label">05 · Appendix</div>
+    <h2>Cross-Reference: Confirmations &amp; Tensions</h2>
+    <p style="max-width:640px; margin-bottom:2rem; color:var(--ap-color-text-primary); font-size:0.95rem; line-height:1.7;">Where user and stakeholder findings align, confidence is high. Where they diverge, there is a design decision to make. Four of each are worth naming explicitly.</p>
+
+    <div class="xref-grid">
+      <div class="xref-block confirm">
+        <div class="xref-label confirm">✓ Confirmed across both sources</div>
+        <h4>Audio embeds are ignored</h4>
+        <p>Users assume they are AI-generated. Kim independently surfaced the same insight from the editorial side. Strong signal for audio redesign — change the CTA, move it to the top, and make human authorship explicit.</p>
+      </div>
+      <div class="xref-block tension">
+        <div class="xref-label tension">↔ Tension to resolve</div>
+        <h4>Recirculation vs. reading experience</h4>
+        <p>Stakeholders see recirculation as the primary article goal. Users (esp. Anna) actively try not to be distracted. Resolution is position and presentation — recirculation that doesn't feel like an interruption, placed where users naturally pause.</p>
+      </div>
+      <div class="xref-block confirm">
+        <div class="xref-label confirm">✓ Confirmed across both sources</div>
+        <h4>Ads are the primary complaint — but tolerated</h4>
+        <p>Both user interviews and stakeholder feedback forms cite ad volume and presentation. Users accept ads as the cost of free content but draw the line at ads that mimic editorial content and video ads that auto-play.</p>
+      </div>
+      <div class="xref-block tension">
+        <div class="xref-label tension">↔ Tension to resolve</div>
+        <h4>Personalization is desired and feared simultaneously</h4>
+        <p>Users want topic surfacing but multiple users independently expressed concern about the filter bubble. Stakeholders have not surfaced this concern internally. Design must make the editorial-first model explicit in how personalization is framed and communicated.</p>
+      </div>
+      <div class="xref-block confirm">
+        <div class="xref-label confirm">✓ Confirmed across both sources</div>
+        <h4>Related stories are sought early, not at the end</h4>
+        <p>At least one user's first action was to look for related stories before reading the lead article. Stakeholder CNN data shows 20–30% engagement when related content follows the reader persistently. Consensus: move it up.</p>
+      </div>
+      <div class="xref-block tension">
+        <div class="xref-label tension">↔ Tension to resolve</div>
+        <h4>Featured treatment as prestige vs. storytelling tool</h4>
+        <p>Editors sometimes request featured treatment as recognition of effort ("feather in the cap") rather than because the visual assets warrant it. Dave Clark named this explicitly. Design guidance — and documented templates — can help reframe the decision around visual suitability.</p>
+      </div>
+      <div class="xref-block confirm">
+        <div class="xref-label confirm">✓ Confirmed across both sources</div>
+        <h4>Save/bookmark demand is real, discoverability is the problem</h4>
+        <p>Users have built workarounds. Stakeholders confirm the feature exists but hasn't been meaningfully promoted. This is a visibility and trust problem, not a feature gap — but it needs to be treated with the urgency of a missing feature.</p>
+      </div>
+      <div class="xref-block tension">
+        <div class="xref-label tension">↔ New from stakeholders (not surfaced by users)</div>
+        <h4>CMS workflow problems are invisible to users but determine quality</h4>
+        <p>Blind stacking, no scheduled publishing, broken preview, and uncoordinated injection are upstream causes of many user-facing problems. Users experience the symptoms (visual clutter, irrelevant related stories) but can't name the cause. Fixing these doesn't show up in user satisfaction immediately — but sets the ceiling for what's possible.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <span>AP News</span> · Article Page Redesign · Research Synthesis · Internal Use Only
+</footer>
+
+<script>
+  function showCluster(name) {
+    document.querySelectorAll('.cluster-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.cluster-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('cluster-' + name).classList.add('active');
+    event.currentTarget.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
