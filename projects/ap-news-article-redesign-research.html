@@ -646,8 +646,8 @@
 <section id="summary">
   <div class="page-wrap">
     <div class="section-label">01 · Executive Summary</div>
-    <h2>Four Headline Findings</h2>
-    <p class="exec-intro">Across 6 user interviews and 10 stakeholder interviews, four findings emerge with consistent, cross-source signal. These are not isolated complaints — they represent structural issues that affect reader experience, editorial quality, and business outcomes simultaneously.</p>
+    <h2>Five Headline Findings</h2>
+    <p class="exec-intro">Across 6 user interviews and 10 stakeholder interviews, five findings emerge with consistent, cross-source signal. These are not isolated complaints — they represent structural issues that affect reader experience, editorial quality, and business outcomes simultaneously.</p>
 
     <div class="headline-findings">
       <div class="finding-card">
@@ -657,8 +657,8 @@
       </div>
       <div class="finding-card">
         <span class="finding-number">02</span>
-        <h3>Recirculation is placed where users never reach</h3>
-        <p>Most users stop reading after a few paragraphs. Related stories, Taboola, and newsletter prompts are concentrated at the bottom. The gap between where users leave and where recirculation lives is a direct drag on pages-per-session — the squad's core metric.</p>
+        <h3>Recirculation needs a strategy grounded in evidence</h3>
+        <p>We have recirculation tools — related stories, hub peeks, inline links, third-party modules — but no unified strategy for how they work together, where they live, or what the evidence says about their effectiveness. Testing and data should drive placement and prioritization decisions, not convention.</p>
       </div>
       <div class="finding-card">
         <span class="finding-number">03</span>
@@ -669,6 +669,11 @@
         <span class="finding-number">04</span>
         <h3>Editorial tooling creates quality ceilings</h3>
         <p>CMS limitations — blind stacking, no scheduled publishing, broken preview, no duplicate image detection, and a broken pull quote component — mean editors cannot reliably produce the visual quality they intend. Better reader experience requires better author experience.</p>
+      </div>
+      <div class="finding-card">
+        <span class="finding-number">05</span>
+        <h3>Loyal users deserve a meaningfully better experience</h3>
+        <p>Our most engaged users — donors, daily readers, registered accounts — currently receive the same experience as first-time visitors. There is an opportunity to build a product that recognizes, rewards, and deepens loyalty through quality: less friction, better personalization, and a sense that AP knows who they are.</p>
       </div>
     </div>
   </div>
@@ -685,8 +690,8 @@
       <div class="challenge-item">
         <div class="challenge-icon">⚡</div>
         <div class="challenge-content">
-          <h3>No governance over article element injection</h3>
-          <p>Ads, editorial modules, donations, and recirculation are injected by separate teams with no coordination. The result is articles where injected content outweighs editorial content on screen.</p>
+          <h3>Article element injection needs better governance</h3>
+          <p>Ads, editorial modules, donations, and recirculation are injected by separate teams without a shared coordination framework. The result is articles where injected content outweighs editorial content on screen.</p>
         </div>
       </div>
       <div class="challenge-item">
@@ -727,8 +732,8 @@
       <div class="challenge-item">
         <div class="challenge-icon">🔖</div>
         <div class="challenge-content">
-          <h3>Save and bookmark is invisible to users</h3>
-          <p>Users have built their own workarounds — emailing articles to themselves, keeping browser tabs open — because in-app save features are either unknown or untrusted. The feature exists but has low discoverability.</p>
+          <h3>Save and bookmark are less visible and effective than they could be</h3>
+          <p>Some users have built their own workarounds — emailing articles, keeping browser tabs open — because in-app save features aren't prominent enough to be trusted or discovered easily. The feature exists but its placement and promotion underserve demand.</p>
         </div>
       </div>
       <div class="challenge-item">
@@ -1396,17 +1401,6 @@
         <div class="action-item">
           <div class="action-num">03</div>
           <div class="action-content">
-            <h4>Fix "read more" desktop div space reservation bug</h4>
-            <p>The mobile "read more" div is reserving space on desktop even when not displayed, creating an unexplained empty gap. Just surfaced — small fix with visible impact.</p>
-          </div>
-          <div class="action-meta">
-            <span class="action-owner">Engineering</span>
-            <span class="action-cards-ref">F2</span>
-          </div>
-        </div>
-        <div class="action-item">
-          <div class="action-num">04</div>
-          <div class="action-content">
             <h4>Update donate button copy to clarify recipient</h4>
             <p>Change "Donate" to "Donate to AP" or "Support AP Journalism." A single-line copy change that reduces ambiguity for new users who don't understand that funds go directly to the AP.</p>
           </div>
@@ -1416,7 +1410,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">05</div>
+          <div class="action-num">04</div>
           <div class="action-content">
             <h4>Strengthen byline and reporter beat presentation</h4>
             <p>Users cite reporter credentials as a primary trust signal. Move beat/assignment context up in the article hierarchy — a layout change that reinforces AP's core differentiator at no cost.</p>
@@ -1427,7 +1421,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">06</div>
+          <div class="action-num">05</div>
           <div class="action-content">
             <h4>Add duplicate image detection to CMS stacking workflow</h4>
             <p>Editors can accidentally stack the same image multiple times with no warning. The old CMS grayed out used images — restoring this signal is a small engineering lift that prevents visible quality errors.</p>
@@ -1448,7 +1442,7 @@
       </div>
       <div class="action-list">
         <div class="action-item">
-          <div class="action-num">07</div>
+          <div class="action-num">06</div>
           <div class="action-content">
             <h4>Define article element roles and establish injection governance</h4>
             <p>Ads, editorial modules, donations, and recirculation are injected by separate teams without coordination. This is the root cause of page clutter. Requires a cross-functional working session to define roles, positions, and ownership before any redesign can hold.</p>
@@ -1459,10 +1453,10 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">08</div>
+          <div class="action-num">07</div>
           <div class="action-content">
-            <h4>Move related stories significantly higher in the article — test sticky variant</h4>
-            <p>Most users don't reach the bottom. Related stories placed there are largely unseen. Test moving them into the top third, and A/B test a persistent/sticky variant modeled on the CNN pattern (20–30% engagement rate cited by stakeholder).</p>
+            <h4>Move recirculation tools higher in the article — test sticky variant</h4>
+            <p>Most users don't reach the bottom. Related stories, hub peeks, and other recirculation tools placed there are largely unseen. Test moving them into the top third, and A/B test a persistent/sticky variant modeled on the CNN pattern (20–30% engagement rate cited by stakeholder).</p>
           </div>
           <div class="action-meta">
             <span class="action-owner">Product + Engineering</span>
@@ -1470,7 +1464,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">09</div>
+          <div class="action-num">08</div>
           <div class="action-content">
             <h4>Redesign pull quote component</h4>
             <p>Broken implementation has caused editors to stop using a standard storytelling tool. Fix: controllable quote marks, readable attribution sizing, balanced typographic hierarchy. High impact, relatively contained scope.</p>
@@ -1481,7 +1475,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">10</div>
+          <div class="action-num">09</div>
           <div class="action-content">
             <h4>Redesign audio embed as a top-of-article CTA</h4>
             <p>Users assume audio embeds are AI-generated and skip them. Rename to "Listen to this article," move to top of relevant articles, add human attribution and play controls. Bridges AP's radio legacy with digital audio expectations.</p>
@@ -1492,7 +1486,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">11</div>
+          <div class="action-num">10</div>
           <div class="action-content">
             <h4>Apply distinct visual treatment to ads (full-width, color-backed)</h4>
             <p>Ads that mimic editorial content erode trust. Full-width ads with a distinct background color (NYT pattern) reduce visual confusion, set clearer editorial/advertising boundary, and produce a cleaner page without reducing ad visibility.</p>
@@ -1503,7 +1497,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">12</div>
+          <div class="action-num">11</div>
           <div class="action-content">
             <h4>Design and implement Timeline article template</h4>
             <p>One of the most frequently used content types currently renders identically to standard articles. A differentiated visual treatment (Guardian-style vertical line + date markers) requires a Pronto template change + frontend treatment. High value for contained scope.</p>
@@ -1514,7 +1508,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">13</div>
+          <div class="action-num">12</div>
           <div class="action-content">
             <h4>Document page-level templates in Zeroheight</h4>
             <p>Component-level design system documentation exists but page-level templates (standard, featured, immersive compositions) are not written down. This is a prerequisite for team alignment and editorial training on when to use which template.</p>
@@ -1525,7 +1519,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">14</div>
+          <div class="action-num">13</div>
           <div class="action-content">
             <h4>Fix lead image sizing to fit within desktop viewport</h4>
             <p>Hero images frequently extend beyond the viewport on desktop due to fixed header height. Constrain image height to viewport minus header, or animate header away on scroll. Stakeholder-confirmed issue with clear solutions to test.</p>
@@ -1536,7 +1530,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">15</div>
+          <div class="action-num">14</div>
           <div class="action-content">
             <h4>Redesign save/bookmark for visibility and reliability</h4>
             <p>Users have built workarounds (emailing articles, browser tabs) because they've given up on in-app save. Improve icon discoverability, add explicit label on first use, and tie to registration value proposition.</p>
@@ -1557,7 +1551,7 @@
       </div>
       <div class="action-list">
         <div class="action-item">
-          <div class="action-num">16</div>
+          <div class="action-num">15</div>
           <div class="action-content">
             <h4>Build configurable featured article template suite</h4>
             <p>Full-bleed lead, text overlay, flexible carousels, accordion, before/after, photo grid with modal. Would allow editors to produce enhanced articles without immersive team involvement — and bring those articles into the monetized CMS environment. Highest editorial demand item.</p>
@@ -1568,9 +1562,9 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">17</div>
+          <div class="action-num">16</div>
           <div class="action-content">
-            <h4>Implement native scrollytelling in featured template</h4>
+            <h4>Implement native scroll-based storytelling in featured template</h4>
             <p>Top priority from visual editors, currently achieved only through hacked Flourish embeds with significant limitations. Native support — even templated — would unlock a storytelling mode currently reserved for immersive team projects.</p>
           </div>
           <div class="action-meta">
@@ -1579,7 +1573,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">18</div>
+          <div class="action-num">17</div>
           <div class="action-content">
             <h4>Explore ad-reduced donor perk tier</h4>
             <p>Multiple donors expressed willingness to pay more specifically to reduce ads. An "ad-light" experience for donors at a higher monthly tier has demonstrated user appetite and could increase average donation value without requiring a full subscription model.</p>
@@ -1590,7 +1584,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">19</div>
+          <div class="action-num">18</div>
           <div class="action-content">
             <h4>Build AP News story search integration in Pronto</h4>
             <p>Inline hyperlinking is a top engagement driver but editors must manually search in a separate window. An internal story search surfaced within the Pronto editor would directly improve one of the highest-performing reader-facing mechanics.</p>
@@ -1601,7 +1595,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">20</div>
+          <div class="action-num">19</div>
           <div class="action-content">
             <h4>Introduce scheduled publishing in Dash CMS</h4>
             <p>A fundamental feature gap causing editors to stack stories at 11pm to hit optimal publish windows. Scheduled publishing is a standard CMS capability — its absence has real workflow and article quality consequences.</p>
@@ -1612,7 +1606,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">21</div>
+          <div class="action-num">20</div>
           <div class="action-content">
             <h4>Design personalization as an additive layer — not a filter</h4>
             <p>Users want topic-based surfacing but fear missing important stories they didn't anticipate wanting. The product framing must be "we'll still show you the important stuff" — personalization supplements editorial curation, it doesn't replace it. Includes email digest volume controls.</p>
@@ -1623,7 +1617,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">22</div>
+          <div class="action-num">21</div>
           <div class="action-content">
             <h4>Offline article saving for app</h4>
             <p>A specific, articulable use case — pre-loading articles before flights or offline periods — with no current solution. High-value for a loyal, travel-oriented segment. Likely registration-gated, which gives it double value as a sign-up driver.</p>
@@ -1634,7 +1628,7 @@
           </div>
         </div>
         <div class="action-item">
-          <div class="action-num">23</div>
+          <div class="action-num">22</div>
           <div class="action-content">
             <h4>Define article-level optimization ownership</h4>
             <p>Who ensures a video is added to a story published 4 hours later? Who fixes a related stories module pulling irrelevant content? Currently a "jump ball." Organizational design question that design can support with better tooling, defaults, and documentation — but someone must own it.</p>
