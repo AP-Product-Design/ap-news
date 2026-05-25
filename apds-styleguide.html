@@ -271,9 +271,10 @@
       overflow: hidden;
       margin-bottom: var(--ap-spacing-300);
     }
-    .grid-viewport--390 { width: 390px; max-width: 100%; }
-    .grid-viewport--768 { width: 768px; max-width: 100%; }
+    .grid-viewport--412 { width: 412px; max-width: 100%; }
+    .grid-viewport--800 { width: 800px; max-width: 100%; }
     .grid-viewport--1024 { width: 1024px; max-width: 100%; }
+    .grid-viewport--1280 { width: 1280px; max-width: 100%; }
     .grid-viewport--1440 { width: 1440px; max-width: 100%; }
     .grid-viewport__inner {
       display: flex;
@@ -1205,11 +1206,11 @@
       <p class="responsive-intro">Grid sets for each breakpoint. Each sample shows viewport width, margins (blue-tinted strips), column count, and gap between columns.</p>
 
       <div class="grid-breakpoint">
-        <h3>390px</h3>
+        <h3>412px</h3>
         <p class="grid-breakpoint-meta">Margins: 20px · Gap: 12px · Column variants: 2, 3, 4, 5, 6</p>
         <div class="grid-variant">
           <p class="grid-variant-title">2 columns</p>
-          <div class="grid-viewport grid-viewport--390">
+          <div class="grid-viewport grid-viewport--412">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(2, 1fr); gap: 12px;">
@@ -1221,7 +1222,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">3 columns</p>
-          <div class="grid-viewport grid-viewport--390">
+          <div class="grid-viewport grid-viewport--412">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(3, 1fr); gap: 12px;">
@@ -1233,7 +1234,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">4 columns</p>
-          <div class="grid-viewport grid-viewport--390">
+          <div class="grid-viewport grid-viewport--412">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(4, 1fr); gap: 12px;">
@@ -1245,7 +1246,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">5 columns</p>
-          <div class="grid-viewport grid-viewport--390">
+          <div class="grid-viewport grid-viewport--412">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(5, 1fr); gap: 12px;">
@@ -1257,7 +1258,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">6 columns</p>
-          <div class="grid-viewport grid-viewport--390">
+          <div class="grid-viewport grid-viewport--412">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(6, 1fr); gap: 12px;">
@@ -1270,11 +1271,11 @@
       </div>
 
       <div class="grid-breakpoint">
-        <h3>768px</h3>
+        <h3>800px</h3>
         <p class="grid-breakpoint-meta">Margins: 20px · Gap: 16px · Column variants: 2, 3, 4, 5, 12</p>
         <div class="grid-variant">
           <p class="grid-variant-title">2 columns</p>
-          <div class="grid-viewport grid-viewport--768">
+          <div class="grid-viewport grid-viewport--800">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(2, 1fr); gap: 16px;">
@@ -1286,7 +1287,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">3 columns</p>
-          <div class="grid-viewport grid-viewport--768">
+          <div class="grid-viewport grid-viewport--800">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(3, 1fr); gap: 16px;">
@@ -1298,7 +1299,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">4 columns</p>
-          <div class="grid-viewport grid-viewport--768">
+          <div class="grid-viewport grid-viewport--800">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
@@ -1310,7 +1311,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">5 columns</p>
-          <div class="grid-viewport grid-viewport--768">
+          <div class="grid-viewport grid-viewport--800">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(5, 1fr); gap: 16px;">
@@ -1322,7 +1323,7 @@
         </div>
         <div class="grid-variant">
           <p class="grid-variant-title">12 columns</p>
-          <div class="grid-viewport grid-viewport--768">
+          <div class="grid-viewport grid-viewport--800">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 20px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(12, 1fr); gap: 16px;">
@@ -1453,6 +1454,136 @@
         <div class="grid-variant">
           <p class="grid-variant-title">12 columns</p>
           <div class="grid-viewport grid-viewport--1024">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(12, 1fr); gap: 16px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-breakpoint">
+        <h3>1280px — Standard</h3>
+        <p class="grid-breakpoint-meta">Margins: 40px · Gap: 24px · Column variants: 2, 3, 4, 5, 12</p>
+        <div class="grid-variant">
+          <p class="grid-variant-title">2 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(2, 1fr); gap: 24px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">3 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">4 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(4, 1fr); gap: 24px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">5 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(5, 1fr); gap: 24px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">12 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(12, 1fr); gap: 24px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-breakpoint">
+        <h3>1280px — Compact</h3>
+        <p class="grid-breakpoint-meta">Margins: 40px · Gap: 16px · Column variants: 2, 3, 4, 5, 12</p>
+        <div class="grid-variant">
+          <p class="grid-variant-title">2 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">3 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">4 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">5 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
+            <div class="grid-viewport__inner">
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+              <div class="grid-viewport__content" style="grid-template-columns: repeat(5, 1fr); gap: 16px;">
+                <div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div><div class="grid-viewport__col"></div>
+              </div>
+              <div class="grid-viewport__margin" style="width: 40px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-variant">
+          <p class="grid-variant-title">12 columns</p>
+          <div class="grid-viewport grid-viewport--1280">
             <div class="grid-viewport__inner">
               <div class="grid-viewport__margin" style="width: 40px;"></div>
               <div class="grid-viewport__content" style="grid-template-columns: repeat(12, 1fr); gap: 16px;">
