@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AP News Tips Embed</title>
+</head>
+<body>
+
+<!-- AP News Tips Embed — Design 3 (dark card) -->
+<!-- Icons: Lucide (MIT License) — https://lucide.dev -->
+<div class="ap-news-tip" role="region" aria-label="Submit a tip to AP Investigates">
+
+  <!-- Header bar -->
+  <div class="ap-news-tip__header">
+    <!-- info (Lucide MIT) -->
+    <svg class="ap-news-tip__header-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 16v-4"/>
+      <path d="M12 8h.01"/>
+    </svg>
+    <span class="ap-news-tip__header-label">Have a news tip?</span>
+  </div>
+
+  <!-- Introduction -->
+  <div class="ap-news-tip__intro">
+    <h2 class="ap-news-tip__headline">Tell our investigators</h2>
+    <p class="ap-news-tip__description">AP&#8217;s global investigative team accepts tips securely and confidentially. Choose the method that works best for you.</p>
+  </div>
+
+  <!-- Contact methods -->
+  <div class="ap-news-tip__contacts">
+
+    <a href="mailto:investigative@ap.org" class="ap-news-tip__contact-row" aria-label="Email AP's investigative team at investigative@ap.org">
+      <!-- mail (Lucide MIT) -->
+      <svg class="ap-news-tip__contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="16" x="2" y="4" rx="2"/>
+        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+      </svg>
+      <div class="ap-news-tip__contact-text">
+        <span class="ap-news-tip__contact-label">Email</span>
+        <span class="ap-news-tip__contact-value">investigative@ap.org</span>
+      </div>
+      <!-- chevron-right (Lucide MIT) -->
+      <svg class="ap-news-tip__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </a>
+
+    <!-- Signal deep link: verify URL with AP Investigates team before publishing -->
+    <a href="https://signal.me/#p/+12022818604" class="ap-news-tip__contact-row" aria-label="Contact AP via Signal app at +1 (202) 281-8604">
+      <!-- smartphone (Lucide MIT) — generic substitute; Signal brand mark is trademarked -->
+      <svg class="ap-news-tip__contact-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="14" height="20" x="5" y="2" rx="2" ry="2"/>
+        <path d="M12 18h.01"/>
+      </svg>
+      <div class="ap-news-tip__contact-text">
+        <span class="ap-news-tip__contact-label">Signal</span>
+        <span class="ap-news-tip__contact-value">+1 (202) 281-8604</span>
+      </div>
+      <svg class="ap-news-tip__chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6"/>
+      </svg>
+    </a>
+
+    <!-- Confidentiality note -->
+    <div class="ap-news-tip__confidentiality">
+      <!-- shield-check (Lucide MIT) -->
+      <svg class="ap-news-tip__confidentiality-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        <path d="m9 12 2 2 4-4"/>
+      </svg>
+      <span class="ap-news-tip__confidentiality-label">Secure and confidential</span>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  @font-face {
+    font-family: 'AP Var';
+    src: url('../fonts/APVarW05-Regular.woff2') format('woff2');
+    font-display: swap;
+  }
+
+  /* ─── Maple design tokens ─────────────────────────────────────────── */
+  :root {
+    /* Primitives */
+    --ap-white:         #ffffff;
+    --ap-neutral-200:   #e6e6e7;
+    --ap-neutral-700:   #515151;
+    --ap-neutral-800:   #3a3a3a;
+    --ap-neutral-900:   #191919;
+    --ap-solid-red:     #da1026;
+
+    /* Surface / semantic */
+    --ap-bg-header-primary:      var(--ap-neutral-900);
+    --ap-bg-header-secondary:    var(--ap-neutral-800);
+    --ap-text-inverse-primary:   var(--ap-white);
+    --ap-text-inverse-secondary: var(--ap-neutral-200);
+    --ap-border-subtle:          var(--ap-neutral-200);
+
+    /* Typography */
+    --ap-font:             'AP Var', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --ap-weight-regular:   400;
+    --ap-weight-medium:    530;
+    --ap-weight-bold:      676;
+    --ap-weight-cond-bold: 724;
+    --ap-letter-wide:      0.0625rem;
+
+    /* Type scale — SM/MD tier (< 1024px) */
+    --ap-text-x2:       1.5rem;   /* 24px — responsive, steps up at LG/XL */
+    --ap-text-x-base:   1rem;     /* 16px — responsive, steps up at LG/XL */
+    --ap-text-fixed-md: 1rem;     /* 16px — fixed, never steps up */
+    --ap-text-metadata: 0.75rem;  /* 12px — fixed, never steps up */
+
+    /* Spacing — SM/MD tier */
+    --ap-space-200: 0.5rem;   /*  8px */
+    --ap-space-300: 0.75rem;  /* 12px */
+    --ap-space-400: 1rem;     /* 16px */
+    --ap-space-600: 1.5rem;   /* 24px */
+
+    /* Layout */
+    --ap-radius-sm: 0.1875rem;  /* 3px */
+    --ap-stroke-01: 0.0625rem;  /* 1px */
+  }
+
+  /* LG/XL — spacing and type scale step up at 1024px */
+  @media (min-width: 1024px) {
+    :root {
+      --ap-text-x2:     1.6875rem;  /* 27px */
+      --ap-text-x-base: 1.125rem;   /* 18px */
+      --ap-space-200:   0.75rem;    /* 12px */
+      --ap-space-300:   1rem;       /* 16px */
+      --ap-space-400:   1.5rem;     /* 24px */
+      --ap-space-600:   2.5rem;     /* 40px */
+    }
+  }
+
+  /* ─── Preview wrapper (remove when embedding in CMS) ─────────────── */
+  body {
+    margin: 0;
+    padding: 2rem 1.25rem;
+    background: #f2f2f2;
+    font-family: var(--ap-font);
+    box-sizing: border-box;
+  }
+
+  /* ─── Embed card ─────────────────────────────────────────────────── */
+  .ap-news-tip {
+    max-width: 680px;
+    width: 100%;
+    margin: 0 auto;
+    border: var(--ap-stroke-01) solid var(--ap-border-subtle);
+    border-radius: var(--ap-radius-sm);
+    overflow: hidden;
+    font-family: var(--ap-font);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+  }
+
+  /* ─── Header bar ─────────────────────────────────────────────────── */
+  .ap-news-tip__header {
+    display: flex;
+    align-items: center;
+    gap: var(--ap-space-200);
+    padding: var(--ap-space-300);
+    background-color: var(--ap-solid-red);
+    color: var(--ap-text-inverse-primary);
+  }
+
+  .ap-news-tip__header-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .ap-news-tip__header-label {
+    font-size: var(--ap-text-x-base);
+    font-weight: var(--ap-weight-bold);
+    font-variation-settings: 'wght' 676;
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ─── Introduction ───────────────────────────────────────────────── */
+  .ap-news-tip__intro {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-space-300);
+    padding: var(--ap-space-400);
+    background-color: var(--ap-bg-header-primary);
+  }
+
+  .ap-news-tip__headline {
+    margin: 0;
+    font-family: var(--ap-font);
+    font-size: var(--ap-text-x2);
+    font-weight: var(--ap-weight-cond-bold);
+    font-stretch: 50%;
+    font-variation-settings: 'wdth' 50, 'wght' 724;
+    line-height: 1.2;
+    text-transform: uppercase;
+    color: var(--ap-text-inverse-primary);
+  }
+
+  .ap-news-tip__description {
+    margin: 0;
+    font-size: var(--ap-text-x-base);
+    font-weight: var(--ap-weight-regular);
+    line-height: 1.5;
+    color: var(--ap-text-inverse-secondary);
+  }
+
+  /* ─── Contact methods ────────────────────────────────────────────── */
+  .ap-news-tip__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-space-300);
+    padding: 0 var(--ap-space-400) var(--ap-space-400);
+    background-color: var(--ap-bg-header-primary);
+  }
+
+  .ap-news-tip__contact-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: var(--ap-space-200) var(--ap-space-600) var(--ap-space-200) var(--ap-space-200);
+    background-color: var(--ap-bg-header-secondary);
+    border-radius: var(--ap-radius-sm);
+    text-decoration: none;
+    color: var(--ap-text-inverse-primary);
+    transition: background-color 0.15s ease;
+    box-sizing: border-box;
+  }
+
+  .ap-news-tip__contact-row:hover {
+    background-color: var(--ap-neutral-700);
+  }
+
+  .ap-news-tip__contact-row:focus-visible {
+    outline: 2px solid var(--ap-white);
+    outline-offset: 2px;
+  }
+
+  .ap-news-tip__contact-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .ap-news-tip__contact-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ap-news-tip__contact-label {
+    display: block;
+    font-size: var(--ap-text-metadata);
+    font-weight: var(--ap-weight-medium);
+    font-variation-settings: 'wght' 530;
+    letter-spacing: var(--ap-letter-wide);
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ap-text-inverse-secondary);
+  }
+
+  .ap-news-tip__contact-value {
+    display: block;
+    font-size: var(--ap-text-fixed-md);
+    font-weight: var(--ap-weight-medium);
+    font-variation-settings: 'wght' 530;
+    line-height: 1.3;
+    color: var(--ap-text-inverse-primary);
+  }
+
+  .ap-news-tip__chevron {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    color: var(--ap-text-inverse-secondary);
+  }
+
+  /* ─── Confidentiality note ───────────────────────────────────────── */
+  .ap-news-tip__confidentiality {
+    display: flex;
+    align-items: center;
+    gap: var(--ap-space-200);
+    color: var(--ap-text-inverse-primary);
+  }
+
+  .ap-news-tip__confidentiality-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .ap-news-tip__confidentiality-label {
+    font-size: var(--ap-text-metadata);
+    font-weight: var(--ap-weight-medium);
+    font-variation-settings: 'wght' 530;
+    letter-spacing: var(--ap-letter-wide);
+    line-height: 1.3;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ─── SM viewport (412px) — tighten padding slightly ─────────────── */
+  @media (max-width: 575px) {
+    .ap-news-tip__headline {
+      font-size: 1.25rem;  /* x1 at SM — slightly smaller than x2 default */
+    }
+  }
+</style>
+
+</body>
+</html>
