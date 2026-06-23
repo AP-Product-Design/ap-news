@@ -319,6 +319,12 @@
       <p class="changelog-intro">Recent additions and changes synced from Figma.</p>
 
       <article class="changelog-entry">
+        <p class="changelog-date">2026-05-18</p>
+        <h3 class="changelog-title">Interactive — Filled red variant added</h3>
+        <p class="changelog-desc">A new <code>interactive/filled-red</code> variant joins Filled, Outlined, Overlay, Text link, and Text link subtle. It includes <code>background</code>, <code>icon</code>, and <code>label</code> tables for a primary red CTA treatment (used for donation and urgency actions). The <code>enabled/active/selected</code> states all resolve to <code>red.600</code> (#da1026); <code>hover-bg</code> uses the new primitive <code>red.400A</code> (#ff1818) to brighten on hover. See <a href="#colors">Colors → Interactive → Filled red</a>.</p>
+      </article>
+
+      <article class="changelog-entry">
         <p class="changelog-date">2026-05-07</p>
         <h3 class="changelog-title">Line-height tokens added</h3>
         <p class="changelog-desc">Five new line-height tokens are now part of the typography utility set: <code>tight</code> (1.1), <code>heading-120</code> (1.2), <code>heading-130</code> (1.3), <code>body</code> (1.5), and <code>relaxed</code> (1.8). Documented under <a href="#font-weight">Font weight &amp; stretch → Line height</a>.</p>
@@ -472,6 +478,39 @@
               <tr><td class="color-token-name">active-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
               <tr><td class="color-token-name">disabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
               <tr><td class="color-token-name">selected-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#191919"></span> <span class="color-hex">#191919</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Filled red (background)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+              <tr><td class="color-token-name">hover-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ff1818"></span> <span class="color-hex">#ff1818</span></td></tr>
+              <tr><td class="color-token-name">active-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+              <tr><td class="color-token-name">disabled-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td></tr>
+              <tr><td class="color-token-name">selected-bg</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#da1026"></span> <span class="color-hex">#da1026</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Filled red (icon)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">disabled-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#a8a8a9"></span> <span class="color-hex">#a8a8a9</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#efefef"></span> <span class="color-hex">#efefef</span></td></tr>
+              <tr><td class="color-token-name">selected-icon</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+            </tbody>
+          </table>
+          <h4>Filled red (label)</h4>
+          <table class="color-table">
+            <thead><tr><th>Token</th><th>Light</th><th>Dark</th></tr></thead>
+            <tbody>
+              <tr><td class="color-token-name">enabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">hover-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">active-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
+              <tr><td class="color-token-name">disabled-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#c4c4c4"></span> <span class="color-hex">#c4c4c4</span></td></tr>
+              <tr><td class="color-token-name">selected-label</td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td><td class="color-swatch-cell"><span class="color-swatch-inline" style="background:#ffffff"></span> <span class="color-hex">#ffffff</span></td></tr>
             </tbody>
           </table>
           <h4>Outlined (background)</h4>
