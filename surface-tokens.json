@@ -1,0 +1,1258 @@
+{
+  "Mode1_Light": {
+    "Surface": {
+      "color": {
+        "backgrounds": {
+          "ap-alert-blue": {
+            "$value": "{Primitives.color.link.500}"
+          },
+          "ap-alert-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "overlay": {
+            "$value": "{Primitives.color.neutral.black-trans-50}"
+          },
+          "elevated": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "header-secondary": {
+            "$value": "{Primitives.color.neutral.800}"
+          },
+          "header-primary": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "tertiary": {
+            "$value": "{Primitives.color.neutral.300}"
+          },
+          "secondary": {
+            "$value": "{Primitives.color.neutral.200}"
+          },
+          "primary": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918310
+          }
+        },
+        "brand": {
+          "ap-solid-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "ap-adaptive-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "ap-accent-red": {
+            "$value": "{Primitives.color.red.500P}"
+          },
+          "ap-brand-red": {
+            "$value": "{Primitives.color.red.500P}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918311
+          }
+        },
+        "elements": {
+          "border-bold": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "border-moderate": {
+            "$value": "{Primitives.color.neutral.500}"
+          },
+          "border-subtle": {
+            "$value": "{Primitives.color.neutral.400}"
+          },
+          "list-item-disc": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918312
+          }
+        },
+        "icons": {
+          "inverse": {
+            "inverse-disabled": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "inverse-selected": {
+              "$value": "{Primitives.color.neutral.300}"
+            },
+            "inverse-active": {
+              "$value": "{Primitives.color.neutral.300}"
+            },
+            "inverse-hovered": {
+              "$value": "{Primitives.color.neutral.200}"
+            },
+            "inverse-enabled": {
+              "$value": "{Primitives.color.neutral.white}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918314
+            }
+          },
+          "primary": {
+            "disabled": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "selected": {
+              "$value": "{Primitives.color.neutral.800}"
+            },
+            "active": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "enabled-semi-trans-50": {
+              "$value": "{Primitives.color.neutral.black-trans-50}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.neutral.900}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918315
+            }
+          },
+          "secondary": {
+            "disabled": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "selected": {
+              "$value": "{Primitives.color.neutral.800}"
+            },
+            "active": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.neutral.900}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.neutral.650}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918316
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918313
+          }
+        },
+        "interactive": {
+          "filled": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.800}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.800}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918323
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918324
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918325
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918318
+            }
+          },
+          "filled-red": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.red.400A}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918320
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918321
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918322
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918319
+            }
+          },
+          "outlined": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.transparent}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.200}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.200}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.200}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.transparent}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918327
+              }
+            },
+            "border": {
+              "disabled-border": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-border": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "active-border": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "hover-border": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "enabled-border": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918328
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918329
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.800}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918330
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918326
+            }
+          },
+          "overlay": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.900-trans-70}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918332
+              }
+            },
+            "border": {
+              "disabled-border": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "active-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "hover-border": {
+                "$value": "{Primitives.color.neutral.100}"
+              },
+              "enabled-border": {
+                "$value": "{Primitives.color.neutral.400}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918333
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918334
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918335
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918331
+            }
+          },
+          "text-link": {
+            "selected": {
+              "$value": "{Primitives.color.link.700}"
+            },
+            "disabled": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "active": {
+              "$value": "{Primitives.color.link.500}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.link.700}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.link.500}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918336
+            }
+          },
+          "text-link-subtle": {
+            "selected": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "disabled": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "active": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "hover": {
+              "$value": "{Surface.color.text.primary-hover}"
+            },
+            "enabled": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918337
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918317
+          }
+        },
+        "notification": {
+          "neutral-bg": {
+            "$value": "{Primitives.color.neutral.700}"
+          },
+          "icon-inverse": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "text-inverse": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "icon": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "text": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "announcement": {
+            "border": {
+              "$value": "{Primitives.color.neutral.400}"
+            },
+            "background": {
+              "$value": "{Primitives.color.neutral.300}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918339
+            }
+          },
+          "feedback-error": {
+            "border": {
+              "$value": "{Primitives.color.red.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.red.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918340
+            }
+          },
+          "feedback-info": {
+            "border": {
+              "$value": "{Primitives.color.cyan.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.blue.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918341
+            }
+          },
+          "feedback-success": {
+            "border": {
+              "$value": "{Primitives.color.green.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.green.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918342
+            }
+          },
+          "feedback-warning": {
+            "border": {
+              "$value": "{Primitives.color.yellow-orange.500}"
+            },
+            "background": {
+              "$value": "{Primitives.color.yellow-orange.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918343
+            }
+          },
+          "status": {
+            "border": {
+              "$value": "{Primitives.color.neutral.650}"
+            },
+            "background": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918344
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918338
+          }
+        },
+        "text": {
+          "warning": {
+            "$value": "{Primitives.color.orange.700}"
+          },
+          "infortmation": {
+            "$value": "{Primitives.color.link.500}"
+          },
+          "error": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "success": {
+            "$value": "{Primitives.color.green.600}"
+          },
+          "inverse-secondary": {
+            "$value": "{Primitives.color.neutral.400}"
+          },
+          "inverse-primary": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "eyebrow-breaking": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "eyebrow-default": {
+            "$value": "{Primitives.color.neutral.650}"
+          },
+          "ap-adaptive-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "subheader": {
+            "$value": "{Primitives.color.neutral.300}"
+          },
+          "header": {
+            "$value": "{Primitives.color.neutral.200}"
+          },
+          "secondary": {
+            "$value": "{Primitives.color.neutral.650}"
+          },
+          "primary-hover": {
+            "$value": "{Primitives.color.neutral.600}"
+          },
+          "primary": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918345
+          }
+        },
+        "$extensions": {
+          "com.zeroheight.tokenGroupId": 2918309
+        }
+      },
+      "$extensions": {
+        "com.zeroheight.collectionId": 80273
+      }
+    },
+    "$extensions": {
+      "com.zeroheight.tokenSetId": 16696,
+      "com.zeroheight.tokenSetVersionId": 48705
+    }
+  },
+  "Mode1_Dark": {
+    "Surface": {
+      "color": {
+        "backgrounds": {
+          "ap-alert-blue": {
+            "$value": "{Primitives.color.link.500}"
+          },
+          "ap-alert-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "overlay": {
+            "$value": "{Primitives.color.neutral.black-trans-50}"
+          },
+          "elevated": {
+            "$value": "{Primitives.color.neutral.800}"
+          },
+          "header-secondary": {
+            "$value": "{Primitives.color.neutral.800}"
+          },
+          "header-primary": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "tertiary": {
+            "$value": "{Primitives.color.neutral.700}"
+          },
+          "secondary": {
+            "$value": "{Primitives.color.neutral.800}"
+          },
+          "primary": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918310
+          }
+        },
+        "brand": {
+          "ap-solid-red": {
+            "$value": "{Primitives.color.red.600}"
+          },
+          "ap-adaptive-red": {
+            "$value": "{Primitives.color.red.300}"
+          },
+          "ap-accent-red": {
+            "$value": "{Primitives.color.red.500P}"
+          },
+          "ap-brand-red": {
+            "$value": "{Primitives.color.red.500P}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918311
+          }
+        },
+        "elements": {
+          "border-bold": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "border-moderate": {
+            "$value": "{Primitives.color.neutral.500}"
+          },
+          "border-subtle": {
+            "$value": "{Primitives.color.neutral.700}"
+          },
+          "list-item-disc": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918312
+          }
+        },
+        "icons": {
+          "inverse": {
+            "inverse-disabled": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "inverse-selected": {
+              "$value": "{Primitives.color.neutral.900}"
+            },
+            "inverse-active": {
+              "$value": "{Primitives.color.neutral.800}"
+            },
+            "inverse-hovered": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "inverse-enabled": {
+              "$value": "{Primitives.color.neutral.900}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918314
+            }
+          },
+          "primary": {
+            "disabled": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "selected": {
+              "$value": "{Primitives.color.neutral.100}"
+            },
+            "active": {
+              "$value": "{Primitives.color.neutral.300}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "enabled-semi-trans-50": {
+              "$value": "{Primitives.color.neutral.white-trans-50}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.neutral.white}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918315
+            }
+          },
+          "secondary": {
+            "disabled": {
+              "$value": "{Primitives.color.neutral.500}"
+            },
+            "selected": {
+              "$value": "{Primitives.color.neutral.100}"
+            },
+            "active": {
+              "$value": "{Primitives.color.neutral.300}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.neutral.white}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.neutral.200}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918316
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918313
+          }
+        },
+        "interactive": {
+          "filled": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.200}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918323
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918324
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.900}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918325
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918318
+            }
+          },
+          "filled-red": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.red.400A}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.red.600}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918320
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918321
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.500}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918322
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918319
+            }
+          },
+          "outlined": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.transparent}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918327
+              }
+            },
+            "border": {
+              "disabled-border": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "active-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "hover-border": {
+                "$value": "{Primitives.color.neutral.100}"
+              },
+              "enabled-border": {
+                "$value": "{Primitives.color.neutral.400}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918328
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918329
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918330
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918326
+            }
+          },
+          "overlay": {
+            "background": {
+              "disabled-bg": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "active-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "hover-bg": {
+                "$value": "{Primitives.color.neutral.700}"
+              },
+              "enabled-bg": {
+                "$value": "{Primitives.color.neutral.900-trans-70}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918332
+              }
+            },
+            "border": {
+              "disabled-border": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "active-border": {
+                "$value": "{Primitives.color.neutral.300}"
+              },
+              "hover-border": {
+                "$value": "{Primitives.color.neutral.100}"
+              },
+              "enabled-border": {
+                "$value": "{Primitives.color.neutral.400}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918333
+              }
+            },
+            "icon": {
+              "disabled-icon": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-icon": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918334
+              }
+            },
+            "label": {
+              "disabled-label": {
+                "$value": "{Primitives.color.neutral.600}"
+              },
+              "selected-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "active-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "hover-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "enabled-label": {
+                "$value": "{Primitives.color.neutral.white}"
+              },
+              "$extensions": {
+                "com.zeroheight.tokenGroupId": 2918335
+              }
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918331
+            }
+          },
+          "text-link": {
+            "selected": {
+              "$value": "{Primitives.color.link.100}"
+            },
+            "disabled": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "active": {
+              "$value": "{Primitives.color.link.300}"
+            },
+            "hover": {
+              "$value": "{Primitives.color.link.100}"
+            },
+            "enabled": {
+              "$value": "{Primitives.color.link.300}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918336
+            }
+          },
+          "text-link-subtle": {
+            "selected": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "disabled": {
+              "$value": "{Primitives.color.neutral.600}"
+            },
+            "active": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "hover": {
+              "$value": "{Surface.color.text.primary-hover}"
+            },
+            "enabled": {
+              "$value": "{Surface.color.text.primary}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918337
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918317
+          }
+        },
+        "notification": {
+          "neutral-bg": {
+            "$value": "{Primitives.color.neutral.700}"
+          },
+          "icon-inverse": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "text-inverse": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "icon": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "text": {
+            "$value": "{Primitives.color.neutral.900}"
+          },
+          "announcement": {
+            "border": {
+              "$value": "{Primitives.color.neutral.650}"
+            },
+            "background": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918339
+            }
+          },
+          "feedback-error": {
+            "border": {
+              "$value": "{Primitives.color.red.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.red.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918340
+            }
+          },
+          "feedback-info": {
+            "border": {
+              "$value": "{Primitives.color.cyan.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.blue.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918341
+            }
+          },
+          "feedback-success": {
+            "border": {
+              "$value": "{Primitives.color.green.600}"
+            },
+            "background": {
+              "$value": "{Primitives.color.green.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918342
+            }
+          },
+          "feedback-warning": {
+            "border": {
+              "$value": "{Primitives.color.yellow-orange.500}"
+            },
+            "background": {
+              "$value": "{Primitives.color.yellow-orange.100}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918343
+            }
+          },
+          "status": {
+            "border": {
+              "$value": "{Primitives.color.neutral.650}"
+            },
+            "background": {
+              "$value": "{Primitives.color.neutral.700}"
+            },
+            "$extensions": {
+              "com.zeroheight.tokenGroupId": 2918344
+            }
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918338
+          }
+        },
+        "text": {
+          "warning": {
+            "$value": "{Primitives.color.orange.300}"
+          },
+          "infortmation": {
+            "$value": "{Primitives.color.link.300}"
+          },
+          "error": {
+            "$value": "{Primitives.color.red.300}"
+          },
+          "success": {
+            "$value": "{Primitives.color.green.200}"
+          },
+          "inverse-secondary": {
+            "$value": "{Primitives.color.neutral.400}"
+          },
+          "inverse-primary": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "eyebrow-breaking": {
+            "$value": "{Primitives.color.red.300}"
+          },
+          "eyebrow-default": {
+            "$value": "{Primitives.color.neutral.300}"
+          },
+          "ap-adaptive-red": {
+            "$value": "{Primitives.color.red.300}"
+          },
+          "subheader": {
+            "$value": "{Primitives.color.neutral.300}"
+          },
+          "header": {
+            "$value": "{Primitives.color.neutral.200}"
+          },
+          "secondary": {
+            "$value": "{Primitives.color.neutral.400}"
+          },
+          "primary-hover": {
+            "$value": "{Primitives.color.neutral.500}"
+          },
+          "primary": {
+            "$value": "{Primitives.color.neutral.white}"
+          },
+          "$extensions": {
+            "com.zeroheight.tokenGroupId": 2918345
+          }
+        },
+        "$extensions": {
+          "com.zeroheight.tokenGroupId": 2918309
+        }
+      },
+      "$extensions": {
+        "com.zeroheight.collectionId": 80273
+      }
+    },
+    "$extensions": {
+      "com.zeroheight.tokenSetId": 16696,
+      "com.zeroheight.tokenSetVersionId": 48705
+    }
+  }
+}
