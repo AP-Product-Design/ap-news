@@ -1,0 +1,103 @@
+/*
+ * Maple Design System — Utility Tokens
+ * Source: Utility collection (Value mode)
+ * Primitives are not exposed; these are the public API.
+ */
+
+:root {
+  /* ─── Border Radius ─────────────────────────────────── */
+  --maple-radius-sm:  3px;
+  --maple-radius-md:  8px;
+  --maple-radius-lg:  24px;
+  --maple-radius-xl:  32px;
+
+  /* ─── Layout Sizes ──────────────────────────────────── */
+  --maple-size-00: 0px;
+  --maple-size-04: 4px;
+  --maple-size-08: 8px;
+  --maple-size-12: 12px;
+  --maple-size-16: 16px;
+  --maple-size-20: 20px;
+  --maple-size-24: 24px;
+  --maple-size-32: 32px;
+  --maple-size-40: 40px;
+  --maple-size-48: 48px;
+  --maple-size-56: 56px;
+  --maple-size-64: 64px;
+  --maple-size-72: 72px;
+  --maple-size-80: 80px;
+  --maple-size-96: 96px;
+
+  /* ─── Content Spacing — Fixed ───────────────────────── */
+  --maple-space-fixed-tight:    4px;
+  --maple-space-fixed-compact:  8px;
+  --maple-space-fixed-snug:     12px;
+  --maple-space-fixed-default:  16px;
+  --maple-space-fixed-expanded: 24px;
+  --maple-space-fixed-generous: 32px;
+  --maple-space-fixed-spacious: 48px;
+
+  /* ─── Content Spacing — Responsive ─────────────────── */
+  /* These resolve through --maple-spacing-* vars defined  */
+  /* in tokens-responsive.css and change at breakpoints.   */
+  --maple-space-tight:    var(--maple-spacing-100);
+  --maple-space-compact:  var(--maple-spacing-200);
+  --maple-space-snug:     var(--maple-spacing-300);
+  --maple-space-default:  var(--maple-spacing-400);
+  --maple-space-expanded: var(--maple-spacing-600);
+  --maple-space-generous: var(--maple-spacing-700);
+  --maple-space-spacious: var(--maple-spacing-800);
+
+  /* ─── Module Spacing ────────────────────────────────── */
+  --maple-space-module-compact:  24px;
+  --maple-space-module-default:  32px;
+  --maple-space-module-expanded: 48px;
+
+  /* ─── Strokes ────────────────────────────────────────── */
+  --maple-stroke-01: 1px;
+  --maple-stroke-02: 2px;
+  --maple-stroke-03: 3px;
+  --maple-stroke-05: 5px;
+  --maple-stroke-07: 7px;
+  --maple-stroke-10: 10px;
+
+  /* ─── Typography — Font Family ──────────────────────── */
+  --maple-font-family: 'AP Var', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* ─── Typography — Font Weight ──────────────────────── */
+  --maple-font-weight-regular: 400;
+  --maple-font-weight-medium:  500;
+  --maple-font-weight-bold:    700;
+
+  /* ─── Typography — Font Width (wdth axis) ───────────── */
+  /* Use with font-variation-settings: "wdth" var(--maple-font-width-*) */
+  --maple-font-width-condensed:      50;
+  --maple-font-width-semi-condensed: 75;
+  --maple-font-width-normal:         100;
+
+  /* ─── Typography — Letter Spacing ──────────────────── */
+  --maple-letter-spacing-tight: -0.5px;
+  --maple-letter-spacing-wide:   1px;
+
+  /* ─── Typography — Line Height ──────────────────────── */
+  --maple-line-height-tight:       1.1;
+  --maple-line-height-heading-120: 1.2;
+  --maple-line-height-heading-130: 1.3;
+  --maple-line-height-body:        1.5;
+  --maple-line-height-relaxed:     1.8;
+
+  /* ─── Typography — Fixed Text Sizes ─────────────────── */
+  /* These do not change with breakpoint.                   */
+  --maple-text-size-metadata:   12px;
+  --maple-text-size-utility-sm: 12px;
+  --maple-text-size-body-sm:    14px;
+  --maple-text-size-fixed-sm:   14px;
+  --maple-text-size-nav-link:   14px;
+  --maple-text-size-utility-md: 14px;
+  --maple-text-size-body-base:  16px;
+  --maple-text-size-fixed-md:   16px;
+  --maple-text-size-utility-lg: 16px;
+  --maple-text-size-fixed-lg:   18px;
+  --maple-text-size-body-lg:    20px;
+}

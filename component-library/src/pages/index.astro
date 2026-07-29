@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const sections = [
+  {
+    href: '/base/',
+    title: 'Base Components',
+    description: 'Atomic UI elements — buttons, inputs, badges, labels, typography, and other foundational building blocks.',
+    tag: 'base',
+  },
+  {
+    href: '/slot/',
+    title: 'Slot Components',
+    description: 'Composite patterns built from base elements — cards, list items, and media containers designed to accept content.',
+    tag: 'slot',
+  },
+  {
+    href: '/modules/',
+    title: 'Modules',
+    description: 'Self-contained content sections — feature layouts, carousels, and standalone page sections with defined structure.',
+    tag: 'modules',
+  },
+  {
+    href: '/page-structures/',
+    title: 'Page Structures',
+    description: 'Full-page layout templates and grid systems for assembling complete views from modules and components.',
+    tag: 'page-structures',
+  },
+];
+---
+
+<BaseLayout title="Home">
+  <div class="hero">
+    <p class="hero-eyebrow">AP News Design System</p>
+    <h1 class="hero-title">Maple</h1>
+    <p class="hero-subtitle">Component Library</p>
+  </div>
+
+  <div class="section-grid">
+    {sections.map(({ href, title, description, tag }) => (
+      <a href={href} class="section-card" data-section={tag}>
+        <div class="section-card-inner">
+          <h2 class="section-card-title">{title}</h2>
+          <p class="section-card-description">{description}</p>
+          <span class="section-card-link" aria-hidden="true">
+            View components →
+          </span>
+        </div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .hero {
+    padding: var(--maple-space-fixed-generous) 0 var(--maple-space-module-default);
+    border-bottom: var(--maple-stroke-01) solid var(--maple-border-subtle);
+    margin-bottom: var(--maple-space-module-default);
+  }
+
+  .hero-eyebrow {
+    font-size: var(--maple-text-size-utility-md);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-eyebrow);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    margin-bottom: var(--maple-space-fixed-compact);
+  }
+
+  .hero-title {
+    font-size: var(--maple-text-x5);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-tight);
+    letter-spacing: var(--maple-letter-spacing-tight);
+    font-variation-settings: "wght" 700;
+    margin-bottom: var(--maple-space-fixed-compact);
+  }
+
+  .hero-subtitle {
+    font-size: var(--maple-text-x2);
+    font-weight: var(--maple-font-weight-regular);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-heading-120);
+  }
+
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--maple-space-fixed-default);
+  }
+
+  @media (max-width: 640px) {
+    .section-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .section-card {
+    display: block;
+    background: var(--maple-bg-elevated);
+    border: var(--maple-stroke-01) solid var(--maple-border-subtle);
+    border-radius: var(--maple-radius-md);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .section-card:hover {
+    border-color: var(--maple-border-moderate);
+    box-shadow: 0 4px 16px #0000001a;
+    transform: translateY(-1px);
+  }
+
+  .section-card:hover .section-card-link {
+    color: var(--maple-link-hover);
+  }
+
+  .section-card[data-section="base"] .section-card-inner {
+    border-top: var(--maple-stroke-03) solid var(--maple-brand-solid-red);
+  }
+
+  .section-card-inner {
+    padding: var(--maple-space-fixed-expanded);
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-compact);
+    height: 100%;
+    border-radius: var(--maple-radius-md);
+    overflow: hidden;
+  }
+
+  .section-card-title {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    font-variation-settings: "wght" 700;
+  }
+
+  .section-card-description {
+    font-size: var(--maple-text-size-body-sm);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-body);
+    flex: 1;
+  }
+
+  .section-card-link {
+    display: inline-block;
+    font-size: var(--maple-text-size-utility-md);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-link);
+    margin-top: var(--maple-space-fixed-snug);
+    transition: color 0.15s ease;
+  }
+</style>

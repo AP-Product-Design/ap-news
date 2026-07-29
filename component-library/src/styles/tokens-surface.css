@@ -1,0 +1,377 @@
+/*
+ * Maple Design System — Surface Tokens
+ * Source: Surface collection (Light / Dark modes)
+ *
+ * Light mode: default (:root) + explicit [data-theme="light"] on <html>.
+ * Dark mode:  set [data-theme="dark"] on <html>.
+ *
+ * To sync with system preference, add this script to your layout:
+ *   const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+ *   document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+ */
+
+/* ─── Light Mode (default) ──────────────────────────────── */
+:root,
+[data-theme="light"] {
+
+  /* Backgrounds */
+  --maple-bg-primary:        #ffffff;
+  --maple-bg-secondary:      #f2f2f2;
+  --maple-bg-tertiary:       #efefef;
+  --maple-bg-elevated:       #ffffff;
+  --maple-bg-header-primary: #191919;
+  --maple-bg-header-secondary: #3a3a3a;
+  --maple-bg-overlay:        #00000080;
+  --maple-bg-alert-blue:     #0042a9;
+  --maple-bg-alert-red:      #da1026;
+
+  /* Brand */
+  --maple-brand-accent-red:   #ff1818;
+  --maple-brand-adaptive-red: #da1026;
+  --maple-brand-red:          #ff1818;
+  --maple-brand-solid-red:    #da1026;
+
+  /* Elements */
+  --maple-border-bold:       #191919;
+  --maple-border-moderate:   #c4c4c4;
+  --maple-border-subtle:     #e6e6e7;
+  --maple-container-border:  #c4c4c4;
+  --maple-list-disc:         #191919;
+
+  /* Icons — Primary */
+  --maple-icon-enabled:       #191919;
+  --maple-icon-enabled-trans: #00000080;
+  --maple-icon-hover:         #a8a8a9;
+  --maple-icon-active:        #515151;
+  --maple-icon-selected:      #3a3a3a;
+  --maple-icon-disabled:      #a8a8a9;
+
+  /* Icons — Secondary */
+  --maple-icon-sec-enabled:  #666666;
+  --maple-icon-sec-hover:    #191919;
+  --maple-icon-sec-active:   #515151;
+  --maple-icon-sec-selected: #3a3a3a;
+  --maple-icon-sec-disabled: #a8a8a9;
+
+  /* Icons — Inverse */
+  --maple-icon-inv-enabled:  #ffffff;
+  --maple-icon-inv-hover:    #f2f2f2;
+  --maple-icon-inv-active:   #efefef;
+  --maple-icon-inv-selected: #efefef;
+  --maple-icon-inv-disabled: #c4c4c4;
+
+  /* Interactive — Filled (default/dark) */
+  --maple-btn-filled-bg:          #191919;
+  --maple-btn-filled-bg-hover:    #515151;
+  --maple-btn-filled-bg-active:   #3a3a3a;
+  --maple-btn-filled-bg-selected: #3a3a3a;
+  --maple-btn-filled-bg-disabled: #efefef;
+  --maple-btn-filled-label:         #ffffff;
+  --maple-btn-filled-label-hover:   #ffffff;
+  --maple-btn-filled-label-active:  #ffffff;
+  --maple-btn-filled-label-selected: #ffffff;
+  --maple-btn-filled-label-disabled: #c4c4c4;
+  --maple-btn-filled-icon:          #ffffff;
+  --maple-btn-filled-icon-hover:    #ffffff;
+  --maple-btn-filled-icon-active:   #ffffff;
+  --maple-btn-filled-icon-selected: #ffffff;
+  --maple-btn-filled-icon-disabled: #a8a8a9;
+
+  /* Interactive — Filled Red */
+  --maple-btn-filled-red-bg:          #da1026;
+  --maple-btn-filled-red-bg-hover:    #ff1818;
+  --maple-btn-filled-red-bg-active:   #da1026;
+  --maple-btn-filled-red-bg-selected: #da1026;
+  --maple-btn-filled-red-bg-disabled: #efefef;
+  --maple-btn-filled-red-label:         #ffffff;
+  --maple-btn-filled-red-label-hover:   #ffffff;
+  --maple-btn-filled-red-label-active:  #ffffff;
+  --maple-btn-filled-red-label-selected: #ffffff;
+  --maple-btn-filled-red-label-disabled: #c4c4c4;
+  --maple-btn-filled-red-icon:          #ffffff;
+  --maple-btn-filled-red-icon-hover:    #ffffff;
+  --maple-btn-filled-red-icon-active:   #ffffff;
+  --maple-btn-filled-red-icon-selected: #ffffff;
+  --maple-btn-filled-red-icon-disabled: #a8a8a9;
+
+  /* Interactive — Outlined */
+  --maple-btn-outlined-bg:          transparent;
+  --maple-btn-outlined-bg-hover:    #f2f2f2;
+  --maple-btn-outlined-bg-active:   #f2f2f2;
+  --maple-btn-outlined-bg-selected: #f2f2f2;
+  --maple-btn-outlined-bg-disabled: transparent;
+  --maple-btn-outlined-border:          #a8a8a9;
+  --maple-btn-outlined-border-hover:    #191919;
+  --maple-btn-outlined-border-active:   #191919;
+  --maple-btn-outlined-border-selected: #191919;
+  --maple-btn-outlined-border-disabled: #c4c4c4;
+  --maple-btn-outlined-label:         #191919;
+  --maple-btn-outlined-label-hover:   #191919;
+  --maple-btn-outlined-label-active:  #3a3a3a;
+  --maple-btn-outlined-label-selected: #191919;
+  --maple-btn-outlined-label-disabled: #c4c4c4;
+  --maple-btn-outlined-icon:          #191919;
+  --maple-btn-outlined-icon-hover:    #191919;
+  --maple-btn-outlined-icon-active:   #191919;
+  --maple-btn-outlined-icon-selected: #191919;
+  --maple-btn-outlined-icon-disabled: #c4c4c4;
+
+  /* Interactive — Overlay */
+  --maple-btn-overlay-bg:          #191919b2;
+  --maple-btn-overlay-bg-hover:    #515151;
+  --maple-btn-overlay-bg-active:   #515151;
+  --maple-btn-overlay-bg-selected: #515151;
+  --maple-btn-overlay-bg-disabled: #c4c4c4;
+  --maple-btn-overlay-border:          #e6e6e7;
+  --maple-btn-overlay-border-hover:    #f4f4f4;
+  --maple-btn-overlay-border-active:   #efefef;
+  --maple-btn-overlay-border-selected: #efefef;
+  --maple-btn-overlay-border-disabled: #a8a8a9;
+  --maple-btn-overlay-label:         #ffffff;
+  --maple-btn-overlay-label-hover:   #ffffff;
+  --maple-btn-overlay-label-active:  #ffffff;
+  --maple-btn-overlay-label-selected: #ffffff;
+  --maple-btn-overlay-label-disabled: #a8a8a9;
+  --maple-btn-overlay-icon:          #ffffff;
+  --maple-btn-overlay-icon-hover:    #ffffff;
+  --maple-btn-overlay-icon-active:   #ffffff;
+  --maple-btn-overlay-icon-selected: #ffffff;
+  --maple-btn-overlay-icon-disabled: #a8a8a9;
+
+  /* Interactive — Text Link */
+  --maple-link:          #0042a9;
+  --maple-link-hover:    #002860;
+  --maple-link-active:   #0042a9;
+  --maple-link-selected: #002860;
+  --maple-link-disabled: #c4c4c4;
+
+  /* Interactive — Text Link Subtle */
+  --maple-link-subtle:          #191919;
+  --maple-link-subtle-hover:    #a8a8a9;
+  --maple-link-subtle-active:   #191919;
+  --maple-link-subtle-selected: #191919;
+  --maple-link-subtle-disabled: #c4c4c4;
+
+  /* Text */
+  --maple-text-primary:        #191919;
+  --maple-text-primary-hover:  #a8a8a9;
+  --maple-text-secondary:      #666666;
+  --maple-text-inv-primary:    #ffffff;
+  --maple-text-inv-secondary:  #e6e6e7;
+  --maple-text-header:         #f2f2f2;
+  --maple-text-subheader:      #efefef;
+  --maple-text-eyebrow:        #666666;
+  --maple-text-eyebrow-breaking: #da1026;
+  --maple-text-adaptive-red:   #da1026;
+  --maple-text-info:           #0042a9;
+  --maple-text-error:          #da1026;
+  --maple-text-success:        #00804a;
+  --maple-text-warning:        #a0400c;
+
+  /* Notifications */
+  --maple-notif-icon:     #191919;
+  --maple-notif-icon-inv: #ffffff;
+  --maple-notif-bg:       #515151;
+  --maple-notif-text:     #191919;
+  --maple-notif-text-inv: #ffffff;
+
+  --maple-notif-announcement-bg:     #efefef;
+  --maple-notif-announcement-border: #e6e6e7;
+
+  --maple-notif-error-bg:     #fff4f0;
+  --maple-notif-error-border: #da1026;
+
+  --maple-notif-info-bg:     #e0f0ff;
+  --maple-notif-info-border: #0081e1;
+
+  --maple-notif-success-bg:     #f4fdee;
+  --maple-notif-success-border: #00804a;
+
+  --maple-notif-warning-bg:     #fffcea;
+  --maple-notif-warning-border: #ffba00;
+
+  --maple-notif-status-bg:     #515151;
+  --maple-notif-status-border: #666666;
+}
+
+/* ─── Dark Mode ─────────────────────────────────────────── */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --maple-bg-primary:          #191919;
+  --maple-bg-secondary:        #3a3a3a;
+  --maple-bg-tertiary:         #515151;
+  --maple-bg-elevated:         #3a3a3a;
+  --maple-bg-header-primary:   #191919;
+  --maple-bg-header-secondary: #3a3a3a;
+  --maple-bg-overlay:          #00000080;
+  --maple-bg-alert-blue:       #0042a9;
+  --maple-bg-alert-red:        #da1026;
+
+  /* Brand */
+  --maple-brand-accent-red:   #ff1818;
+  --maple-brand-adaptive-red: #ff5c58;
+  --maple-brand-red:          #ff1818;
+  --maple-brand-solid-red:    #da1026;
+
+  /* Elements */
+  --maple-border-bold:      #ffffff;
+  --maple-border-moderate:  #c4c4c4;
+  --maple-border-subtle:    #515151;
+  --maple-container-border: #515151;
+  --maple-list-disc:        #ffffff;
+
+  /* Icons — Primary */
+  --maple-icon-enabled:       #ffffff;
+  --maple-icon-enabled-trans: #ffffff80;
+  --maple-icon-hover:         #c4c4c4;
+  --maple-icon-active:        #efefef;
+  --maple-icon-selected:      #f4f4f4;
+  --maple-icon-disabled:      #c4c4c4;
+
+  /* Icons — Secondary */
+  --maple-icon-sec-enabled:  #f2f2f2;
+  --maple-icon-sec-hover:    #ffffff;
+  --maple-icon-sec-active:   #efefef;
+  --maple-icon-sec-selected: #f4f4f4;
+  --maple-icon-sec-disabled: #c4c4c4;
+
+  /* Icons — Inverse */
+  --maple-icon-inv-enabled:  #191919;
+  --maple-icon-inv-hover:    #515151;
+  --maple-icon-inv-active:   #3a3a3a;
+  --maple-icon-inv-selected: #191919;
+  --maple-icon-inv-disabled: #a8a8a9;
+
+  /* Interactive — Filled */
+  --maple-btn-filled-bg:          #ffffff;
+  --maple-btn-filled-bg-hover:    #f2f2f2;
+  --maple-btn-filled-bg-active:   #efefef;
+  --maple-btn-filled-bg-selected: #efefef;
+  --maple-btn-filled-bg-disabled: #a8a8a9;
+  --maple-btn-filled-label:          #191919;
+  --maple-btn-filled-label-hover:    #191919;
+  --maple-btn-filled-label-active:   #191919;
+  --maple-btn-filled-label-selected: #191919;
+  --maple-btn-filled-label-disabled: #c4c4c4;
+  --maple-btn-filled-icon:          #191919;
+  --maple-btn-filled-icon-hover:    #191919;
+  --maple-btn-filled-icon-active:   #191919;
+  --maple-btn-filled-icon-selected: #191919;
+  --maple-btn-filled-icon-disabled: #efefef;
+
+  /* Interactive — Filled Red */
+  --maple-btn-filled-red-bg:          #da1026;
+  --maple-btn-filled-red-bg-hover:    #ff1818;
+  --maple-btn-filled-red-bg-active:   #da1026;
+  --maple-btn-filled-red-bg-selected: #da1026;
+  --maple-btn-filled-red-bg-disabled: #a8a8a9;
+  --maple-btn-filled-red-label:          #ffffff;
+  --maple-btn-filled-red-label-hover:    #ffffff;
+  --maple-btn-filled-red-label-active:   #ffffff;
+  --maple-btn-filled-red-label-selected: #ffffff;
+  --maple-btn-filled-red-label-disabled: #c4c4c4;
+  --maple-btn-filled-red-icon:          #ffffff;
+  --maple-btn-filled-red-icon-hover:    #ffffff;
+  --maple-btn-filled-red-icon-active:   #ffffff;
+  --maple-btn-filled-red-icon-selected: #ffffff;
+  --maple-btn-filled-red-icon-disabled: #efefef;
+
+  /* Interactive — Outlined */
+  --maple-btn-outlined-bg:          transparent;
+  --maple-btn-outlined-bg-hover:    #515151;
+  --maple-btn-outlined-bg-active:   #515151;
+  --maple-btn-outlined-bg-selected: #515151;
+  --maple-btn-outlined-bg-disabled: transparent;
+  --maple-btn-outlined-border:          #e6e6e7;
+  --maple-btn-outlined-border-hover:    #f4f4f4;
+  --maple-btn-outlined-border-active:   #efefef;
+  --maple-btn-outlined-border-selected: #efefef;
+  --maple-btn-outlined-border-disabled: #a8a8a9;
+  --maple-btn-outlined-label:          #ffffff;
+  --maple-btn-outlined-label-hover:    #ffffff;
+  --maple-btn-outlined-label-active:   #ffffff;
+  --maple-btn-outlined-label-selected: #ffffff;
+  --maple-btn-outlined-label-disabled: #a8a8a9;
+  --maple-btn-outlined-icon:          #ffffff;
+  --maple-btn-outlined-icon-hover:    #ffffff;
+  --maple-btn-outlined-icon-active:   #ffffff;
+  --maple-btn-outlined-icon-selected: #ffffff;
+  --maple-btn-outlined-icon-disabled: #a8a8a9;
+
+  /* Interactive — Overlay */
+  --maple-btn-overlay-bg:          #191919b2;
+  --maple-btn-overlay-bg-hover:    #515151;
+  --maple-btn-overlay-bg-active:   #515151;
+  --maple-btn-overlay-bg-selected: #515151;
+  --maple-btn-overlay-bg-disabled: #a8a8a9;
+  --maple-btn-overlay-border:          #e6e6e7;
+  --maple-btn-overlay-border-hover:    #f4f4f4;
+  --maple-btn-overlay-border-active:   #efefef;
+  --maple-btn-overlay-border-selected: #efefef;
+  --maple-btn-overlay-border-disabled: #a8a8a9;
+  --maple-btn-overlay-label:          #ffffff;
+  --maple-btn-overlay-label-hover:    #ffffff;
+  --maple-btn-overlay-label-active:   #ffffff;
+  --maple-btn-overlay-label-selected: #ffffff;
+  --maple-btn-overlay-label-disabled: #a8a8a9;
+  --maple-btn-overlay-icon:          #ffffff;
+  --maple-btn-overlay-icon-hover:    #ffffff;
+  --maple-btn-overlay-icon-active:   #ffffff;
+  --maple-btn-overlay-icon-selected: #ffffff;
+  --maple-btn-overlay-icon-disabled: #a8a8a9;
+
+  /* Interactive — Text Link */
+  --maple-link:          #8bc4fa;
+  --maple-link-hover:    #c8eeff;
+  --maple-link-active:   #8bc4fa;
+  --maple-link-selected: #c8eeff;
+  --maple-link-disabled: #a8a8a9;
+
+  /* Interactive — Text Link Subtle */
+  --maple-link-subtle:          #ffffff;
+  --maple-link-subtle-hover:    #c4c4c4;
+  --maple-link-subtle-active:   #ffffff;
+  --maple-link-subtle-selected: #ffffff;
+  --maple-link-subtle-disabled: #a8a8a9;
+
+  /* Text */
+  --maple-text-primary:        #ffffff;
+  --maple-text-primary-hover:  #c4c4c4;
+  --maple-text-secondary:      #e6e6e7;
+  --maple-text-inv-primary:    #ffffff;
+  --maple-text-inv-secondary:  #e6e6e7;
+  --maple-text-header:         #f2f2f2;
+  --maple-text-subheader:      #efefef;
+  --maple-text-eyebrow:        #efefef;
+  --maple-text-eyebrow-breaking: #ff5c58;
+  --maple-text-adaptive-red:   #ff5c58;
+  --maple-text-info:           #8bc4fa;
+  --maple-text-error:          #ff5c58;
+  --maple-text-success:        #deffc4;
+  --maple-text-warning:        #ffac2c;
+
+  /* Notifications */
+  --maple-notif-icon:     #ffffff;
+  --maple-notif-icon-inv: #ffffff;
+  --maple-notif-bg:       #515151;
+  --maple-notif-text:     #ffffff;
+  --maple-notif-text-inv: #ffffff;
+
+  --maple-notif-announcement-bg:     #515151;
+  --maple-notif-announcement-border: #666666;
+
+  --maple-notif-error-bg:     #da1026;
+  --maple-notif-error-border: #fff4f0;
+
+  --maple-notif-info-bg:     #0081e1;
+  --maple-notif-info-border: #e0f0ff;
+
+  --maple-notif-success-bg:     #00804a;
+  --maple-notif-success-border: #f4fdee;
+
+  --maple-notif-warning-bg:     #fba20b;
+  --maple-notif-warning-border: #fffcea;
+
+  --maple-notif-status-bg:     #515151;
+  --maple-notif-status-border: #666666;
+}

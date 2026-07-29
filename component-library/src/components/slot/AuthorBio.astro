@@ -1,0 +1,186 @@
+---
+/**
+ * AuthorBio — Slot Component
+ * Figma: Author page › Author Bio frame
+ *
+ * Expanded author card used in dedicated author sections and article footers.
+ * Larger photo (80px) than Byline, no timestamp, includes full bio and social links.
+ */
+
+interface Props {
+  /** Author's name, displayed uppercase. E.g. "Michelle L. Price" */
+  authorName?: string;
+  beat?: string;
+  bio?: string;
+  photoSrc?: string;
+  photoAlt?: string;
+  showPhoto?: boolean;
+  showBeat?: boolean;
+  showBio?: boolean;
+  showX?: boolean;
+  showTikTok?: boolean;
+  showBluesky?: boolean;
+  showEmail?: boolean;
+  class?: string;
+}
+
+const {
+  authorName = '',
+  beat,
+  bio,
+  photoSrc,
+  photoAlt,
+  showPhoto    = true,
+  showBeat     = true,
+  showBio      = true,
+  showX        = true,
+  showTikTok   = true,
+  showBluesky  = true,
+  showEmail    = true,
+  class: className,
+} = Astro.props;
+
+const hasSocialLinks = showX || showTikTok || showBluesky || showEmail;
+---
+
+<div class:list={['author-bio', className]}>
+  {showPhoto && (
+    <div class="author-bio-photo">
+      {photoSrc
+        ? <img src={photoSrc} alt={photoAlt ?? authorName} />
+        : <div class="author-bio-photo-placeholder" />
+      }
+    </div>
+  )}
+
+  <div class="author-bio-content">
+    {authorName && (
+      <p class="author-bio-name">{authorName}</p>
+    )}
+    {showBeat && beat && (
+      <p class="author-bio-beat">{beat}</p>
+    )}
+    {showBio && bio && (
+      <p class="author-bio-text">{bio}</p>
+    )}
+    {hasSocialLinks && (
+      <div class="author-bio-social">
+        {showX && (
+          <a href="#" class="author-bio-social-link" aria-label="X (Twitter)">
+            <img src="/icons/social/x.svg" alt="" width="20" height="20" />
+          </a>
+        )}
+        {showTikTok && (
+          <a href="#" class="author-bio-social-link" aria-label="TikTok">
+            <img src="/icons/social/tiktok.svg" alt="" width="20" height="20" />
+          </a>
+        )}
+        {showBluesky && (
+          <a href="#" class="author-bio-social-link" aria-label="Bluesky">
+            <img src="/icons/social/bluesky.svg" alt="" width="20" height="20" />
+          </a>
+        )}
+        {showEmail && (
+          <a href="#" class="author-bio-social-link" aria-label="Email">
+            <img src="/icons/social/email.svg" alt="" width="20" height="24" />
+          </a>
+        )}
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  .author-bio {
+    display: flex;
+    gap: var(--maple-space-fixed-snug);
+    align-items: flex-start;
+    padding: var(--maple-space-fixed-default) 0;
+    font-family: var(--maple-font-family);
+  }
+
+  /* 80px circle photo */
+  .author-bio-photo {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .author-bio-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .author-bio-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--maple-bg-tertiary);
+  }
+
+  /* Content column */
+  .author-bio-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-tight);
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Name — semi-condensed bold, all caps */
+  .author-bio-name {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: var(--maple-font-weight-bold);
+    font-variation-settings: "wdth" 75;
+    line-height: var(--maple-line-height-heading-120);
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: var(--maple-text-primary);
+  }
+
+  /* Beat */
+  .author-bio-beat {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: var(--maple-font-weight-regular);
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-body);
+    color: var(--maple-text-primary);
+  }
+
+  /* Bio */
+  .author-bio-text {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: var(--maple-font-weight-regular);
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-body);
+    color: var(--maple-text-primary);
+  }
+
+  /* Social links */
+  .author-bio-social {
+    display: flex;
+    gap: var(--maple-space-fixed-default);
+    align-items: center;
+    padding-top: var(--maple-space-fixed-snug);
+  }
+
+  .author-bio-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+  }
+
+  .author-bio-social-link:hover {
+    opacity: 0.65;
+  }
+
+  .author-bio-social-link img {
+    display: block;
+  }
+</style>

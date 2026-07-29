@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  section?: 'base' | 'slot' | 'modules' | 'page-structures';
+}
+
+const { title, section } = Astro.props;
+const nav = [
+  { href: '/base/',            label: 'Base',            id: 'base' },
+  { href: '/slot/',            label: 'Slot',            id: 'slot' },
+  { href: '/modules/',         label: 'Modules',         id: 'modules' },
+  { href: '/page-structures/', label: 'Page Structures', id: 'page-structures' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Maple</title>
+  <link rel="icon" type="image/png" href="/ap-logo-32.png" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="header-brand" aria-label="Maple home">
+      <img src="/ap-logo.png" alt="AP" class="header-logo" width="28" height="28" />
+      <span class="header-name">Maple</span>
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      {nav.map(({ href, label, id }) => (
+        <a href={href} class:list={['nav-link', { 'nav-link--active': section === id }]}>
+          {label}
+        </a>
+      ))}
+    </nav>
+  </header>
+
+  <main class="site-main">
+    <slot />
+  </main>
+</body>
+</html>
+
+<style>
+  .site-header {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-expanded);
+    padding: 0 var(--maple-screen-margins);
+    height: 56px;
+    background: var(--maple-bg-header-primary);
+    border-bottom: var(--maple-stroke-01) solid #ffffff14;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-compact);
+    text-decoration: none;
+    color: var(--maple-text-inv-primary);
+    flex-shrink: 0;
+  }
+
+  .header-logo {
+    display: block;
+    width: 28px;
+    height: auto;
+  }
+
+  .header-name {
+    font-size: var(--maple-text-size-fixed-lg);
+    font-weight: var(--maple-font-weight-bold);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-default);
+    margin-left: auto;
+  }
+
+  .nav-link {
+    font-size: var(--maple-text-size-nav-link);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-subheader);
+    text-decoration: none;
+    padding: var(--maple-space-fixed-compact) var(--maple-space-fixed-snug);
+    border-radius: var(--maple-radius-sm);
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--maple-text-inv-primary);
+    background: #ffffff14;
+  }
+
+  .nav-link--active {
+    color: var(--maple-text-inv-primary);
+    background: #ffffff1f;
+  }
+
+  .site-main {
+    padding: var(--maple-space-fixed-generous) var(--maple-screen-margins);
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+</style>

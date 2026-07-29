@@ -1,0 +1,37 @@
+@import './tokens.css';
+@import './tokens-responsive.css';
+@import './tokens-surface.css';
+
+@font-face {
+  font-family: 'AP Var';
+  src: url('/fonts/APVarW05-Regular.woff2') format('woff2');
+  font-display: swap;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--maple-font-family);
+  font-size: 16px;
+  color: var(--maple-text-primary);
+  background-color: var(--maple-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: var(--maple-link);
+  text-decoration: underline;
+}
+
+a:hover {
+  color: var(--maple-link-hover);
+}
