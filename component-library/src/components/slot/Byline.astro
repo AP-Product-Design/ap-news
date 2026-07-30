@@ -1,0 +1,375 @@
+---
+/**
+ * Byline — Slot Component
+ * Figma: Author page › Byline frame
+ *
+ * Layouts:
+ *   stack  — photo(s) above text block (default for article bylines)
+ *   row    — photo(s) left, text right (compact inline use)
+ *   hover  — white card that appears on author name hover; single author only
+ */
+
+interface Author {
+  /** Full byline string including prefix, e.g. "By Jill Lawless". Displayed uppercase. */
+  name: string;
+  beat?: string;
+  affiliation?: string;
+  bio?: string;
+  photoSrc?: string;
+  photoAlt?: string;
+}
+
+interface Props {
+  layout?: 'stack' | 'row' | 'hover';
+  authors?: Author[];
+  timestamp?: string;
+  language?: string;
+  showTimestamp?: boolean;
+  showLanguage?: boolean;
+  showBeat?: boolean;
+  showAffiliation?: boolean;
+  showBio?: boolean;
+  showPhoto?: boolean;
+  /** Hover layout only — "See all stories" pill button */
+  showButton?: boolean;
+  /** Hover layout only — X, TikTok, Bluesky, Email links */
+  showSocialLinks?: boolean;
+  class?: string;
+}
+
+const {
+  layout = 'stack',
+  authors = [],
+  timestamp,
+  language,
+  showTimestamp = true,
+  showLanguage = false,
+  showBeat = true,
+  showAffiliation = false,
+  showBio = false,
+  showPhoto = true,
+  showButton = true,
+  showSocialLinks = true,
+  class: className,
+} = Astro.props;
+
+const isStack = layout === 'stack';
+const isRow   = layout === 'row';
+const isHover = layout === 'hover';
+
+// Hover is always single-author
+const primary = authors[0];
+---
+
+{isStack && (
+  <div class:list={['byline', 'byline--stack', className]}>
+    {showPhoto && authors.length > 0 && (
+      <div class="byline-photos">
+        {authors.map((a) => (
+          <div class="byline-photo byline-photo--sm">
+            {a.photoSrc
+              ? <img src={a.photoSrc} alt={a.photoAlt ?? a.name} />
+              : <div class="byline-photo-placeholder" />
+            }
+          </div>
+        ))}
+      </div>
+    )}
+    {primary && (
+      <div class="byline-text">
+        <p class="byline-name">{primary.name}</p>
+        {showBeat && primary.beat && (
+          <p class="byline-beat">{primary.beat}</p>
+        )}
+        {showAffiliation && primary.affiliation && (
+          <p class="byline-affiliation">{primary.affiliation}</p>
+        )}
+        {showBio && primary.bio && (
+          <p class="byline-bio">{primary.bio}</p>
+        )}
+      </div>
+    )}
+    {(showTimestamp && timestamp) || (showLanguage && language) ? (
+      <div class="byline-meta">
+        {showTimestamp && timestamp && <p class="byline-meta-item">{timestamp}</p>}
+        {showLanguage  && language  && <p class="byline-meta-item">{language}</p>}
+      </div>
+    ) : null}
+  </div>
+)}
+
+{isRow && (
+  <div class:list={['byline', 'byline--row', className]}>
+    <div class="byline-row-main">
+      {showPhoto && authors.length > 0 && (
+        <div class="byline-photos">
+          {authors.map((a) => (
+            <div class="byline-photo byline-photo--sm">
+              {a.photoSrc
+                ? <img src={a.photoSrc} alt={a.photoAlt ?? a.name} />
+                : <div class="byline-photo-placeholder" />
+              }
+            </div>
+          ))}
+        </div>
+      )}
+      {primary && (
+        <div class="byline-text">
+          <p class="byline-name">{primary.name}</p>
+          {showBeat && primary.beat && (
+            <p class="byline-beat">{primary.beat}</p>
+          )}
+          {showAffiliation && primary.affiliation && (
+            <p class="byline-affiliation">{primary.affiliation}</p>
+          )}
+          {showBio && primary.bio && (
+            <p class="byline-bio">{primary.bio}</p>
+          )}
+        </div>
+      )}
+    </div>
+    {(showTimestamp && timestamp) || (showLanguage && language) ? (
+      <div class="byline-meta">
+        {showTimestamp && timestamp && <p class="byline-meta-item">{timestamp}</p>}
+        {showLanguage  && language  && <p class="byline-meta-item">{language}</p>}
+      </div>
+    ) : null}
+  </div>
+)}
+
+{isHover && primary && (
+  <div class:list={['byline', 'byline--hover', className]}>
+    <div class="byline-row-main">
+      {showPhoto && (
+        <div class="byline-photo byline-photo--sm">
+          {primary.photoSrc
+            ? <img src={primary.photoSrc} alt={primary.photoAlt ?? primary.name} />
+            : <div class="byline-photo-placeholder" />
+          }
+        </div>
+      )}
+      <div class="byline-text">
+        <p class="byline-name">{primary.name}</p>
+        {showBeat && primary.beat && (
+          <p class="byline-beat">{primary.beat}</p>
+        )}
+        {showAffiliation && primary.affiliation && (
+          <p class="byline-affiliation">{primary.affiliation}</p>
+        )}
+        {showBio && primary.bio && (
+          <p class="byline-bio">{primary.bio}</p>
+        )}
+        {showButton && (
+          <div class="byline-hover-actions">
+            <button class="byline-btn" type="button">See all stories</button>
+          </div>
+        )}
+        {showSocialLinks && (
+          <div class="byline-social">
+            <a href="#" class="byline-social-link" aria-label="X (Twitter)">
+              <img src="/icons/social/x.svg" alt="" width="20" height="20" />
+            </a>
+            <a href="#" class="byline-social-link" aria-label="TikTok">
+              <img src="/icons/social/tiktok.svg" alt="" width="20" height="20" />
+            </a>
+            <a href="#" class="byline-social-link" aria-label="Bluesky">
+              <img src="/icons/social/bluesky.svg" alt="" width="20" height="20" />
+            </a>
+            <a href="#" class="byline-social-link" aria-label="Email">
+              <img src="/icons/social/email.svg" alt="" width="20" height="24" />
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  /* ── Shared ─────────────────────────────────────────────── */
+
+  .byline {
+    font-family: var(--maple-font-family);
+    color: var(--maple-text-primary);
+  }
+
+  /* Photo: 56px circle */
+  .byline-photo--sm {
+    width:  56px;
+    height: 56px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .byline-photo--sm img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .byline-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--maple-bg-tertiary);
+  }
+
+  /* Photo row (multiple authors) */
+  .byline-photos {
+    display: flex;
+    gap: var(--maple-space-fixed-snug);
+    flex-shrink: 0;
+  }
+
+  /* Text block */
+  .byline-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-tight);
+  }
+
+  /* Name — semi-condensed bold, all caps */
+  .byline-name {
+    font-size: var(--maple-text-x-1);
+    font-weight: var(--maple-font-weight-bold);
+    font-variation-settings: "wdth" 75;
+    line-height: var(--maple-line-height-heading-120);
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: var(--maple-text-primary);
+  }
+
+  /* Beat — regular body text */
+  .byline-beat {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: var(--maple-font-weight-regular);
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-body);
+    color: var(--maple-text-primary);
+  }
+
+  /* Affiliation — medium weight */
+  .byline-affiliation {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: 530;
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-text-primary);
+  }
+
+  /* Bio — same as beat */
+  .byline-bio {
+    font-size: var(--maple-text-size-body-sm);
+    font-weight: var(--maple-font-weight-regular);
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-body);
+    color: var(--maple-text-primary);
+  }
+
+  /* Metadata: timestamp, language */
+  .byline-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-tight);
+  }
+
+  .byline-meta-item {
+    font-size: var(--maple-text-size-metadata);
+    font-weight: var(--maple-font-weight-regular);
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-text-secondary);
+  }
+
+  /* ── Stack ──────────────────────────────────────────────── */
+
+  .byline--stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-compact);
+    align-items: flex-start;
+  }
+
+  /* ── Row ────────────────────────────────────────────────── */
+
+  .byline--row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-compact);
+    align-items: flex-start;
+  }
+
+  .byline-row-main {
+    display: flex;
+    gap: var(--maple-space-fixed-snug);
+    align-items: flex-start;
+  }
+
+  /* ── Hover card ─────────────────────────────────────────── */
+
+  .byline--hover {
+    background: var(--maple-bg-elevated);
+    border-radius: var(--maple-radius-md);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+    padding: var(--maple-space-fixed-snug);
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-snug);
+  }
+
+  /* Hover card button: "See all stories" */
+  .byline-hover-actions {
+    padding-top: var(--maple-space-fixed-compact);
+  }
+
+  .byline-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: var(--maple-space-fixed-tight) var(--maple-space-fixed-snug);
+    background: var(--maple-btn-filled-bg);
+    color: var(--maple-btn-filled-label);
+    border: none;
+    border-radius: var(--maple-radius-xl);
+    font-family: var(--maple-font-family);
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: 530;
+    font-variation-settings: "wdth" 100;
+    line-height: var(--maple-line-height-heading-130);
+    letter-spacing: var(--maple-letter-spacing-tight);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s ease;
+  }
+
+  .byline-btn:hover {
+    background: var(--maple-btn-filled-bg-hover);
+  }
+
+  /* Social links */
+  .byline-social {
+    display: flex;
+    gap: var(--maple-space-fixed-default);
+    align-items: center;
+    padding-top: var(--maple-space-fixed-snug);
+  }
+
+  .byline-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 1;
+    transition: opacity 0.15s ease;
+  }
+
+  .byline-social-link:hover {
+    opacity: 0.65;
+  }
+
+  .byline-social-link img {
+    display: block;
+  }
+</style>

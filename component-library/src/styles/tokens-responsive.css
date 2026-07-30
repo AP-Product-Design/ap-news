@@ -1,0 +1,83 @@
+/*
+ * Maple Design System — Responsive Tokens
+ * Source: Responsive collection (SM / MD / LG / XL modes)
+ *
+ * SM and MD share identical values; LG and XL share identical values.
+ * Default = SM (mobile-first). Override kicks in at 1024px (LG).
+ *
+ * These vars are referenced by --maple-space-* in tokens.css.
+ */
+
+/* ─── Default: SM / MD ───────────────────────────────────── */
+:root {
+  --maple-screen-margins: 20px;
+
+  --maple-spacing-0:   0px;
+  --maple-spacing-100: 4px;
+  --maple-spacing-200: 8px;
+  --maple-spacing-300: 12px;
+  --maple-spacing-400: 16px;
+  --maple-spacing-500: 20px;
+  --maple-spacing-600: 24px;
+  --maple-spacing-700: 32px;
+  --maple-spacing-800: 48px;
+  --maple-spacing-900: 64px;
+
+  /* Type x-scale */
+  --maple-text-x-3:    10px;
+  --maple-text-x-2:    12px;
+  --maple-text-x-1:    14px;
+  --maple-text-x-base: 16px;
+  --maple-text-x1:     20px;
+  --maple-text-x2:     24px;
+  --maple-text-x3:     32px;
+  --maple-text-x4:     40px;
+  --maple-text-x5:     48px;
+
+  /* Special type sizes */
+  --maple-text-mobile-priority-sm: 14px;
+  --maple-text-mobile-priority-md: 16px;
+  --maple-text-mobile-priority-lg: 20px;
+  --maple-text-headline-sm:        20px;
+  --maple-text-headline-md:        24px;
+  --maple-text-headline-lg:        32px;
+  --maple-text-breaking-heading:   40px;
+}
+
+/* ─── LG / XL (≥ 1024px) ─────────────────────────────────── */
+@media (min-width: 1024px) {
+  :root {
+    --maple-screen-margins: 40px;
+
+    --maple-spacing-0:   0px;
+    --maple-spacing-100: 8px;
+    --maple-spacing-200: 12px;
+    --maple-spacing-300: 16px;
+    --maple-spacing-400: 24px;
+    --maple-spacing-500: 32px;
+    --maple-spacing-600: 40px;
+    --maple-spacing-700: 48px;
+    --maple-spacing-800: 64px;
+    --maple-spacing-900: 80px;
+
+    /* Type x-scale */
+    --maple-text-x-3:    12px;
+    --maple-text-x-2:    14px;
+    --maple-text-x-1:    16px;
+    --maple-text-x-base: 18px;
+    --maple-text-x1:     23px;
+    --maple-text-x2:     27px;
+    --maple-text-x3:     36px;
+    --maple-text-x4:     45px;
+    --maple-text-x5:     54px;
+
+    /* Special type sizes */
+    --maple-text-mobile-priority-sm: 12px;
+    --maple-text-mobile-priority-md: 14px;
+    --maple-text-mobile-priority-lg: 16px;
+    --maple-text-headline-sm:        27px;
+    --maple-text-headline-md:        36px;
+    --maple-text-headline-lg:        45px;
+    --maple-text-breaking-heading:   54px;
+  }
+}
