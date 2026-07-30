@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tablet Gallery — Rotation Demo</title>
+<link rel="stylesheet" href="../ap-design-tokens.css" />
+<link rel="stylesheet" href="../ap-text-styles.css" />
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ap-font-family);
+    background: var(--ap-color-backgrounds-secondary);
+    color: var(--ap-color-text-primary);
+    min-height: 100vh;
+    padding: var(--ap-layout-size-40);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--ap-layout-size-32);
+  }
+
+  /* ============================================================
+     PAGE HEADER + CONTROLS
+  ============================================================ */
+  .page-header {
+    text-align: center;
+    max-width: 720px;
+  }
+
+  .page-title {
+    font-size: var(--ap-text-size-x3);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    letter-spacing: var(--ap-letter-spacing-tight);
+    color: var(--ap-color-text-primary);
+    margin-bottom: var(--ap-spacing-300);
+  }
+
+  .page-desc {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .controls {
+    display: flex;
+    gap: var(--ap-layout-size-16);
+    align-items: center;
+  }
+
+  .rotate-btn {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-md);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-interactive-filled-label-enabled-label);
+    background: var(--ap-color-interactive-filled-background-enabled-bg);
+    border: none;
+    border-radius: var(--ap-layout-border-radius-sm);
+    padding: var(--ap-spacing-300) var(--ap-spacing-600);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ap-layout-size-08);
+    transition: background 0.15s;
+  }
+
+  .rotate-btn:hover {
+    background: var(--ap-color-interactive-filled-background-hover-bg);
+  }
+
+  .rotate-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .orientation-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+  }
+
+  /* ============================================================
+     TABLET FRAME
+  ============================================================ */
+  .tablet {
+    width: 800px;
+    height: 1280px;
+    background: var(--ap-color-backgrounds-primary);
+    border: 12px solid var(--ap-color-backgrounds-header-primary);
+    border-radius: var(--ap-layout-border-radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+    transition: width 0.4s ease, height 0.4s ease;
+  }
+
+  .tablet.landscape {
+    width: 1280px;
+    height: 800px;
+  }
+
+  /* ============================================================
+     TABLET HEADER (104px)
+  ============================================================ */
+  .tablet-header {
+    flex-shrink: 0;
+    height: 104px;
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-text-inverse-primary);
+    display: flex;
+    flex-direction: column;
+    padding: var(--ap-layout-size-12) var(--ap-layout-size-16) var(--ap-layout-size-12);
+  }
+
+  .status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-inverse-primary);
+    margin-bottom: var(--ap-layout-size-12);
+  }
+
+  .status-time strong {
+    font-weight: var(--ap-font-weight-bold);
+    margin-right: var(--ap-layout-size-04);
+  }
+
+  .status-time span {
+    font-weight: var(--ap-font-weight-regular);
+    color: var(--ap-color-elements-border-subtle);
+  }
+
+  .status-indicators {
+    display: flex;
+    gap: var(--ap-layout-size-08);
+    align-items: center;
+    color: var(--ap-color-elements-border-subtle);
+    font-size: var(--ap-text-size-utility-sm);
+  }
+
+  .topic-chips {
+    display: flex;
+    gap: var(--ap-layout-size-08);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .topic-chips::-webkit-scrollbar { display: none; }
+
+  .topic-chip {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-inverse-primary);
+    background: var(--ap-color-backgrounds-header-secondary);
+    padding: var(--ap-spacing-200) var(--ap-spacing-300);
+    border-radius: var(--ap-layout-border-radius-sm);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ap-layout-size-04);
+  }
+
+  .topic-chip .live-badge {
+    background: var(--ap-color-brand-ap-solid-red);
+    color: var(--ap-color-text-inverse-primary);
+    font-weight: var(--ap-font-weight-bold);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-size: 0.625rem;
+    letter-spacing: var(--ap-letter-spacing-wide);
+  }
+
+  /* ============================================================
+     TABLET CONTENT (scrollable)
+  ============================================================ */
+  .tablet-content {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--ap-color-backgrounds-primary);
+    padding: var(--ap-layout-size-16) var(--ap-layout-size-16) var(--ap-layout-size-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-16);
+  }
+
+  /* Featured item — small thumbnail + headline */
+  .featured-item {
+    display: flex;
+    gap: var(--ap-layout-size-16);
+    align-items: flex-start;
+    padding-bottom: var(--ap-layout-size-12);
+    border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+  }
+
+  .featured-thumb {
+    flex-shrink: 0;
+    width: 128px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: var(--ap-layout-border-radius-sm);
+    background: var(--ap-color-backgrounds-tertiary);
+  }
+
+  .featured-headline {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 1.1rem;
+    line-height: 1.3;
+    color: var(--ap-color-text-primary);
+    align-self: center;
+  }
+
+  /* Big headline */
+  .big-headline {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 1.5rem;
+    line-height: 1.25;
+    color: var(--ap-color-text-primary);
+    padding-bottom: var(--ap-layout-size-16);
+  }
+
+  /* Gallery section */
+  .gallery-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-16);
+  }
+
+  .gallery-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: var(--ap-text-size-utility-md);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-primary);
+    padding-top: var(--ap-spacing-300);
+    border-top: 3px solid var(--ap-color-brand-ap-solid-red);
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .gallery {
+    display: flex;
+    gap: var(--ap-layout-size-24);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    padding-bottom: var(--ap-spacing-200);
+  }
+
+  /* Each gallery item = image + its caption, stacked and moving together */
+  .gallery-item {
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+    width: 640px;
+    transition: width 0.4s ease;
+  }
+
+  /* Landscape: item pinned to a fixed 3:2 image width (460 × 1.5) */
+  .tablet.landscape .gallery-item {
+    width: 690px;
+  }
+
+  .gallery-img {
+    aspect-ratio: 3 / 2;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--ap-layout-border-radius-sm);
+    background: var(--ap-color-backgrounds-tertiary);
+    display: block;
+    transition: height 0.4s ease;
+  }
+
+  /* Landscape: 690 × 460 keeps the 3:2 ratio and fills the vertical space */
+  .tablet.landscape .gallery-img {
+    width: 690px;
+    height: 460px;
+  }
+
+  .gallery-caption {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-regular);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-body-sm);
+    line-height: 1.5;
+    color: var(--ap-color-text-secondary);
+  }
+
+  /* Story headline */
+  .story-headline {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 1.15rem;
+    line-height: 1.3;
+    color: var(--ap-color-text-primary);
+  }
+
+  .story-time {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+    margin-top: var(--ap-layout-size-04);
+  }
+
+  /* Read more */
+  .read-more {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+    padding-top: var(--ap-layout-size-16);
+    border-top: 1px solid var(--ap-color-elements-border-subtle);
+  }
+
+  .read-more-label {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+  }
+
+  .read-more-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-12);
+    list-style: none;
+  }
+
+  .read-more-list li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ap-layout-size-04);
+    padding-left: var(--ap-layout-size-16);
+    position: relative;
+  }
+
+  .read-more-list li::before {
+    content: "■";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--ap-color-text-primary);
+    font-size: 0.7rem;
+    line-height: 1.6;
+  }
+
+  .read-more-list .item-headline {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: 1rem;
+    line-height: 1.35;
+    color: var(--ap-color-text-primary);
+  }
+
+  .read-more-list .item-time {
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+  }
+
+  /* ============================================================
+     TABLET FOOTER (56px)
+  ============================================================ */
+  .tablet-footer {
+    flex-shrink: 0;
+    height: 56px;
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-text-inverse-primary);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 var(--ap-layout-size-24);
+  }
+
+  .footer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-icons-inverse-disabled);
+  }
+
+  .footer-item.active {
+    color: var(--ap-color-text-inverse-primary);
+    font-weight: var(--ap-font-weight-bold);
+  }
+
+  .footer-item svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+</style>
+</head>
+<body>
+
+  <header class="page-header">
+    <h1 class="page-title">Tablet Gallery — Rotation Demo</h1>
+    <p class="page-desc">A modeled tablet (800×1280) containing a swipable photo gallery. The gallery uses 3:2 images with a 24px gap. Tap <strong>Rotate</strong> to switch between portrait and landscape — in landscape, gallery images resize so the entire image remains visible within the viewport.</p>
+  </header>
+
+  <div class="controls">
+    <button class="rotate-btn" onclick="toggleRotation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 3-6.7"/>
+        <polyline points="3 4 3 10 9 10"/>
+      </svg>
+      Rotate
+    </button>
+    <span class="orientation-label" id="orientationLabel">Portrait · 800 × 1280</span>
+  </div>
+
+  <div class="tablet" id="tablet">
+
+    <!-- HEADER -->
+    <div class="tablet-header">
+      <div class="status-row">
+        <div class="status-time"><strong>8:45</strong> <span>Mon, Apr 13</span></div>
+        <div class="status-indicators">🔒 🛜 🔋 100</div>
+      </div>
+      <div class="topic-chips">
+        <span class="topic-chip"><span class="live-badge">LIVE</span> Grammy Awards</span>
+        <span class="topic-chip">AP &amp; Elections</span>
+        <span class="topic-chip">Google Election Trends</span>
+        <span class="topic-chip">Donald Trump</span>
+        <span class="topic-chip">Kamala Harris</span>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="tablet-content">
+
+      <!-- Featured item -->
+      <div class="featured-item">
+        <img class="featured-thumb" src="../images/3-2basketball.apnews.webp" alt="Featured thumbnail" />
+        <p class="featured-headline">Photos show rescue work after train derailment in Thailand</p>
+      </div>
+
+      <!-- Big headline -->
+      <h2 class="big-headline">Ocean dumping – or a climate solution? A growing industry bets on the ocean to capture carbon</h2>
+
+      <!-- Gallery section -->
+      <div class="gallery-section">
+        <p class="gallery-label">Gallery Lead Media — List E</p>
+
+        <div class="gallery">
+          <figure class="gallery-item">
+            <img class="gallery-img" src="../images/3-2-img.webp" alt="Haifa Kenjo holds her daughter inside a tent in Beirut" />
+            <figcaption class="gallery-caption">Haifa Kenjo, who fled Israeli airstrikes on the southern suburbs of Beirut, holds her 15-day-old daughter Shiman inside the tent she uses as a shelter and where she gave birth to her in Beirut, Sunday, April 12, 2026. (AP Photo/Emilio Morenatti)</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img class="gallery-img" src="../images/3-2-science-image.apnews.webp" alt="Researchers examine ocean samples" />
+            <figcaption class="gallery-caption">Researchers examine water samples during a study on marine carbon capture off the coast of Massachusetts, Monday, March 3, 2026. Scientists are testing whether the ocean can be used to absorb atmospheric carbon dioxide. (AP Photo/Sarah Chen)</figcaption>
+          </figure>
+          <figure class="gallery-item">
+            <img class="gallery-img" src="../images/3-2basketball.apnews.webp" alt="Basketball player drives to the basket" />
+            <figcaption class="gallery-caption">A player drives to the basket during the second half of an NBA game against the visiting team, Sunday, April 5, 2026, in Washington. (AP Photo/Alex Brandon)</figcaption>
+          </figure>
+        </div>
+
+        <h3 class="story-headline">Washington brings 3-game win streak into matchup with Columbus</h3>
+        <p class="story-time">34 mins ago</p>
+      </div>
+
+      <!-- Read more -->
+      <div class="read-more">
+        <p class="read-more-label">Read more</p>
+        <ul class="read-more-list">
+          <li>
+            <span class="item-headline">Devils play the Bruins after Hischier's 2-goal game</span>
+            <span class="item-time">28 mins ago</span>
+          </li>
+          <li>
+            <span class="item-headline">Mets aim to break skid in matchup with the Dodgers</span>
+            <span class="item-time">37 mins ago</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="tablet-footer">
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v10h-5v-6h-2v6H6V11H3z"/></svg>
+        Top News
+      </div>
+      <div class="footer-item active">
+        <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+        Sections
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        Videos
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.49-1.5zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+        Explore
+      </div>
+      <div class="footer-item">
+        <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm8.94 3a8 8 0 0 0-.7-2.94l2.06-1.62-2-3.46-2.44 1a8 8 0 0 0-2.52-1.46L15 0h-4l-.34 2.52a8 8 0 0 0-2.52 1.46l-2.44-1-2 3.46 2.06 1.62A8 8 0 0 0 5.06 11L3 12.62l2 3.46 2.44-1a8 8 0 0 0 2.52 1.46L10.34 19h4l.34-2.52a8 8 0 0 0 2.52-1.46l2.44 1 2-3.46zM12 15a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
+        Settings
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleRotation() {
+      const tablet = document.getElementById('tablet');
+      const label = document.getElementById('orientationLabel');
+      tablet.classList.toggle('landscape');
+      const isLandscape = tablet.classList.contains('landscape');
+      label.textContent = isLandscape
+        ? 'Landscape · 1280 × 800'
+        : 'Portrait · 800 × 1280';
+    }
+  </script>
+
+</body>
+</html>
