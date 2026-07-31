@@ -7,11 +7,12 @@ interface Props {
 }
 
 const { title, section } = Astro.props;
+const base = import.meta.env.BASE_URL;
 const nav = [
-  { href: '/base/',            label: 'Base',            id: 'base' },
-  { href: '/slot/',            label: 'Slot',            id: 'slot' },
-  { href: '/modules/',         label: 'Modules',         id: 'modules' },
-  { href: '/page-structures/', label: 'Page Structures', id: 'page-structures' },
+  { href: `${base}base/`,            label: 'Base',            id: 'base' },
+  { href: `${base}slot/`,            label: 'Slot',            id: 'slot' },
+  { href: `${base}modules/`,         label: 'Modules',         id: 'modules' },
+  { href: `${base}page-structures/`, label: 'Page Structures', id: 'page-structures' },
 ];
 ---
 
@@ -21,12 +22,12 @@ const nav = [
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title} — Maple</title>
-  <link rel="icon" type="image/png" href="/ap-logo-32.png" />
+  <link rel="icon" type="image/png" href={`${base}ap-logo-32.png`} />
 </head>
 <body>
   <header class="site-header">
-    <a href="/" class="header-brand" aria-label="Maple home">
-      <img src="/ap-logo.png" alt="AP" class="header-logo" width="28" height="28" />
+    <a href={base} class="header-brand" aria-label="Maple home">
+      <img src={`${base}ap-logo.png`} alt="AP" class="header-logo" width="28" height="28" />
       <span class="header-name">Maple</span>
     </a>
     <nav class="header-nav" aria-label="Primary">

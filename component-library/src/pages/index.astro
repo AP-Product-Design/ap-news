@@ -1,27 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+const base = import.meta.env.BASE_URL;
 const sections = [
   {
-    href: '/base/',
+    href: `${base}base/`,
     title: 'Base Components',
     description: 'Atomic UI elements — buttons, inputs, badges, labels, typography, and other foundational building blocks.',
     tag: 'base',
   },
   {
-    href: '/slot/',
+    href: `${base}slot/`,
     title: 'Slot Components',
     description: 'Composite patterns built from base elements — cards, list items, and media containers designed to accept content.',
     tag: 'slot',
   },
   {
-    href: '/modules/',
+    href: `${base}modules/`,
     title: 'Modules',
     description: 'Self-contained content sections — feature layouts, carousels, and standalone page sections with defined structure.',
     tag: 'modules',
   },
   {
-    href: '/page-structures/',
+    href: `${base}page-structures/`,
     title: 'Page Structures',
     description: 'Full-page layout templates and grid systems for assembling complete views from modules and components.',
     tag: 'page-structures',

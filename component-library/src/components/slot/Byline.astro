@@ -59,6 +59,7 @@ const isHover = layout === 'hover';
 
 // Hover is always single-author
 const primary = authors[0];
+const base = import.meta.env.BASE_URL;
 ---
 
 {isStack && (
@@ -167,16 +168,16 @@ const primary = authors[0];
         {showSocialLinks && (
           <div class="byline-social">
             <a href="#" class="byline-social-link" aria-label="X (Twitter)">
-              <img src="/icons/social/x.svg" alt="" width="20" height="20" />
+              <img src={`${base}icons/social/x.svg`} alt="" width="20" height="20" />
             </a>
             <a href="#" class="byline-social-link" aria-label="TikTok">
-              <img src="/icons/social/tiktok.svg" alt="" width="20" height="20" />
+              <img src={`${base}icons/social/tiktok.svg`} alt="" width="20" height="20" />
             </a>
             <a href="#" class="byline-social-link" aria-label="Bluesky">
-              <img src="/icons/social/bluesky.svg" alt="" width="20" height="20" />
+              <img src={`${base}icons/social/bluesky.svg`} alt="" width="20" height="20" />
             </a>
             <a href="#" class="byline-social-link" aria-label="Email">
-              <img src="/icons/social/email.svg" alt="" width="20" height="24" />
+              <img src={`${base}icons/social/email.svg`} alt="" width="20" height="24" />
             </a>
           </div>
         )}
