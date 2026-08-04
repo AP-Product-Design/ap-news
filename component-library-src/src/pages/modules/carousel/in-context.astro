@@ -1,0 +1,516 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import CarouselListB from '../../../components/module/CarouselListB.astro';
+
+const base = import.meta.env.BASE_URL;
+
+/* ── Content used inside the mock ─────────────────────── */
+
+const leadImage = `${base}images/carousel-lead-image.png`;
+const rowImage  = `${base}images/carousel-row-image.png`;
+
+const lead = {
+  eyebrow: 'Name of Topic',
+  headline: 'AP Decision Notes: What to expect in the Illinois state primary',
+  dek: 'Voters will choose nominees for a full slate of offices, including governor, U.S. Senate, U.S. House, the state Legislature and local offices.',
+  timestamp: '29 mins ago',
+  readTime: '4 min read',
+  image: leadImage,
+  imageAlt: 'AP Decision Notes anchors on election night stage',
+};
+
+const storiesWithImages = Array.from({ length: 8 }, () => ({
+  live: true,
+  timestamp: '29 mins ago',
+  headline: 'AP Decision Notes: What to expect in the Illinois state primary',
+  readTime: '4 min read',
+  image: rowImage,
+  imageAlt: 'Crowd waving American flags at a campaign rally',
+}));
+
+const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
+
+/* ── Template → layout → slot mapping ─────────────────── */
+
+type Size = 'compact' | 'sidebar' | 'mobile' | 'split' | 'tablet' | 'full' | 'wide';
+type Slot = { width: number; size: Size; active: boolean };
+type Combo = {
+  key: string;
+  template: string; templateLabel: string;
+  layout:   string; layoutLabel:   string;
+  viewport: number; margins: number; gap: number;
+  slots: Slot[];
+};
+
+const combos: Combo[] = [
+  // SM 412
+  { key: 'sm-412__full-width',  template: 'sm-412',  templateLabel: 'SM 412', layout: 'full-width', layoutLabel: 'Full width', viewport: 412,  margins: 20, gap: 12,
+    slots: [{ width: 372, size: 'mobile', active: true }] },
+
+  // MD 800
+  { key: 'md-800__full-width',  template: 'md-800',  templateLabel: 'MD 800', layout: 'full-width', layoutLabel: 'Full width', viewport: 800,  margins: 20, gap: 16,
+    slots: [{ width: 760, size: 'tablet', active: true }] },
+  { key: 'md-800__50-50',       template: 'md-800',  templateLabel: 'MD 800', layout: '50-50',      layoutLabel: '50-50',      viewport: 800,  margins: 20, gap: 16,
+    slots: [{ width: 372, size: 'mobile', active: true }, { width: 372, size: 'mobile', active: false }] },
+  { key: 'md-800__3-column',    template: 'md-800',  templateLabel: 'MD 800', layout: '3-column',   layoutLabel: '3 column',   viewport: 800,  margins: 20, gap: 16,
+    slots: [{ width: 242, size: 'compact', active: true }, { width: 242, size: 'compact', active: false }, { width: 242, size: 'compact', active: false }] },
+
+  // LG 1024
+  { key: 'lg-1024__full-width', template: 'lg-1024', templateLabel: 'LG 1024', layout: 'full-width', layoutLabel: 'Full width', viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 944, size: 'full', active: true }] },
+  { key: 'lg-1024__70-30',      template: 'lg-1024', templateLabel: 'LG 1024', layout: '70-30',      layoutLabel: '70-30',      viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 600, size: 'split', active: true }, { width: 320, size: 'sidebar', active: false }] },
+  { key: 'lg-1024__sidebar',    template: 'lg-1024', templateLabel: 'LG 1024', layout: 'sidebar',    layoutLabel: 'Sidebar',    viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 600, size: 'split', active: false }, { width: 320, size: 'sidebar', active: true }] },
+  { key: 'lg-1024__50-50',      template: 'lg-1024', templateLabel: 'LG 1024', layout: '50-50',      layoutLabel: '50-50',      viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 460, size: 'split', active: true }, { width: 460, size: 'split', active: false }] },
+  { key: 'lg-1024__3-column',   template: 'lg-1024', templateLabel: 'LG 1024', layout: '3-column',   layoutLabel: '3 column',   viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 299, size: 'sidebar', active: true }, { width: 299, size: 'sidebar', active: false }, { width: 298, size: 'sidebar', active: false }] },
+  { key: 'lg-1024__4-column',   template: 'lg-1024', templateLabel: 'LG 1024', layout: '4-column',   layoutLabel: '4 column',   viewport: 1024, margins: 40, gap: 24,
+    slots: [{ width: 218, size: 'compact', active: true }, { width: 218, size: 'compact', active: false }, { width: 218, size: 'compact', active: false }, { width: 218, size: 'compact', active: false }] },
+
+  // LG 1280
+  { key: 'lg-1280__full-width', template: 'lg-1280', templateLabel: 'LG 1280', layout: 'full-width', layoutLabel: 'Full width', viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 1200, size: 'wide', active: true }] },
+  { key: 'lg-1280__70-30',      template: 'lg-1280', templateLabel: 'LG 1280', layout: '70-30',      layoutLabel: '70-30',      viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 828, size: 'tablet', active: true }, { width: 340, size: 'sidebar', active: false }] },
+  { key: 'lg-1280__sidebar',    template: 'lg-1280', templateLabel: 'LG 1280', layout: 'sidebar',    layoutLabel: 'Sidebar',    viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 828, size: 'tablet', active: false }, { width: 340, size: 'sidebar', active: true }] },
+  { key: 'lg-1280__50-50',      template: 'lg-1280', templateLabel: 'LG 1280', layout: '50-50',      layoutLabel: '50-50',      viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 584, size: 'split', active: true }, { width: 584, size: 'split', active: false }] },
+  { key: 'lg-1280__3-column',   template: 'lg-1280', templateLabel: 'LG 1280', layout: '3-column',   layoutLabel: '3 column',   viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 384, size: 'mobile', active: true }, { width: 384, size: 'mobile', active: false }, { width: 384, size: 'mobile', active: false }] },
+  { key: 'lg-1280__4-column',   template: 'lg-1280', templateLabel: 'LG 1280', layout: '4-column',   layoutLabel: '4 column',   viewport: 1280, margins: 40, gap: 24,
+    slots: [{ width: 282, size: 'sidebar', active: true }, { width: 282, size: 'sidebar', active: false }, { width: 282, size: 'sidebar', active: false }, { width: 282, size: 'sidebar', active: false }] },
+
+  // XL 1440
+  { key: 'xl-1440__full-width', template: 'xl-1440', templateLabel: 'XL 1440', layout: 'full-width', layoutLabel: 'Full width', viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 1360, size: 'wide', active: true }] },
+  { key: 'xl-1440__70-30',      template: 'xl-1440', templateLabel: 'XL 1440', layout: '70-30',      layoutLabel: '70-30',      viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 968, size: 'full', active: true }, { width: 360, size: 'sidebar', active: false }] },
+  { key: 'xl-1440__sidebar',    template: 'xl-1440', templateLabel: 'XL 1440', layout: 'sidebar',    layoutLabel: 'Sidebar',    viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 968, size: 'full', active: false }, { width: 360, size: 'sidebar', active: true }] },
+  { key: 'xl-1440__50-50',      template: 'xl-1440', templateLabel: 'XL 1440', layout: '50-50',      layoutLabel: '50-50',      viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 664, size: 'split', active: true }, { width: 664, size: 'split', active: false }] },
+  { key: 'xl-1440__3-column',   template: 'xl-1440', templateLabel: 'XL 1440', layout: '3-column',   layoutLabel: '3 column',   viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 437, size: 'mobile', active: true }, { width: 437, size: 'mobile', active: false }, { width: 437, size: 'mobile', active: false }] },
+  { key: 'xl-1440__4-column',   template: 'xl-1440', templateLabel: 'XL 1440', layout: '4-column',   layoutLabel: '4 column',   viewport: 1440, margins: 40, gap: 24,
+    slots: [{ width: 322, size: 'sidebar', active: true }, { width: 322, size: 'sidebar', active: false }, { width: 322, size: 'sidebar', active: false }, { width: 322, size: 'sidebar', active: false }] },
+];
+
+const templates = [
+  { key: 'sm-412',  label: 'SM 412' },
+  { key: 'md-800',  label: 'MD 800' },
+  { key: 'lg-1024', label: 'LG 1024' },
+  { key: 'lg-1280', label: 'LG 1280' },
+  { key: 'xl-1440', label: 'XL 1440' },
+];
+const layouts = [
+  { key: 'full-width', label: 'Full width' },
+  { key: '70-30',      label: '70-30' },
+  { key: 'sidebar',    label: 'Sidebar' },
+  { key: '50-50',      label: '50-50' },
+  { key: '3-column',   label: '3 column' },
+  { key: '4-column',   label: '4 column' },
+];
+const variants = [
+  { key: 'image-row', label: 'Image row' },
+  { key: 'text-row',  label: 'Text row' },
+];
+
+// Availability lookup for enabling/disabling layout chips per template
+const availability: Record<string, string[]> = {};
+combos.forEach(c => {
+  availability[c.template] ??= [];
+  if (!availability[c.template].includes(c.layout)) availability[c.template].push(c.layout);
+});
+---
+
+<BaseLayout title="Carousel List B — In Context" section="modules">
+
+  <header class="ic-header">
+    <nav class="ic-breadcrumb" aria-label="Breadcrumb">
+      <a href={`${base}modules/carousel/`} class="ic-breadcrumb-link">← Carousel List B</a>
+    </nav>
+    <h1 class="ic-title">In Context</h1>
+    <p class="ic-description">
+      See how Carousel List B renders inside every screen-template slot. Change
+      the template size, layout, and component variant to inspect specific
+      combinations.
+    </p>
+  </header>
+
+  <div class="ic-filters" role="region" aria-label="Filters">
+
+    <div class="ic-filter-group">
+      <p class="ic-filter-label">Template</p>
+      <div class="ic-chip-row" data-filter-name="template">
+        {templates.map(t => (
+          <button type="button" class="ic-chip" data-value={t.key}>{t.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="ic-filter-group">
+      <p class="ic-filter-label">Layout</p>
+      <div class="ic-chip-row" data-filter-name="layout">
+        {layouts.map(l => (
+          <button type="button" class="ic-chip" data-value={l.key}>{l.label}</button>
+        ))}
+      </div>
+    </div>
+
+    <div class="ic-filter-group">
+      <p class="ic-filter-label">Variant</p>
+      <div class="ic-chip-row" data-filter-name="variant">
+        {variants.map(v => (
+          <button type="button" class="ic-chip" data-value={v.key}>{v.label}</button>
+        ))}
+      </div>
+    </div>
+
+  </div>
+
+  <p class="ic-meta" id="ic-meta"></p>
+
+  <div class="ic-stage-scroll">
+    <div class="ic-stage">
+      {combos.map(c => (
+        <>
+          <div
+            class="ic-view"
+            data-template={c.template}
+            data-layout={c.layout}
+            data-variant="image-row"
+            data-key={`${c.key}__image-row`}
+          >
+            <div class="ic-template" style={`width: ${c.viewport}px;`}>
+              <div class="ic-template-inner" style={`padding: 0 ${c.margins}px; gap: ${c.gap}px;`}>
+                {c.slots.map((slot) => (
+                  slot.active
+                    ? <div class="ic-slot ic-slot--active" style={`width: ${slot.width}px;`}>
+                        <CarouselListB
+                          size={slot.size}
+                          variant="image-row"
+                          mode={c.layout === 'full-width' ? 'auto' : 'grid'}
+                          title="This is a module title"
+                          lead={lead}
+                          stories={storiesWithImages}
+                        />
+                      </div>
+                    : <div class="ic-slot" style={`width: ${slot.width}px;`}>
+                        <div class="ic-slot-placeholder">
+                          <span class="ic-slot-placeholder-label">{slot.width}px · {slot.size}</span>
+                        </div>
+                      </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div
+            class="ic-view"
+            data-template={c.template}
+            data-layout={c.layout}
+            data-variant="text-row"
+            data-key={`${c.key}__text-row`}
+          >
+            <div class="ic-template" style={`width: ${c.viewport}px;`}>
+              <div class="ic-template-inner" style={`padding: 0 ${c.margins}px; gap: ${c.gap}px;`}>
+                {c.slots.map((slot) => (
+                  slot.active
+                    ? <div class="ic-slot ic-slot--active" style={`width: ${slot.width}px;`}>
+                        <CarouselListB
+                          size={slot.size}
+                          variant="text-row"
+                          mode={c.layout === 'full-width' ? 'auto' : 'grid'}
+                          title="This is a module title"
+                          lead={lead}
+                          stories={storiesTextOnly}
+                        />
+                      </div>
+                    : <div class="ic-slot" style={`width: ${slot.width}px;`}>
+                        <div class="ic-slot-placeholder">
+                          <span class="ic-slot-placeholder-label">{slot.width}px · {slot.size}</span>
+                        </div>
+                      </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      ))}
+    </div>
+  </div>
+
+</BaseLayout>
+
+<script is:inline define:vars={{ availability }}>
+  (function() {
+    const state = {
+      template: 'lg-1024',
+      layout:   'full-width',
+      variant:  'image-row',
+    };
+
+    // Restore state from URL params if present.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('template')) state.template = params.get('template');
+    if (params.get('layout'))   state.layout   = params.get('layout');
+    if (params.get('variant'))  state.variant  = params.get('variant');
+
+    const chipRows = document.querySelectorAll('.ic-chip-row');
+    const views    = document.querySelectorAll('.ic-view');
+    const meta     = document.getElementById('ic-meta');
+
+    function update() {
+      // If current layout isn't available for current template, fall back to first valid.
+      const validLayouts = availability[state.template] || [];
+      if (!validLayouts.includes(state.layout)) {
+        state.layout = validLayouts[0] || 'full-width';
+      }
+
+      // Update chip states (active / disabled).
+      chipRows.forEach(row => {
+        const name = row.getAttribute('data-filter-name');
+        row.querySelectorAll('.ic-chip').forEach(chip => {
+          const v = chip.getAttribute('data-value');
+          chip.classList.toggle('ic-chip--active', state[name] === v);
+          if (name === 'layout') {
+            const invalid = !validLayouts.includes(v);
+            chip.disabled = invalid;
+            chip.classList.toggle('ic-chip--disabled', invalid);
+          }
+        });
+      });
+
+      // Show only the matching view.
+      const activeKey = `${state.template}__${state.layout}__${state.variant}`;
+      views.forEach(view => {
+        view.hidden = view.getAttribute('data-key') !== activeKey;
+      });
+
+      // Update meta line.
+      const currentCombo = Array.from(views).find(v => v.getAttribute('data-key') === activeKey);
+      if (currentCombo && meta) {
+        const activeSlot = currentCombo.querySelector('.ic-slot--active');
+        const carouselB  = activeSlot && activeSlot.querySelector('.carousel-list-b');
+        const size       = carouselB && carouselB.getAttribute('data-size');
+        const templateLabel = { 'sm-412':'SM 412', 'md-800':'MD 800', 'lg-1024':'LG 1024', 'lg-1280':'LG 1280', 'xl-1440':'XL 1440' }[state.template];
+        const layoutLabel   = { 'full-width':'Full width', '70-30':'70-30', 'sidebar':'Sidebar', '50-50':'50-50', '3-column':'3 column', '4-column':'4 column' }[state.layout];
+        const variantLabel  = { 'image-row':'Image row', 'text-row':'Text row' }[state.variant];
+        meta.innerHTML = `Rendering <strong>${variantLabel}</strong> at <strong>${size}</strong> size inside <strong>${templateLabel} · ${layoutLabel}</strong>.`;
+      }
+
+      // Update URL (replaceState, no history spam).
+      const url = new URL(window.location.href);
+      url.searchParams.set('template', state.template);
+      url.searchParams.set('layout',   state.layout);
+      url.searchParams.set('variant',  state.variant);
+      history.replaceState(null, '', url);
+    }
+
+    chipRows.forEach(row => {
+      const name = row.getAttribute('data-filter-name');
+      row.addEventListener('click', (e) => {
+        const chip = e.target.closest('.ic-chip');
+        if (!chip || chip.disabled) return;
+        state[name] = chip.getAttribute('data-value');
+        update();
+      });
+    });
+
+    update();
+  })();
+</script>
+
+<style>
+  /* ── Header ───────────────────────────────────────── */
+  .ic-header {
+    padding-bottom: var(--maple-space-module-compact);
+    border-bottom: 1px solid var(--maple-border-subtle);
+    margin-bottom: var(--maple-space-module-compact);
+  }
+
+  .ic-breadcrumb {
+    margin-bottom: var(--maple-space-fixed-default);
+  }
+
+  .ic-breadcrumb-link {
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-secondary);
+    text-decoration: none;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  .ic-breadcrumb-link:hover {
+    color: var(--maple-text-primary);
+  }
+
+  .ic-title {
+    font-size: var(--maple-text-x3);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    letter-spacing: var(--maple-letter-spacing-tight);
+    font-variation-settings: "wght" 700;
+    margin-bottom: var(--maple-space-fixed-compact);
+  }
+
+  .ic-description {
+    font-size: var(--maple-text-size-body-base);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-body);
+    max-width: 56ch;
+  }
+
+  /* ── Filters ──────────────────────────────────────── */
+  .ic-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--maple-space-fixed-expanded);
+    padding: var(--maple-space-fixed-default);
+    background: var(--maple-bg-elevated);
+    border: 1px solid var(--maple-border-subtle);
+    border-radius: var(--maple-radius-md);
+    margin-bottom: var(--maple-space-fixed-default);
+    position: sticky;
+    top: var(--maple-space-fixed-default);
+    z-index: 10;
+  }
+
+  .ic-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-compact);
+  }
+
+  .ic-filter-label {
+    font-size: var(--maple-text-x-3);
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--maple-text-secondary);
+    font-variation-settings: "wght" 700, "wdth" 75;
+    margin: 0;
+  }
+
+  .ic-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--maple-space-fixed-tight);
+  }
+
+  .ic-chip {
+    font-family: var(--maple-font-family);
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-medium);
+    font-stretch: 75%;
+    color: var(--maple-text-primary);
+    background: var(--maple-bg-elevated);
+    border: 1px solid var(--maple-border-moderate);
+    border-radius: var(--maple-radius-sm);
+    padding: var(--maple-space-fixed-compact) var(--maple-space-fixed-snug);
+    cursor: pointer;
+    font-variation-settings: "wght" 500, "wdth" 75;
+    transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+
+  .ic-chip:hover:not(.ic-chip--active):not(.ic-chip--disabled) {
+    background: var(--maple-bg-secondary);
+  }
+
+  .ic-chip--active {
+    background: var(--maple-bg-header-primary);
+    color: var(--maple-text-inv-primary);
+    border-color: var(--maple-bg-header-primary);
+  }
+
+  .ic-chip--disabled {
+    color: var(--maple-border-moderate);
+    background: var(--maple-bg-elevated);
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* ── Meta line ────────────────────────────────────── */
+  .ic-meta {
+    font-size: var(--maple-text-size-body-sm);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-body);
+    margin-bottom: var(--maple-space-fixed-default);
+  }
+
+  .ic-meta strong {
+    color: var(--maple-text-primary);
+    font-weight: var(--maple-font-weight-bold);
+  }
+
+  /* ── Stage / template mock ────────────────────────── */
+  /* Break out of the site-main max-width so a 1440 template mock can render
+     without horizontal scrolling inside the preview window. On viewports
+     narrower than the mock, the stage-scroll's overflow-x still allows
+     scrolling as a fallback. */
+  .ic-stage-scroll {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    overflow-x: auto;
+    background: var(--maple-bg-secondary);
+    border-top: 1px solid var(--maple-border-subtle);
+    border-bottom: 1px solid var(--maple-border-subtle);
+    padding: var(--maple-space-fixed-generous) var(--maple-space-fixed-default);
+  }
+
+  .ic-stage {
+    display: flex;
+    justify-content: center;
+    min-width: max-content;
+    /* When content is wider than 100vw, keep it left-anchored so scrolling
+       feels natural (start of the mock is visible without scrolling). */
+    margin: 0 auto;
+  }
+
+  .ic-view[hidden] {
+    display: none;
+  }
+
+  .ic-template {
+    background: var(--maple-bg-primary);
+    border: 1px solid var(--maple-border-moderate);
+    padding: var(--maple-space-fixed-generous) 0;
+  }
+
+  .ic-template-inner {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .ic-slot {
+    flex-shrink: 0;
+  }
+
+  .ic-slot--active {
+    /* nothing special; content is the real component */
+  }
+
+  .ic-slot-placeholder {
+    background: var(--maple-bg-secondary);
+    border: 1px dashed var(--maple-border-moderate);
+    min-height: 400px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--maple-space-fixed-default);
+  }
+
+  .ic-slot-placeholder-label {
+    font-family: ui-monospace, monospace;
+    font-size: var(--maple-text-x-3);
+    color: var(--maple-text-secondary);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+</style>

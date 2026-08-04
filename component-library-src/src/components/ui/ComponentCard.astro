@@ -1,0 +1,110 @@
+---
+/**
+ * ComponentCard — used on the section index pages (base, slot, modules,
+ * page-structures) to link to individual component detail pages.
+ *
+ * Structure:
+ *   ┌──────────────────────┐
+ *   │                      │
+ *   │      preview         │  ← slot; fallback is the component initial
+ *   │                      │
+ *   ├──────────────────────┤
+ *   │  Name                │
+ *   │  Optional desc       │
+ *   └──────────────────────┘
+ */
+
+interface Props {
+  href: string;
+  name: string;
+  description?: string;
+  /** Optional accent color for the fallback preview (defaults to neutral) */
+  accent?: 'red' | 'neutral';
+}
+
+const { href, name, description, accent = 'neutral' } = Astro.props;
+const initial = name.charAt(0).toUpperCase();
+---
+
+<a href={href} class:list={['component-card', `component-card--${accent}`]}>
+  <div class="component-card-preview">
+    <slot>
+      <span class="component-card-initial" aria-hidden="true">{initial}</span>
+    </slot>
+  </div>
+  <div class="component-card-body">
+    <h3 class="component-card-name">{name}</h3>
+    {description && <p class="component-card-description">{description}</p>}
+  </div>
+</a>
+
+<style>
+  .component-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--maple-bg-elevated);
+    border: var(--maple-stroke-01) solid var(--maple-border-subtle);
+    border-radius: var(--maple-radius-md);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .component-card:hover {
+    border-color: var(--maple-border-moderate);
+    box-shadow: 0 4px 16px #0000001a;
+    transform: translateY(-1px);
+  }
+
+  .component-card-preview {
+    aspect-ratio: 3 / 2;
+    background: var(--maple-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-bottom: var(--maple-stroke-01) solid var(--maple-border-subtle);
+  }
+
+  .component-card--red .component-card-preview {
+    background: linear-gradient(135deg, #fff4f0 0%, #ffe4d9 100%);
+  }
+
+  .component-card-initial {
+    font-family: var(--maple-font-family);
+    font-size: 64px;
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-border-moderate);
+    font-variation-settings: "wght" 700;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .component-card--red .component-card-initial {
+    color: var(--maple-brand-solid-red);
+    opacity: 0.35;
+  }
+
+  .component-card-body {
+    padding: var(--maple-space-fixed-default);
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-tight);
+    flex: 1;
+  }
+
+  .component-card-name {
+    font-size: var(--maple-text-size-body-base);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    font-variation-settings: "wght" 700;
+  }
+
+  .component-card-description {
+    font-size: var(--maple-text-size-body-sm);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-body);
+  }
+</style>

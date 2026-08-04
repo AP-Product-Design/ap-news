@@ -1,0 +1,48 @@
+---
+import DetailLayout from '../../layouts/DetailLayout.astro';
+---
+
+<DetailLayout
+  name="Author Bio"
+  section="slot"
+  sectionLabel="Slot Components"
+  description="Expanded author card for article footers and dedicated author pages. Larger photo, full bio, and social links."
+>
+  <section class="detail-section">
+    <h2 class="detail-section-title">Preview</h2>
+    <div class="detail-placeholder">
+      <p>Author Bio preview will render here.</p>
+    </div>
+  </section>
+
+  <section class="detail-section">
+    <h2 class="detail-section-title">Usage</h2>
+    <div class="detail-placeholder">
+      <p>API, props, and code samples coming soon.</p>
+    </div>
+  </section>
+</DetailLayout>
+
+<style>
+  .detail-section-title {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    margin-bottom: var(--maple-space-fixed-default);
+    font-variation-settings: "wght" 700;
+  }
+
+  .detail-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    background: var(--maple-bg-elevated);
+    border: var(--maple-stroke-01) dashed var(--maple-border-moderate);
+    border-radius: var(--maple-radius-md);
+    color: var(--maple-text-secondary);
+    font-size: var(--maple-text-size-body-sm);
+    padding: var(--maple-space-fixed-default);
+  }
+</style>

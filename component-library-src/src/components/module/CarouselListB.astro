@@ -1,0 +1,556 @@
+---
+/**
+ * Carousel List B — Module
+ * Figma: AP News design system (Maple) › Modules › Carousel List B
+ *
+ * Sizes (from container-size taxonomy):
+ *   compact 240  – swipe row, 1 story + ~20% peek, stacked lead
+ *   sidebar 320  – swipe row, 1 story + ~20% peek, stacked lead
+ *   mobile  372  – swipe row, 1 story + ~20% peek, stacked lead
+ *   split   584  – grid row, 2 stories + prev/next arrows, stacked lead
+ *   tablet  760  – swipe row, 1 story + ~20% peek, stacked lead
+ *   full    944  – grid row, 3 stories + prev/next arrows, 2-column lead
+ *   wide    1360 – grid row, 4 stories + prev/next arrows, 2-column lead
+ *
+ * Variants:
+ *   image-row  supporting stories carry a 3:2 thumbnail
+ *   text-row   supporting stories are headline-only (no thumbnail)
+ */
+
+type Size = 'compact' | 'sidebar' | 'mobile' | 'split' | 'tablet' | 'full' | 'wide';
+type Variant = 'image-row' | 'text-row';
+type Mode = 'swipe' | 'grid' | 'auto';
+
+interface Story {
+  live?: boolean;
+  timestamp: string;
+  headline: string;
+  readTime: string;
+  href?: string;
+  image?: string;
+  imageAlt?: string;
+}
+
+interface LeadStory {
+  eyebrow: string;
+  headline: string;
+  dek: string;
+  timestamp: string;    // red timestamp shown on stacked-lead sizes
+  readTime: string;     // gray "N min read" shown on 2-column-lead sizes
+  image: string;
+  imageAlt: string;
+  href?: string;
+}
+
+interface Props {
+  size: Size;
+  variant?: Variant;
+  /**
+   * mode: 'swipe' shows 1 card + peek with native scroll (no arrows).
+   *       'grid' shows N cards with prev/next arrow pagination.
+   *       'auto' (default) infers from size: compact/sidebar/mobile/tablet → swipe,
+   *       split/full/wide → grid. Override with 'grid' when placing the module
+   *       inside a non-full-width slot (per the design system: only Full width
+   *       layouts get the peek variant; every other layout uses arrows).
+   */
+  mode?: Mode;
+  title: string;
+  lead: LeadStory;
+  stories: Story[];
+  moreCoverageHref?: string;
+  moreCoverageLabel?: string;
+  prevIconSrc?: string;
+  nextIconSrc?: string;
+  class?: string;
+}
+
+const {
+  size,
+  variant = 'image-row',
+  mode = 'auto',
+  title,
+  lead,
+  stories,
+  moreCoverageHref = '#',
+  moreCoverageLabel = 'More coverage',
+  prevIconSrc,
+  nextIconSrc,
+  class: className,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const prevIcon = prevIconSrc ?? `${base}images/gallery-button-prev.svg`;
+const nextIcon = nextIconSrc ?? `${base}images/gallery-button-next.svg`;
+
+// Swipe sizes (auto mode only). Explicit mode override wins.
+const swipeSizes: Size[] = ['compact', 'sidebar', 'mobile', 'tablet'];
+const isSwipe =
+  mode === 'swipe' ||
+  (mode === 'auto' && swipeSizes.includes(size));
+
+// Grid sizes: fixed N items visible + prev/next carousel.
+const itemsVisibleBySize: Record<Size, number> = {
+  compact: 1, sidebar: 1, mobile: 1, tablet: 1,
+  split: 2, full: 3, wide: 4,
+};
+const itemsVisible = itemsVisibleBySize[size];
+
+// 2-column lead only at Full and Wide.
+const twoColLead = size === 'full' || size === 'wide';
+
+// Timestamp treatment: red timestamp when lead is stacked, gray read-time on 2-col.
+const showLeadTimestamp = !twoColLead;
+
+const isImageRow = variant === 'image-row';
+---
+
+<section
+  class:list={['carousel-list-b', className]}
+  data-size={size}
+  data-variant={variant}
+  data-mode={isSwipe ? 'swipe' : 'grid'}
+  aria-label={title}
+>
+
+  <div class="clb-title-block">
+    <span class="clb-top-rule" aria-hidden="true"></span>
+    <h2 class="clb-title">{title}</h2>
+  </div>
+
+  <div class:list={['clb-lead', twoColLead ? 'clb-lead--two-col' : 'clb-lead--stacked']}>
+    <div class="clb-lead-media">
+      <img src={lead.image} alt={lead.imageAlt} loading="lazy" />
+    </div>
+    <div class="clb-lead-text">
+      <p class="clb-eyebrow">{lead.eyebrow}</p>
+      {lead.href
+        ? <a href={lead.href} class="clb-lead-headline-link"><h3 class="clb-lead-headline">{lead.headline}</h3></a>
+        : <h3 class="clb-lead-headline">{lead.headline}</h3>
+      }
+      <p class="clb-lead-dek">{lead.dek}</p>
+      {showLeadTimestamp
+        ? <p class="clb-timestamp clb-timestamp--standalone">{lead.timestamp}</p>
+        : <p class="clb-meta">{lead.readTime}</p>
+      }
+    </div>
+  </div>
+
+  <div class="clb-carousel" style={`--items-visible: ${itemsVisible};`}>
+    <div class="clb-carousel-viewport">
+      <div class="clb-story-row" role="list">
+        {stories.map((s) => (
+          <article class="clb-story-card" role="listitem">
+            {isImageRow && s.image && (
+              <div class="clb-story-thumb">
+                <img src={s.image} alt={s.imageAlt ?? ''} loading="lazy" />
+              </div>
+            )}
+            <div class="clb-story-body">
+              <div class="clb-story-meta">
+                {s.live && <span class="clb-live-badge">LIVE</span>}
+                <span class="clb-timestamp">{s.timestamp}</span>
+              </div>
+              {s.href
+                ? <a href={s.href} class="clb-story-headline-link"><h4 class="clb-story-headline">{s.headline}</h4></a>
+                : <h4 class="clb-story-headline">{s.headline}</h4>
+              }
+              <p class="clb-meta">{s.readTime}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    {!isSwipe && (
+      <>
+        <button type="button" class="clb-nav clb-nav--prev" aria-label="Previous stories" data-clb-nav="prev">
+          <img src={prevIcon} alt="" width="40" height="40" />
+        </button>
+        <button type="button" class="clb-nav clb-nav--next" aria-label="Next stories" data-clb-nav="next">
+          <img src={nextIcon} alt="" width="40" height="40" />
+        </button>
+      </>
+    )}
+  </div>
+
+  <a href={moreCoverageHref} class="clb-more-coverage">{moreCoverageLabel}</a>
+
+</section>
+
+<script>
+  // Grid-mode carousel: prev/next paginate the story row by items-visible count.
+  document.querySelectorAll<HTMLElement>('.carousel-list-b[data-mode="grid"]').forEach(root => {
+    const viewport = root.querySelector<HTMLElement>('.clb-carousel-viewport');
+    const row      = root.querySelector<HTMLElement>('.clb-story-row');
+    const prevBtn  = root.querySelector<HTMLButtonElement>('[data-clb-nav="prev"]');
+    const nextBtn  = root.querySelector<HTMLButtonElement>('[data-clb-nav="next"]');
+    if (!viewport || !row || !prevBtn || !nextBtn) return;
+
+    const totalCards = row.children.length;
+    const visible    = parseInt(getComputedStyle(root).getPropertyValue('--items-visible')) || 1;
+    const maxPage    = Math.max(0, Math.ceil(totalCards / visible) - 1);
+    let page = 0;
+
+    const update = () => {
+      // Translate by the viewport width per page. Using pixels (not %) keeps
+      // the offset stable regardless of the row's intrinsic content width.
+      const offset = page * viewport.clientWidth;
+      row.style.transform = `translateX(${-offset}px)`;
+      prevBtn.disabled = page <= 0;
+      nextBtn.disabled = page >= maxPage;
+    };
+
+    prevBtn.addEventListener('click', () => { if (page > 0) { page--; update(); } });
+    nextBtn.addEventListener('click', () => { if (page < maxPage) { page++; update(); } });
+
+    // Re-measure on resize so pagination stays aligned.
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>
+
+<style>
+  .carousel-list-b {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-expanded); /* 24 */
+    font-family: var(--maple-font-family);
+    color: var(--maple-text-primary);
+    background: var(--maple-bg-primary); /* #fff so the module shape is visible */
+  }
+
+  /* ── Title block ─────────────────────────────────────── */
+
+  .clb-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-snug); /* 12 */
+    padding-top: var(--maple-space-fixed-snug); /* 12 */
+    border-top: 1px solid var(--maple-border-subtle); /* divider ABOVE red prompt */
+  }
+
+  .clb-top-rule {
+    display: block;
+    /* Default (sm/md container sizes): 32 × 4 */
+    width: 32px;
+    height: 4px;
+    background: var(--maple-brand-solid-red);
+  }
+
+  /* lg/xl container sizes: 48 × 6 prompt */
+  [data-size="full"] .clb-top-rule,
+  [data-size="wide"] .clb-top-rule {
+    width: 48px;
+    height: 6px;
+  }
+
+  .clb-title {
+    /* Default (sm/md container sizes): 20px */
+    font-size: 20px;
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 50%;
+    line-height: var(--maple-line-height-heading-120);
+    color: var(--maple-text-primary);
+    text-transform: uppercase;
+    font-variation-settings: "wght" 700, "wdth" 50;
+    margin: 0;
+  }
+
+  /* lg/xl container sizes: 27px title */
+  [data-size="full"] .clb-title,
+  [data-size="wide"] .clb-title {
+    font-size: var(--maple-text-x2); /* 27 */
+  }
+
+  /* ── Lead story ──────────────────────────────────────── */
+
+  .clb-lead {
+    display: grid;
+    padding-bottom: var(--maple-space-fixed-expanded); /* 24 */
+    border-bottom: 1px solid var(--maple-border-subtle);
+  }
+
+  .clb-lead--stacked {
+    grid-template-columns: 1fr;
+    gap: var(--maple-space-fixed-default); /* 16 */
+  }
+
+  .clb-lead--two-col {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: var(--maple-space-fixed-generous); /* 32 */
+  }
+
+  /* Two-col lead: reorder so text is on the left */
+  .clb-lead--two-col .clb-lead-text  { order: 1; grid-column: 1; }
+  .clb-lead--two-col .clb-lead-media { order: 2; grid-column: 2; }
+
+  .clb-lead-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-snug); /* 12 */
+    min-width: 0;
+  }
+
+  .clb-eyebrow {
+    font-size: var(--maple-text-x-3); /* 12 */
+    font-weight: var(--maple-font-weight-medium);
+    font-stretch: 75%;
+    line-height: var(--maple-line-height-heading-120);
+    color: var(--maple-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    font-variation-settings: "wght" 500, "wdth" 75;
+    margin: 0;
+  }
+
+  .clb-lead-headline {
+    font-size: var(--maple-text-x1); /* 23 */
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    line-height: var(--maple-line-height-heading-120);
+    color: var(--maple-text-primary);
+    font-variation-settings: "wght" 700, "wdth" 75;
+    margin: 0;
+  }
+
+  /* Smaller headline at Compact/Sidebar */
+  [data-size="compact"] .clb-lead-headline,
+  [data-size="sidebar"] .clb-lead-headline {
+    font-size: var(--maple-text-x-base); /* 18 */
+  }
+
+  /* If the module ends up nested inside a page that also has bg-primary
+     (default), reveal the shape by adding a subtle outline on the wrapping
+     size-gallery-frame. Nothing here — handled at SizeGallery layer. */
+
+  .clb-lead-headline-link,
+  .clb-story-headline-link {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+  }
+
+  .clb-lead-headline-link:hover,
+  .clb-story-headline-link:hover {
+    color: var(--maple-text-secondary);
+  }
+
+  .clb-lead-dek {
+    font-size: var(--maple-text-x-2); /* 14 */
+    font-weight: var(--maple-font-weight-regular);
+    line-height: var(--maple-line-height-body);
+    color: var(--maple-text-primary);
+    margin: 0;
+  }
+
+  .clb-lead-media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--maple-bg-secondary);
+  }
+
+  .clb-lead-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Carousel + story row ────────────────────────────── */
+
+  .clb-carousel {
+    position: relative;
+  }
+
+  .clb-carousel-viewport {
+    overflow: hidden;
+  }
+
+  .clb-story-row {
+    display: flex;
+    gap: var(--maple-space-fixed-default); /* 16 */
+  }
+
+  /* Grid mode: transform-driven pagination. Cards are sized to fill exactly
+     N per page of the viewport; extra cards overflow to the right and get
+     clipped by the viewport's overflow:hidden until Next scrolls them in. */
+  [data-mode="grid"] .clb-story-row {
+    transition: transform 0.35s ease;
+  }
+
+  [data-mode="grid"] .clb-story-card {
+    width: calc((100% - (var(--items-visible) - 1) * var(--maple-space-fixed-default)) / var(--items-visible));
+    flex-shrink: 0;
+    min-width: 0;
+  }
+
+  /* Swipe mode: native horizontal scroll with ~80% width so ~20% of next peeks */
+  [data-mode="swipe"] .clb-carousel-viewport {
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
+  }
+
+  [data-mode="swipe"] .clb-carousel-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-mode="swipe"] .clb-story-card {
+    width: 80%;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    min-width: 0;
+  }
+
+  /* Story card */
+  .clb-story-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-snug); /* 12 */
+  }
+
+  /* Text-row variant: vertical dividers between cards. Image-row has no
+     dividers because the thumbnails already separate the cards visually. */
+  [data-variant="text-row"] .clb-story-card {
+    padding-right: var(--maple-space-fixed-default);
+    border-right: 1px solid var(--maple-border-subtle);
+  }
+
+  [data-variant="text-row"] .clb-story-card:last-child {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .clb-story-thumb {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: var(--maple-bg-secondary);
+  }
+
+  .clb-story-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .clb-story-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-compact); /* 8 */
+  }
+
+  .clb-story-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-compact); /* 8 */
+  }
+
+  .clb-live-badge {
+    background: var(--maple-brand-solid-red);
+    color: #ffffff;
+    font-size: var(--maple-text-x-3);
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    padding: 2px var(--maple-space-fixed-compact);
+    line-height: 1.2;
+    font-variation-settings: "wght" 700, "wdth" 75;
+  }
+
+  .clb-timestamp {
+    font-size: var(--maple-text-x-3);
+    font-weight: var(--maple-font-weight-medium);
+    font-stretch: 75%;
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-brand-solid-red);
+    text-transform: uppercase;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    font-variation-settings: "wght" 500, "wdth" 75;
+  }
+
+  .clb-timestamp--standalone {
+    margin: var(--maple-space-fixed-tight) 0 0;
+  }
+
+  .clb-story-headline {
+    font-size: var(--maple-text-x-base); /* 18 */
+    font-weight: var(--maple-font-weight-medium);
+    font-stretch: 75%;
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-text-primary);
+    font-variation-settings: "wght" 500, "wdth" 75;
+    margin: 0;
+  }
+
+  .clb-meta {
+    font-size: var(--maple-text-x-3);
+    font-weight: var(--maple-font-weight-medium);
+    font-stretch: 75%;
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    font-variation-settings: "wght" 500, "wdth" 75;
+    margin: 0;
+  }
+
+  /* ── Prev / Next nav buttons (grid mode only) ────────── */
+
+  .clb-nav {
+    position: absolute;
+    top: 33%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    transition: opacity 0.15s ease;
+  }
+
+  .clb-nav[disabled] {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .clb-nav img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Half-on / half-off the viewport edges */
+  .clb-nav--prev {
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+
+  .clb-nav--next {
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+
+  /* text-row: center vertically on the whole card row (no image to anchor on) */
+  [data-variant="text-row"] .clb-nav {
+    top: 50%;
+  }
+
+  /* ── More coverage link ──────────────────────────────── */
+
+  .clb-more-coverage {
+    align-self: flex-start;
+    font-size: var(--maple-text-x-2); /* 14 */
+    font-weight: var(--maple-font-weight-medium);
+    line-height: var(--maple-line-height-heading-130);
+    color: var(--maple-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .clb-more-coverage:hover {
+    color: var(--maple-text-secondary);
+  }
+</style>

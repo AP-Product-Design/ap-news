@@ -1,64 +1,27 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import SectionLayout from '../../layouts/SectionLayout.astro';
+import ComponentCard from '../../components/ui/ComponentCard.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const cards = [
+  { slug: 'article-page',  name: 'Article Page',  description: 'Standard article template with header, byline, lead media, body, and related content rail.' },
+  { slug: 'homepage',      name: 'Homepage',      description: 'Top-level layout combining lead hero, feature grid, and section rails.' },
+  { slug: 'category-page', name: 'Category Page', description: 'Section landing page with topic hero, article list, and topic navigation.' },
+  { slug: 'author-page',   name: 'Author Page',   description: 'Author profile page with expanded bio, story archive, and social links.' },
+];
 ---
 
-<BaseLayout title="Page Structures" section="page-structures">
-  <header class="page-header">
-    <p class="page-eyebrow">Component Library</p>
-    <h1 class="page-title">Page Structures</h1>
-    <p class="page-description">
-      Full-page layout templates and grid systems for assembling complete
-      views from modules and components.
-    </p>
-  </header>
-
-  <div class="placeholder">
-    <p>Components coming soon.</p>
-  </div>
-</BaseLayout>
-
-<style>
-  .page-header {
-    padding-bottom: var(--maple-space-module-compact);
-    border-bottom: var(--maple-stroke-01) solid var(--maple-border-subtle);
-    margin-bottom: var(--maple-space-module-compact);
-  }
-
-  .page-eyebrow {
-    font-size: var(--maple-text-size-utility-sm);
-    font-weight: var(--maple-font-weight-medium);
-    color: var(--maple-text-eyebrow);
-    letter-spacing: var(--maple-letter-spacing-wide);
-    text-transform: uppercase;
-    margin-bottom: var(--maple-space-fixed-compact);
-  }
-
-  .page-title {
-    font-size: var(--maple-text-x3);
-    font-weight: var(--maple-font-weight-bold);
-    color: var(--maple-text-primary);
-    line-height: var(--maple-line-height-heading-120);
-    letter-spacing: var(--maple-letter-spacing-tight);
-    font-variation-settings: "wght" 700;
-    margin-bottom: var(--maple-space-fixed-compact);
-  }
-
-  .page-description {
-    font-size: var(--maple-text-size-body-base);
-    color: var(--maple-text-secondary);
-    line-height: var(--maple-line-height-body);
-    max-width: 56ch;
-  }
-
-  .placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 240px;
-    background: var(--maple-bg-elevated);
-    border: var(--maple-stroke-01) dashed var(--maple-border-moderate);
-    border-radius: var(--maple-radius-md);
-    color: var(--maple-text-secondary);
-    font-size: var(--maple-text-size-body-sm);
-  }
-</style>
+<SectionLayout
+  title="Page Structures"
+  section="page-structures"
+  description="Full-page layout templates and grid systems for assembling complete views from modules and components."
+>
+  {cards.map(c => (
+    <ComponentCard
+      href={`${base}page-structures/${c.slug}/`}
+      name={c.name}
+      description={c.description}
+    />
+  ))}
+</SectionLayout>

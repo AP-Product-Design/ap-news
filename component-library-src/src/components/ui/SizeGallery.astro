@@ -1,0 +1,134 @@
+---
+/**
+ * SizeGallery — renders slotted content at each of the 7 canonical
+ * container sizes (Compact 240 → Wide 1360). Each named slot expects
+ * one component instance sized for that width.
+ *
+ * Note: slot names are hardcoded (not mapped) because Astro's dynamic
+ * <slot name={var} /> inside a .map() doesn't bind reliably.
+ */
+
+interface Props {
+  /** Optional heading above the gallery (e.g. variant name) */
+  heading?: string;
+}
+
+const { heading } = Astro.props;
+---
+
+<section class="size-gallery">
+  {heading && <h2 class="size-gallery-heading">{heading}</h2>}
+
+  <div class="size-gallery-item" id="size-compact">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Compact</span>
+      <span class="size-gallery-label-width">240px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 240px;"><slot name="compact" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-sidebar">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Sidebar</span>
+      <span class="size-gallery-label-width">320px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 320px;"><slot name="sidebar" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-mobile">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Mobile</span>
+      <span class="size-gallery-label-width">372px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 372px;"><slot name="mobile" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-split">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Split</span>
+      <span class="size-gallery-label-width">584px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 584px;"><slot name="split" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-tablet">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Tablet</span>
+      <span class="size-gallery-label-width">760px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 760px;"><slot name="tablet" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-full">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Full</span>
+      <span class="size-gallery-label-width">944px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 944px;"><slot name="full" /></div>
+  </div>
+
+  <div class="size-gallery-item" id="size-wide">
+    <div class="size-gallery-label">
+      <span class="size-gallery-label-name">Wide</span>
+      <span class="size-gallery-label-width">1360px</span>
+    </div>
+    <div class="size-gallery-frame" style="width: 1360px;"><slot name="wide" /></div>
+  </div>
+</section>
+
+<style>
+  .size-gallery {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-module-default);
+  }
+
+  .size-gallery-heading {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    font-variation-settings: "wght" 700;
+    margin: 0;
+  }
+
+  .size-gallery-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-snug);
+    scroll-margin-top: var(--maple-space-fixed-generous);
+  }
+
+  .size-gallery-label {
+    display: flex;
+    align-items: baseline;
+    gap: var(--maple-space-fixed-compact);
+    padding-bottom: var(--maple-space-fixed-compact);
+    border-bottom: 1px solid var(--maple-border-subtle);
+  }
+
+  .size-gallery-label-name {
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--maple-text-primary);
+    font-variation-settings: "wght" 700, "wdth" 75;
+  }
+
+  .size-gallery-label-width {
+    font-family: ui-monospace, monospace;
+    font-size: var(--maple-text-x-3);
+    color: var(--maple-text-secondary);
+  }
+
+  .size-gallery-frame {
+    /* Extra padding on the sides so the half-off prev/next buttons remain visible.
+       content-box makes the declared width refer to the content, not the padded box,
+       so 240px frame = 240px component + 24px padding on each side. */
+    box-sizing: content-box;
+    padding: 0 var(--maple-space-fixed-generous);
+    margin-left: calc(-1 * var(--maple-space-fixed-generous));
+  }
+</style>

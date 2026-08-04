@@ -1,0 +1,173 @@
+---
+import DetailLayout from '../../../layouts/DetailLayout.astro';
+import SizeGallery from '../../../components/ui/SizeGallery.astro';
+import CarouselListB from '../../../components/module/CarouselListB.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const leadImage = `${base}images/carousel-lead-image.png`;
+const rowImage  = `${base}images/carousel-row-image.png`;
+
+const lead = {
+  eyebrow: 'Name of Topic',
+  headline: 'AP Decision Notes: What to expect in the Illinois state primary',
+  dek: 'Voters will choose nominees for a full slate of offices, including governor, U.S. Senate, U.S. House, the state Legislature and local offices.',
+  timestamp: '29 mins ago',
+  readTime: '4 min read',
+  image: leadImage,
+  imageAlt: 'AP Decision Notes anchors on election night stage',
+};
+
+const storiesWithImages = Array.from({ length: 8 }, () => ({
+  live: true,
+  timestamp: '29 mins ago',
+  headline: 'AP Decision Notes: What to expect in the Illinois state primary',
+  readTime: '4 min read',
+  image: rowImage,
+  imageAlt: 'Crowd waving American flags at a campaign rally',
+}));
+
+const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
+---
+
+<DetailLayout
+  name="Carousel List B"
+  section="modules"
+  sectionLabel="Modules"
+  description="Lead story with a large 3:2 image plus a paginated row of supporting stories. Two variants (Image row / Text row) across seven container sizes: Compact 240, Sidebar 320, Mobile 372, Split 584, Tablet 760, Full 944, Wide 1360."
+>
+
+  <div class="detail-actions">
+    <a href={`${base}modules/carousel/in-context/`} class="detail-action-link">
+      View in context →
+    </a>
+  </div>
+
+  <nav class="size-jump" aria-label="Jump to size">
+    <span class="size-jump-label">Jump to</span>
+    <a href="#size-compact" class="size-jump-link">Compact</a>
+    <a href="#size-sidebar" class="size-jump-link">Sidebar</a>
+    <a href="#size-mobile"  class="size-jump-link">Mobile</a>
+    <a href="#size-split"   class="size-jump-link">Split</a>
+    <a href="#size-tablet"  class="size-jump-link">Tablet</a>
+    <a href="#size-full"    class="size-jump-link">Full</a>
+    <a href="#size-wide"    class="size-jump-link">Wide</a>
+  </nav>
+
+  <section class="detail-section">
+    <h2 class="detail-section-title">Image row</h2>
+    <p class="detail-section-note">
+      Supporting stories carry a 3:2 thumbnail. Compact / Sidebar / Mobile / Tablet
+      swipe one story at a time; Split / Full / Wide paginate 2 / 3 / 4 stories with
+      prev / next buttons.
+    </p>
+    <SizeGallery heading="Image row — 7 sizes">
+      <CarouselListB slot="compact" size="compact" variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="sidebar" size="sidebar" variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="mobile"  size="mobile"  variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="split"   size="split"   variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="tablet"  size="tablet"  variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="full"    size="full"    variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+      <CarouselListB slot="wide"    size="wide"    variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
+    </SizeGallery>
+  </section>
+
+  <section class="detail-section">
+    <h2 class="detail-section-title">Text row</h2>
+    <p class="detail-section-note">
+      Supporting stories are headline-only — no thumbnail. Same size behavior as
+      Image row.
+    </p>
+    <SizeGallery heading="Text row — 7 sizes">
+      <CarouselListB slot="compact" size="compact" variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="sidebar" size="sidebar" variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="mobile"  size="mobile"  variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="split"   size="split"   variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="tablet"  size="tablet"  variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="full"    size="full"    variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+      <CarouselListB slot="wide"    size="wide"    variant="text-row" title="This is a module title" lead={lead} stories={storiesTextOnly} />
+    </SizeGallery>
+  </section>
+
+</DetailLayout>
+
+<style>
+  .detail-section-title {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-bold);
+    color: var(--maple-text-primary);
+    line-height: var(--maple-line-height-heading-120);
+    margin-bottom: var(--maple-space-fixed-compact);
+    font-variation-settings: "wght" 700;
+  }
+
+  .detail-section-note {
+    font-size: var(--maple-text-size-body-sm);
+    color: var(--maple-text-secondary);
+    line-height: var(--maple-line-height-body);
+    margin-bottom: var(--maple-space-fixed-generous);
+    max-width: 64ch;
+  }
+
+  .size-jump {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--maple-space-fixed-compact) var(--maple-space-fixed-default);
+    padding: var(--maple-space-fixed-snug) var(--maple-space-fixed-default);
+    background: var(--maple-bg-elevated);
+    border: 1px solid var(--maple-border-subtle);
+    border-radius: var(--maple-radius-md);
+    position: sticky;
+    top: var(--maple-space-fixed-default);
+    z-index: 10;
+    margin-bottom: var(--maple-space-fixed-generous);
+  }
+
+  .size-jump-label {
+    font-size: var(--maple-text-x-3);
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--maple-text-secondary);
+    font-variation-settings: "wght" 700, "wdth" 75;
+    margin-right: var(--maple-space-fixed-compact);
+  }
+
+  .size-jump-link {
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-primary);
+    text-decoration: none;
+  }
+
+  .size-jump-link:hover {
+    text-decoration: underline;
+  }
+
+  .detail-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: var(--maple-space-fixed-generous);
+  }
+
+  .detail-action-link {
+    font-family: var(--maple-font-family);
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-bold);
+    font-stretch: 75%;
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--maple-text-inv-primary);
+    background: var(--maple-bg-header-primary);
+    text-decoration: none;
+    padding: var(--maple-space-fixed-snug) var(--maple-space-fixed-default);
+    border-radius: var(--maple-radius-sm);
+    font-variation-settings: "wght" 700, "wdth" 75;
+  }
+
+  .detail-action-link:hover {
+    background: var(--maple-btn-filled-bg-hover, #515151);
+  }
+</style>
