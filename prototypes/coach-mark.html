@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coach mark — Component</title>
+<link rel="stylesheet" href="../ap-design-tokens.css" />
+<link rel="stylesheet" href="../ap-text-styles.css" />
+<style>
+  /* ============================================================
+     DEMO PAGE STYLES ONLY — everything below this comment block
+     is for previewing the component on this page. It plays no
+     part in the component itself. The component's own styles are
+     fully self-contained inside the <script> block further down.
+  ============================================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ap-font-family);
+    background: var(--ap-color-backgrounds-secondary);
+    color: var(--ap-color-text-primary);
+    min-height: 100vh;
+    padding: var(--ap-layout-size-40);
+  }
+
+  .page-wrap {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .page-title {
+    font-size: var(--ap-text-size-x3);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    margin-bottom: var(--ap-spacing-300);
+  }
+
+  .page-desc {
+    font-size: var(--ap-text-size-body-sm);
+    color: var(--ap-color-text-secondary);
+    line-height: 1.6;
+    max-width: 62ch;
+    margin-bottom: var(--ap-spacing-700);
+  }
+
+  .page-desc code {
+    font-family: ui-monospace, monospace;
+    font-size: 0.8125rem;
+    background: var(--ap-color-backgrounds-tertiary);
+    padding: 0.1em 0.4em;
+    border-radius: var(--ap-layout-border-radius-sm);
+  }
+
+  .demo-section {
+    margin-bottom: var(--ap-spacing-800);
+  }
+
+  .demo-label {
+    font-size: var(--ap-text-size-utility-sm);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-400);
+    padding-bottom: var(--ap-spacing-200);
+    border-bottom: 1px solid var(--ap-color-elements-border-subtle);
+  }
+
+  /* Mock phone frame mirroring the reference screenshots — a dark
+     bottom tab bar with a coach mark pointing at one of the tabs. */
+  .phone-mock {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: var(--ap-color-backgrounds-primary);
+    border: 1px solid var(--ap-color-elements-border-subtle);
+    border-radius: var(--ap-layout-border-radius-md);
+    overflow: hidden;
+  }
+
+  .phone-mock-content {
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ap-color-text-secondary);
+    font-size: var(--ap-text-size-body-sm);
+    background: var(--ap-color-backgrounds-tertiary);
+  }
+
+  .phone-mock-tabbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 64px;
+    background: var(--ap-color-backgrounds-header-primary);
+  }
+
+  .phone-mock-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-family: var(--ap-font-family);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-icons-inverse-disabled);
+  }
+
+  .phone-mock-tab svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+
+  .phone-mock-tab.active {
+    color: var(--ap-color-text-inverse-primary);
+    font-weight: var(--ap-font-weight-bold);
+  }
+
+  .anchor-slot {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+  }
+
+  .plain-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ap-spacing-600);
+    align-items: flex-start;
+  }
+
+  .plain-demo-item {
+    flex: 1 1 260px;
+    min-width: 260px;
+  }
+
+  .plain-demo-item p {
+    font-size: var(--ap-text-size-utility-sm);
+    color: var(--ap-color-text-secondary);
+    margin-bottom: var(--ap-spacing-300);
+  }
+
+  .code-block {
+    background: var(--ap-color-backgrounds-header-primary);
+    color: var(--ap-color-text-inverse-primary);
+    border-radius: var(--ap-layout-border-radius-md);
+    padding: var(--ap-spacing-500);
+    font-family: ui-monospace, monospace;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+  }
+
+  .copy-btn {
+    font-family: var(--ap-font-family);
+    font-size: var(--ap-text-size-utility-md);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    color: var(--ap-color-interactive-filled-label-enabled-label);
+    background: var(--ap-color-interactive-filled-background-enabled-bg);
+    border: none;
+    border-radius: var(--ap-layout-border-radius-sm);
+    padding: var(--ap-spacing-300) var(--ap-spacing-500);
+    cursor: pointer;
+  }
+
+  .copy-btn:hover {
+    background: var(--ap-color-interactive-filled-background-hover-bg);
+  }
+
+  .copy-btn[data-copied="true"] {
+    background: var(--ap-color-notification-feedback-success-border);
+  }
+</style>
+</head>
+<body>
+
+  <div class="page-wrap">
+
+    <h1 class="page-title">Coach mark</h1>
+    <p class="page-desc">
+      A dismissible callout that spotlights a new feature and points at the UI
+      element it relates to. Built as a self-contained <strong>Web
+      Component</strong> (<code>&lt;ap-coach-mark&gt;</code>) using Shadow
+      DOM, so its styles cannot leak into — or be affected by — a host page's
+      CSS, and it has zero external dependencies. Copy the full source below
+      and drop it into any third-party page — the tag becomes available with
+      nothing else to install.
+    </p>
+
+    <!-- ============================================================
+         DEMO 1 — pointer bottom, pointing at the Sections tab
+    ============================================================ -->
+    <section class="demo-section">
+      <p class="demo-label">In context — pointing at the Sections tab</p>
+      <div class="phone-mock">
+        <div class="phone-mock-content">Page content</div>
+        <div class="anchor-slot" style="bottom: 64px; left: 0; right: 0;">
+          <ap-coach-mark
+            heading="New games added"
+            message="Explore new games and puzzles in Sections — daily crosswords, trivia and more."
+            pointer="bottom"
+            pointer-align="left"
+            style="margin: 0 auto 12px 76px; max-width: 300px;"
+          ></ap-coach-mark>
+        </div>
+        <div class="phone-mock-tabbar">
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v10h-5v-6h-2v6H6V11H3z"/></svg>
+            Top News
+          </div>
+          <div class="phone-mock-tab active">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            Sections
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Videos
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.49-1.5zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+            Explore
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm8.94 3a8 8 0 0 0-.7-2.94l2.06-1.62-2-3.46-2.44 1a8 8 0 0 0-2.52-1.46L15 0h-4l-.34 2.52a8 8 0 0 0-2.52 1.46l-2.44-1-2 3.46 2.06 1.62A8 8 0 0 0 5.06 11L3 12.62l2 3.46 2.44-1a8 8 0 0 0 2.52 1.46L10.34 19h4l.34-2.52a8 8 0 0 0 2.52-1.46l2.44 1 2-3.46zM12 15a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
+            Settings
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DEMO 2 — pointer bottom, pointing at Explore
+    ============================================================ -->
+    <section class="demo-section">
+      <p class="demo-label">In context — pointing at the Explore tab</p>
+      <div class="phone-mock">
+        <div class="phone-mock-content">Page content</div>
+        <div class="anchor-slot" style="bottom: 64px; left: 0; right: 0;">
+          <ap-coach-mark
+            heading="New: Puzzle streaks"
+            message="Keep your streak going — daily puzzle recommendations now show up under Explore."
+            pointer="bottom"
+            pointer-align="right"
+            style="margin: 0 76px 12px auto; max-width: 300px;"
+          ></ap-coach-mark>
+        </div>
+        <div class="phone-mock-tabbar">
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 3l9 8h-3v10h-5v-6h-2v6H6V11H3z"/></svg>
+            Top News
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+            Sections
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Videos
+          </div>
+          <div class="phone-mock-tab active">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 1 0-.7.7l.27.28v.79l5 5 1.49-1.5zM9.5 14A4.5 4.5 0 1 1 14 9.5 4.5 4.5 0 0 1 9.5 14z"/></svg>
+            Explore
+          </div>
+          <div class="phone-mock-tab">
+            <svg viewBox="0 0 24 24"><path d="M12 8a4 4 0 1 0 4 4 4 4 0 0 0-4-4zm8.94 3a8 8 0 0 0-.7-2.94l2.06-1.62-2-3.46-2.44 1a8 8 0 0 0-2.52-1.46L15 0h-4l-.34 2.52a8 8 0 0 0-2.52 1.46l-2.44-1-2 3.46 2.06 1.62A8 8 0 0 0 5.06 11L3 12.62l2 3.46 2.44-1a8 8 0 0 0 2.52 1.46L10.34 19h4l.34-2.52a8 8 0 0 0 2.52-1.46l2.44 1 2-3.46zM12 15a3 3 0 1 1 3-3 3 3 0 0 1-3 3z"/></svg>
+            Settings
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         DEMO 3 — pointer top / center / no pointer, standalone
+    ============================================================ -->
+    <section class="demo-section">
+      <p class="demo-label">Pointer variants — top, center, none</p>
+      <div class="plain-demo">
+        <div class="plain-demo-item">
+          <p>Pointer: top · center</p>
+          <ap-coach-mark
+            heading="New feature title"
+            message="This is the description of the new feature, it can be long and wrap to two lines to say more about the feature."
+            pointer="top"
+            pointer-align="center"
+          ></ap-coach-mark>
+        </div>
+        <div class="plain-demo-item">
+          <p>Pointer: none</p>
+          <ap-coach-mark
+            heading="New feature title"
+            message="This is the description of the new feature, it can be long and wrap to two lines to say more about the feature."
+            pointer="none"
+          ></ap-coach-mark>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         USAGE
+    ============================================================ -->
+    <section class="demo-section">
+      <p class="demo-label">Usage</p>
+      <div class="code-block">&lt;script src="ap-coach-mark.js"&gt;&lt;/script&gt;
+
+&lt;ap-coach-mark
+  heading="New games added"
+  message="Explore new games and puzzles in Sections — daily crosswords, trivia and more."
+  pointer="bottom"
+  pointer-align="left"
+&gt;&lt;/ap-coach-mark&gt;
+
+&lt;script&gt;
+  document.querySelector('ap-coach-mark')
+    .addEventListener('ap-coach-mark-close', (e) => {
+      // fires right before the element removes itself from the DOM.
+      // call e.preventDefault() here to keep it in place instead.
+    });
+&lt;/script&gt;</div>
+    </section>
+
+    <!-- ============================================================
+         FULL SOURCE — the entire component, ready to copy/paste.
+         The code shown here is read live from the actual <script>
+         running on this page (see id="coach-mark-source" below), so
+         it can never drift out of sync with what you're previewing.
+    ============================================================ -->
+    <section class="demo-section">
+      <p class="demo-label">Copy the component</p>
+      <p style="font-size: var(--ap-text-size-body-sm); color: var(--ap-color-text-secondary); margin-bottom: var(--ap-spacing-400); max-width: 62ch;">
+        This is the complete, self-contained <code>&lt;script&gt;</code> block — HTML template, CSS, and JS all in one place with no external dependencies. Copy it as-is into any page.
+      </p>
+      <button type="button" id="copy-source-btn" class="copy-btn">Copy code</button>
+      <pre class="code-block" id="source-display" style="margin-top: var(--ap-spacing-300);"></pre>
+    </section>
+
+  </div>
+
+  <!-- ============================================================
+       COMPONENT — Coach mark
+       Everything below is the actual portable artifact. Copy this
+       entire <script> block (or save it as its own .js file) and
+       drop it into any third-party page — the <ap-coach-mark>
+       tag becomes available with no other dependencies.
+  ============================================================ -->
+  <script id="coach-mark-source">
+  (function () {
+    const TEMPLATE = document.createElement('template');
+    TEMPLATE.innerHTML = `
+      <style>
+        /* ---- AP design tokens, inlined -----------------------------
+           Values below are copied from the AP News design system
+           (Maple) so this component has zero external dependencies.
+           Source tokens are named in the comments for traceability. */
+        :host {
+          --font-family: "AP Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* text/font-family/ap-var */
+          --font-weight-bold: 700;      /* text/font-weight/bold */
+          --font-weight-regular: 400;   /* text/font-weight/regular */
+          --font-stretch-semi-condensed: 75%; /* text/font-width/semi-condensed */
+          --text-size-heading: 0.875rem;      /* text/text-size/utility-md */
+          --text-size-body: 0.875rem;         /* text/text-size/body-sm */
+          --spacing-300: 0.75rem;  /* spacing/spacing-300 */
+          --spacing-400: 1rem;     /* spacing/spacing-400 */
+          --spacing-500: 1.25rem;  /* spacing/spacing-500 */
+          --radius-md: 0.5rem;     /* layout/border-radius/md */
+          --color-bg: #515151;     /* color/notification/status/background */
+          --color-border: #666666; /* color/notification/status/border */
+          --color-text: #ffffff;   /* color/notification/text-inverse */
+          --color-icon: #ffffff;   /* color/notification/icon-inverse */
+
+          display: inline-block;
+          max-width: 22rem;
+          font-family: var(--font-family);
+        }
+
+        :host([hidden]) { display: none; }
+
+        * { box-sizing: border-box; }
+
+        .card {
+          position: relative;
+          background: var(--color-bg);
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-md);
+          padding: var(--spacing-400) var(--spacing-500) var(--spacing-400) var(--spacing-400);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+        }
+
+        .row {
+          display: flex;
+          align-items: flex-start;
+          gap: var(--spacing-300);
+        }
+
+        .text { flex: 1; min-width: 0; }
+
+        .heading {
+          font-size: var(--text-size-heading);
+          font-weight: var(--font-weight-bold);
+          font-stretch: var(--font-stretch-semi-condensed);
+          color: var(--color-text);
+          line-height: 1.3;
+          margin: 0 0 0.25rem;
+        }
+
+        .message {
+          font-size: var(--text-size-body);
+          font-weight: var(--font-weight-regular);
+          color: var(--color-text);
+          opacity: 0.9;
+          line-height: 1.45;
+          margin: 0;
+        }
+
+        .close {
+          flex-shrink: 0;
+          appearance: none;
+          border: none;
+          background: transparent;
+          padding: 0.125rem;
+          margin: -0.125rem -0.125rem 0 0;
+          cursor: pointer;
+          color: var(--color-icon);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 999px;
+        }
+
+        .close:hover { opacity: 0.7; }
+        .close:focus-visible {
+          outline: 2px solid var(--color-icon);
+          outline-offset: 2px;
+        }
+        .close svg { display: block; width: 1rem; height: 1rem; }
+
+        /* Pointer / tail — a pure CSS border-triangle (not a rotated,
+           clipped square) so the tip renders as a crisp, sharp point
+           instead of a soft anti-aliased corner. Built from two stacked
+           triangles: a slightly larger one in the border color behind,
+           and a slightly smaller one in the background color in front,
+           offset 1px so a thin outline shows along the two slanted
+           edges (the flush edge is hidden under the card, so it needs
+           no outline). */
+        .pointer {
+          position: absolute;
+          width: 1rem;   /* 16px, matches the outer triangle's full width */
+          height: 0.5rem; /* 8px */
+          pointer-events: none;
+        }
+
+        .pointer::before,
+        .pointer::after {
+          content: "";
+          position: absolute;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          border-left-color: transparent;
+          border-right-color: transparent;
+        }
+
+        .pointer::before { left: 0; }
+        .pointer::after   { left: 1px; }
+
+        /* Points down — flat edge at top (flush with the card), tip at
+           bottom. Only the top border is colored; left/right are the
+           transparent slants and bottom is zero-width. */
+        :host([pointer="bottom"]) .pointer { bottom: -0.5rem; }
+        :host([pointer="bottom"]) .pointer::before {
+          top: 0;
+          border-width: 0.5rem 0.5rem 0 0.5rem;
+          border-top-color: var(--color-border);
+        }
+        :host([pointer="bottom"]) .pointer::after {
+          top: 0;
+          border-width: 0.4375rem 0.4375rem 0 0.4375rem;
+          border-top-color: var(--color-bg);
+        }
+
+        /* Points up — flat edge at bottom (flush with the card), tip at
+           top. Mirror of the bottom case. */
+        :host([pointer="top"]) .pointer { top: -0.5rem; }
+        :host([pointer="top"]) .pointer::before {
+          bottom: 0;
+          border-width: 0 0.5rem 0.5rem 0.5rem;
+          border-bottom-color: var(--color-border);
+        }
+        :host([pointer="top"]) .pointer::after {
+          bottom: 0;
+          border-width: 0 0.4375rem 0.4375rem 0.4375rem;
+          border-bottom-color: var(--color-bg);
+        }
+
+        :host([pointer="none"]) .pointer { display: none; }
+
+        :host([pointer-align="left"]) .pointer { left: 1.25rem; }
+        :host([pointer-align="center"]) .pointer { left: 50%; margin-left: -0.5rem; }
+        :host([pointer-align="right"]) .pointer { right: 1.25rem; }
+      </style>
+
+      <div class="card" part="card">
+        <div class="pointer" part="pointer"></div>
+        <div class="row">
+          <div class="text">
+            <p class="heading" part="heading"></p>
+            <p class="message" part="message"></p>
+          </div>
+          <button class="close" type="button" part="close" aria-label="Dismiss">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 3L13 13M13 3L3 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    class APCoachMark extends HTMLElement {
+      static observedAttributes = ['heading', 'message'];
+
+      constructor() {
+        super();
+        const root = this.attachShadow({ mode: 'open' });
+        root.appendChild(TEMPLATE.content.cloneNode(true));
+        this._headingEl = root.querySelector('.heading');
+        this._messageEl = root.querySelector('.message');
+        this._closeBtn = root.querySelector('.close');
+        this._handleClose = this._handleClose.bind(this);
+      }
+
+      connectedCallback() {
+        if (!this.hasAttribute('pointer')) this.setAttribute('pointer', 'bottom');
+        if (!this.hasAttribute('pointer-align')) this.setAttribute('pointer-align', 'left');
+        this.setAttribute('role', 'status');
+        this._syncText();
+        this._closeBtn.addEventListener('click', this._handleClose);
+      }
+
+      disconnectedCallback() {
+        this._closeBtn.removeEventListener('click', this._handleClose);
+      }
+
+      attributeChangedCallback() {
+        this._syncText();
+      }
+
+      _syncText() {
+        if (this._headingEl) this._headingEl.textContent = this.getAttribute('heading') || '';
+        if (this._messageEl) this._messageEl.textContent = this.getAttribute('message') || '';
+      }
+
+      _handleClose() {
+        const evt = new CustomEvent('ap-coach-mark-close', { bubbles: true, composed: true, cancelable: true });
+        const proceed = this.dispatchEvent(evt);
+        if (proceed) this.remove();
+      }
+    }
+
+    if (!customElements.get('ap-coach-mark')) {
+      customElements.define('ap-coach-mark', APCoachMark);
+    }
+  })();
+  </script>
+
+  <!-- ============================================================
+       PAGE UTILITY SCRIPT — NOT part of the component.
+       Reads the live component source above and renders it into the
+       "Copy the component" code block, and wires the copy button.
+       This exists purely for this demo page's convenience.
+  ============================================================ -->
+  <script>
+  (function () {
+    const sourceScript = document.getElementById('coach-mark-source');
+    const display = document.getElementById('source-display');
+    const copyBtn = document.getElementById('copy-source-btn');
+
+    const fullSnippet = '<script>\n' + sourceScript.textContent.trim() + '\n<' + '/script>';
+    display.textContent = fullSnippet;
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(fullSnippet);
+        copyBtn.textContent = 'Copied!';
+        copyBtn.dataset.copied = 'true';
+      } catch (err) {
+        copyBtn.textContent = 'Copy failed — select manually';
+      }
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy code';
+        delete copyBtn.dataset.copied;
+      }, 1800);
+    });
+  })();
+  </script>
+
+</body>
+</html>

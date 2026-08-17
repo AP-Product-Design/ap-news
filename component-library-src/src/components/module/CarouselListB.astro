@@ -8,7 +8,7 @@
  *   sidebar 320  – swipe row, 1 story + ~20% peek, stacked lead
  *   mobile  372  – swipe row, 1 story + ~20% peek, stacked lead
  *   split   584  – grid row, 2 stories + prev/next arrows, stacked lead
- *   tablet  760  – swipe row, 1 story + ~20% peek, stacked lead
+ *   tablet  760  – swipe row, 3 stories + ~20% peek, 2-column lead
  *   full    944  – grid row, 3 stories + prev/next arrows, 2-column lead
  *   wide    1360 – grid row, 4 stories + prev/next arrows, 2-column lead
  *
@@ -88,15 +88,16 @@ const isSwipe =
   mode === 'swipe' ||
   (mode === 'auto' && swipeSizes.includes(size));
 
-// Grid sizes: fixed N items visible + prev/next carousel.
+// Cards visible per size (swipe sizes show this many full + a ~20% peek;
+// grid sizes show exactly this many with prev/next pagination).
 const itemsVisibleBySize: Record<Size, number> = {
-  compact: 1, sidebar: 1, mobile: 1, tablet: 1,
+  compact: 1, sidebar: 1, mobile: 1, tablet: 3,
   split: 2, full: 3, wide: 4,
 };
 const itemsVisible = itemsVisibleBySize[size];
 
-// 2-column lead only at Full and Wide.
-const twoColLead = size === 'full' || size === 'wide';
+// 2-column lead at Tablet, Full, and Wide.
+const twoColLead = size === 'tablet' || size === 'full' || size === 'wide';
 
 // Timestamp treatment: red timestamp when lead is stacked, gray read-time on 2-col.
 const showLeadTimestamp = !twoColLead;
@@ -384,7 +385,9 @@ const isImageRow = variant === 'image-row';
     min-width: 0;
   }
 
-  /* Swipe mode: native horizontal scroll with ~80% width so ~20% of next peeks */
+  /* Swipe mode: native horizontal scroll. Shows N full cards (--items-visible)
+     plus a ~20% peek of the next one, so the card width divides the viewport
+     into (items-visible + 0.2) card-units, minus the gaps between them. */
   [data-mode="swipe"] .clb-carousel-viewport {
     overflow-x: auto;
     scrollbar-width: none;
@@ -396,7 +399,7 @@ const isImageRow = variant === 'image-row';
   }
 
   [data-mode="swipe"] .clb-story-card {
-    width: 80%;
+    width: calc((100% - (var(--items-visible) - 0.8) * var(--maple-space-fixed-default)) / (var(--items-visible) + 0.2));
     flex-shrink: 0;
     scroll-snap-align: start;
     min-width: 0;
