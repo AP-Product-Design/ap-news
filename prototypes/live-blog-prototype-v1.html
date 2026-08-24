@@ -222,7 +222,6 @@
     margin-bottom:4px;
   }
   .sidebar-time .dot{width:7px; height:7px; border-radius:50%; background:var(--ap-adaptive-red); flex:none;}
-  .sidebar-time--stale{ color:var(--text-secondary); }
   .sidebar-headline{
     font-size:.9375rem; font-weight:500; font-stretch:87.5%;
     line-height:1.3; color:var(--text-primary);
@@ -383,9 +382,6 @@
     text-transform:uppercase; color:var(--ap-adaptive-red);
   }
   .post-time .dot{width:8px; height:8px; border-radius:50%; background:var(--ap-adaptive-red); flex:none;}
-  /* Posts published over 60 minutes ago show an absolute timestamp
-     ("8:17 AM EDT") in text-secondary instead of a red relative time. */
-  .post-time--stale{ color:var(--text-secondary); }
   .post-tag{
     background:var(--bg-secondary); color:var(--text-primary);
     font-size:.6875rem; font-weight:700; font-stretch:87.5%;
@@ -583,7 +579,7 @@
 
         <article class="post" id="post-5" data-tag="florida">
           <div class="post-meta">
-            <span class="post-time post-time--stale">8:17 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 1 hr ago</span>
             <span class="post-tag">Florida</span>
           </div>
           <h3 class="post-headline">Governor's race draws crowded field on both sides of the ballot</h3>
@@ -595,7 +591,7 @@
 
         <article class="post" id="post-6" data-tag="alaska">
           <div class="post-meta">
-            <span class="post-time post-time--stale">8:05 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 1 hr 12 min ago</span>
             <span class="post-tag">Alaska</span>
           </div>
           <h3 class="post-headline">Ranked-choice voting explainer sees record traffic ahead of primary</h3>
@@ -607,7 +603,7 @@
 
         <article class="post" id="post-7" data-tag="wyoming">
           <div class="post-meta">
-            <span class="post-time post-time--stale">7:47 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 1 hr 30 min ago</span>
             <span class="post-tag">Wyoming</span>
           </div>
           <h3 class="post-headline">Secretary of state race added to already unusual ballot</h3>
@@ -619,7 +615,7 @@
 
         <article class="post" id="post-8" data-tag="florida">
           <div class="post-meta">
-            <span class="post-time post-time--stale">7:29 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 1 hr 48 min ago</span>
             <span class="post-tag">Florida</span>
           </div>
           <h3 class="post-headline">Senate special election ballot finalized after late court challenge</h3>
@@ -631,7 +627,7 @@
 
         <article class="post" id="post-9" data-tag="california">
           <div class="post-meta">
-            <span class="post-time post-time--stale">7:17 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 2 hr ago</span>
             <span class="post-tag">California</span>
           </div>
           <h3 class="post-headline">Turnout expected to be light in low-profile special runoff</h3>
@@ -643,7 +639,7 @@
 
         <article class="post" id="post-10" data-tag="alaska">
           <div class="post-meta">
-            <span class="post-time post-time--stale">7:02 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 2 hr 15 min ago</span>
             <span class="post-tag">Alaska</span>
           </div>
           <h3 class="post-headline">Absentee ballots from rural districts could delay final count</h3>
@@ -655,7 +651,7 @@
 
         <article class="post" id="post-11" data-tag="wyoming">
           <div class="post-meta">
-            <span class="post-time post-time--stale">6:37 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 2 hr 40 min ago</span>
             <span class="post-tag">Wyoming</span>
           </div>
           <h3 class="post-headline">Statewide races could reshape delegation for first time in a decade</h3>
@@ -667,7 +663,7 @@
 
         <article class="post" id="post-12" data-tag="florida">
           <div class="post-meta">
-            <span class="post-time post-time--stale">6:17 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 3 hr ago</span>
             <span class="post-tag">Florida</span>
           </div>
           <h3 class="post-headline">Attorney general primary overshadowed by top-of-ticket races</h3>
@@ -679,7 +675,7 @@
 
         <article class="post" id="post-13" data-tag="florida">
           <div class="post-meta">
-            <span class="post-time post-time--stale">5:57 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 3 hr 20 min ago</span>
             <span class="post-tag">Florida</span>
           </div>
           <h3 class="post-headline">Polls open on schedule across all 67 counties</h3>
@@ -691,7 +687,7 @@
 
         <article class="post" id="post-14" data-tag="wyoming">
           <div class="post-meta">
-            <span class="post-time post-time--stale">5:32 AM EDT</span>
+            <span class="post-time"><span class="dot"></span> 3 hr 45 min ago</span>
             <span class="post-tag">Wyoming</span>
           </div>
           <h3 class="post-headline">Our live coverage of today's primaries begins</h3>
@@ -755,14 +751,12 @@
       btn.type = 'button';
       btn.setAttribute('data-target', post.id);
 
-      var postTimeEl = post.querySelector('.post-time');
-      var time = postTimeEl.textContent.trim();
-      var isStale = postTimeEl.classList.contains('post-time--stale');
+      var time = post.querySelector('.post-time').textContent.trim();
       var headline = post.querySelector('.post-headline').textContent.trim();
 
       var timeEl = document.createElement('div');
-      timeEl.className = 'sidebar-time' + (isStale ? ' sidebar-time--stale' : '');
-      timeEl.innerHTML = (isStale ? '' : '<span class="dot"></span>') + time;
+      timeEl.className = 'sidebar-time';
+      timeEl.innerHTML = '<span class="dot"></span>' + time;
 
       var headlineEl = document.createElement('div');
       headlineEl.className = 'sidebar-headline';
