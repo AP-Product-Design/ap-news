@@ -412,9 +412,21 @@
   }
 
   @media (max-width:860px){
+    /* Sidebar drops out entirely on mobile — main content becomes the
+       whole page, with the tab bar sitting directly under the lead
+       story and going sticky under the nav on scroll, same as desktop. */
     .liveblog-grid{grid-template-columns:1fr;}
-    .sidebar{position:static; max-height:none;}
+    .sidebar{display:none;}
     .page{padding:0 var(--space-20);}
+
+    /* Header collapses to icons only — hamburger opens the full nav,
+       so we don't show the text link row AND the sub-nav row stacked
+       on top of the live blog content. */
+    .nav-primary{padding:12px var(--space-20); gap:var(--space-12);}
+    .nav-links{display:none;}
+    .nav-sub{display:none;}
+    .nav-utility{margin-left:auto;}
+    .nav-donate{padding:6px 12px; font-size:.75rem;}
   }
 </style>
 </head>
