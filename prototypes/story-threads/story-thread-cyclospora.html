@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cyclospora Outbreak — Story Thread</title>
@@ -146,8 +145,7 @@
 
   .engagement-box{background:#fdf3ee; border-left:3px solid var(--ap-red-solid); padding:14px 16px;
     margin-bottom:14px; border-radius:0 4px 4px 0;}
-  .engagement-text{display:block; font-size:15px; font-weight:700; color:var(--ink); line-height:1.4; text-decoration:none; cursor:pointer;}
-  .engagement-text:hover{text-decoration:underline;}
+  .engagement-text{font-size:15px; font-weight:700; color:var(--ink); line-height:1.4;}
 
   .st-meta{display:flex; align-items:center; gap:14px; font-size:12px; color:var(--ink-soft);}
   .st-meta span{display:flex; align-items:center; gap:5px;}
@@ -193,7 +191,7 @@
   .tl-meta-item svg{flex-shrink:0;}
 
   @media (max-width:480px){
-    .tl-item{grid-template-columns:66px 18px 1fr;}
+    .tl-item{grid-template-columns:70px 18px 1fr;}
     .tl-date{font-size:10px;}
   }
 
@@ -215,6 +213,9 @@
   .auth-modal{background:var(--ap-white); width:100%; max-width:430px; border-radius:14px;
     padding:36px 32px; position:relative; transform:scale(.96); transition:transform .2s ease;
     max-height:90vh; overflow-y:auto;}
+  @media (max-width:380px){
+    .auth-modal{padding:28px 20px;}
+  }
   .m-overlay.open .auth-modal{transform:scale(1);}
   .auth-step{display:none;}
   .auth-step.active{display:block;}
@@ -332,13 +333,13 @@
     text-transform:uppercase; margin-bottom:12px;}
 
   /* thread timeline view (primary, read-first) */
-  .settings-bar{display:flex; justify-content:flex-end; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
-  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; border:1px solid #c4c4c4; background:transparent;
+  .settings-bar{display:flex; flex-wrap:wrap; gap:8px; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
+  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; margin-left:auto; border:1px solid #c4c4c4; background:transparent;
     color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px; cursor:pointer;
     font-family:inherit;}
   .settings-btn-sm:hover{background:var(--paper); border-color:#a8a8a9; color:var(--ink);}
   .settings-btn-sm svg{flex-shrink:0;}
-  .thread-hub-link{margin-right:auto; display:none; align-items:center; gap:6px; font-size:12px;
+  .thread-hub-link{display:none; align-items:center; gap:6px; font-size:12px;
     font-weight:700; color:var(--link); text-decoration:none;}
   .thread-hub-link:hover{text-decoration:underline;}
   .thread-hub-link.show{display:inline-flex;}
@@ -458,7 +459,7 @@
         <div class="st-headline">Michigan reports first 2 U.S. deaths related to diarrhea-causing parasite</div>
         <p class="st-summary">State health officials say two people have died in the cyclospora outbreak in Michigan. Both had underlying health conditions that may have been worsened by the illness.</p>
         <div class="engagement-box">
-          <a href="#" class="engagement-text" onclick="event.preventDefault();">Which four other states have now confirmed cases linked to this outbreak?</a>
+          <div class="engagement-text">Which four other states have now confirmed cases linked to this outbreak?</div>
         </div>
         <div class="st-meta"><span>4 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>100</span></div>
       </div>
@@ -471,7 +472,7 @@
         <div class="st-headline">Between prices and a diarrhea-causing parasite, lettuce is causing hard times at some restaurants</div>
         <p class="st-summary">It's been a choppy year for restaurants that lean into lettuce, with prices rising sharply even before the outbreak began affecting supply chains.</p>
         <div class="engagement-box">
-          <a href="#" class="engagement-text" onclick="event.preventDefault();">How much have wholesale lettuce prices risen so far this year?</a>
+          <div class="engagement-text">How much have wholesale lettuce prices risen so far this year?</div>
         </div>
         <div class="st-meta"><span>6 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>42</span></div>
       </div>
@@ -484,7 +485,7 @@
         <div class="st-headline">Outbreak of diarrhea-causing parasite linked to 4 more states</div>
         <p class="st-summary">Federal health officials have linked four more states to the outbreak, as investigators trace contaminated produce through the restaurant supply chain.</p>
         <div class="engagement-box">
-          <a href="#" class="engagement-text" onclick="event.preventDefault();">Which restaurant chain's lettuce supply has now been tied to the outbreak?</a>
+          <div class="engagement-text">Which restaurant chain's lettuce supply has now been tied to the outbreak?</div>
         </div>
         <div class="st-meta"><span>3 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>78</span></div>
       </div>
@@ -497,7 +498,7 @@
         <div class="st-headline">Foodborne illnesses at restaurant chains are rare but can sicken customers, roil businesses</div>
         <p class="st-summary">Big U.S. restaurant chains don't get linked to foodborne illness outbreaks often, but the number of meals they serve means contamination can affect a lot of customers fast.</p>
         <div class="engagement-box">
-          <a href="#" class="engagement-text" onclick="event.preventDefault();">How many people have been sickened at restaurant chains linked to this outbreak so far?</a>
+          <div class="engagement-text">How many people have been sickened at restaurant chains linked to this outbreak so far?</div>
         </div>
         <div class="st-meta"><span>4 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>55</span></div>
       </div>
@@ -510,7 +511,7 @@
         <div class="st-headline">Lettuce at Taco Bell in 5 states confirmed as source of a diarrhea-causing parasite outbreak</div>
         <p class="st-summary">Federal health officials have identified lettuce from Mexico served by Taco Bell locations across five states as the source of the widespread outbreak.</p>
         <div class="engagement-box">
-          <a href="#" class="engagement-text" onclick="event.preventDefault();">Which country did the contaminated lettuce served at Taco Bell come from?</a>
+          <div class="engagement-text">Which country did the contaminated lettuce served at Taco Bell come from?</div>
         </div>
         <div class="st-meta"><span>5 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>163</span></div>
       </div>

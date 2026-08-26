@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tour de France — AP News</title>
@@ -125,11 +124,14 @@
   .hub-hero-accent{width:44px; height:4px; background:var(--ap-red-solid); margin-bottom:14px;}
   .hub-hero-title{color:var(--ap-white); font-size:34px; font-weight:800; letter-spacing:0.5px;
     text-transform:uppercase; margin:0;}
+  @media (max-width:400px){
+    .hub-hero-title{font-size:26px;}
+  }
 
   .hub-wrap{max-width:1080px; margin:0 auto; padding:28px 20px 80px;}
 
   .hub-thread-module{border:1px solid var(--line); border-radius:10px; background:var(--ap-white);
-    margin-bottom:36px; overflow:hidden;}
+    margin-bottom:36px;}
   .hub-thread-header{display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
     gap:12px; padding:20px 20px 4px;}
   .hub-thread-eyebrow{color:var(--ap-red-solid); font-weight:800; font-size:12px; letter-spacing:0.6px;
@@ -209,7 +211,7 @@
   .tl-meta-item svg{flex-shrink:0;}
 
   @media (max-width:480px){
-    .tl-item{grid-template-columns:66px 18px 1fr;}
+    .tl-item{grid-template-columns:70px 18px 1fr;}
     .tl-date{font-size:10px;}
   }
 
@@ -231,6 +233,9 @@
   .auth-modal{background:var(--ap-white); width:100%; max-width:430px; border-radius:14px;
     padding:36px 32px; position:relative; transform:scale(.96); transition:transform .2s ease;
     max-height:90vh; overflow-y:auto;}
+  @media (max-width:380px){
+    .auth-modal{padding:28px 20px;}
+  }
   .m-overlay.open .auth-modal{transform:scale(1);}
   .auth-step{display:none;}
   .auth-step.active{display:block;}

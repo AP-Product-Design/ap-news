@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Story Threads — Follow Prototype</title>
@@ -141,6 +140,9 @@
   .auth-modal{background:var(--ap-white); width:100%; max-width:430px; border-radius:14px;
     padding:36px 32px; position:relative; transform:scale(.96); transition:transform .2s ease;
     max-height:90vh; overflow-y:auto;}
+  @media (max-width:380px){
+    .auth-modal{padding:28px 20px;}
+  }
   .m-overlay.open .auth-modal{transform:scale(1);}
   .auth-step{display:none;}
   .auth-step.active{display:block;}
@@ -258,13 +260,13 @@
     text-transform:uppercase; margin-bottom:12px;}
 
   /* thread timeline view (primary, read-first) */
-  .settings-bar{display:flex; justify-content:flex-end; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
-  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; border:1px solid #c4c4c4; background:transparent;
+  .settings-bar{display:flex; flex-wrap:wrap; gap:8px; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
+  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; margin-left:auto; border:1px solid #c4c4c4; background:transparent;
     color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px; cursor:pointer;
     font-family:inherit;}
   .settings-btn-sm:hover{background:var(--paper); border-color:#a8a8a9; color:var(--ink);}
   .settings-btn-sm svg{flex-shrink:0;}
-  .thread-hub-link{margin-right:auto; display:none; align-items:center; gap:6px; font-size:12px;
+  .thread-hub-link{display:none; align-items:center; gap:6px; font-size:12px;
     font-weight:700; color:var(--link); text-decoration:none;}
   .thread-hub-link:hover{text-decoration:underline;}
   .thread-hub-link.show{display:inline-flex;}
