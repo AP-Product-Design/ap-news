@@ -1,0 +1,7 @@
+# Netlify custom headers — https://docs.netlify.com/routing/headers/
+# Applies X-Robots-Tag to every response on this site (HTML and otherwise),
+# so search engines and bots that respect the standard are told to exclude
+# everything even before/without reading page content.
+
+/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet
