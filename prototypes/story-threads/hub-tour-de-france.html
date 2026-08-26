@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour de France — AP News</title>
+<style>
+  :root{
+    --ap-black:#000000;
+    --ap-red:#ff1818;
+    --ap-red-solid:#da1026;
+    --ap-white:#ffffff;
+    --ink:#1a1a1a;
+    --ink-soft:#4a4a4a;
+    --line:#e2e2e2;
+    --line-soft:#ececec;
+    --paper:#fafafa;
+    --success:#1c6c00;
+    --link:#0042a9;
+
+    --outline-bg-enabled:#ffffff00;
+    --outline-bg-hover:#f2f2f2;
+    --outline-bg-active:#f2f2f2;
+    --outline-border-enabled:#a8a8a9;
+    --outline-border-hover:#191919;
+    --outline-border-active:#0042a9;
+    --outline-label-enabled:#191919;
+    --outline-label-hover:#191919;
+    --outline-label-active:#3a3a3a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;}
+
+  /* ---------- top nav ---------- */
+  .nav{background:var(--ap-black); color:var(--ap-white);}
+  .nav-top{display:flex; align-items:center; justify-content:space-between; padding:10px 20px;}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{background:var(--ap-white); color:var(--ap-black); font-weight:800; font-size:20px;
+    padding:4px 8px; border-bottom:3px solid var(--ap-red); letter-spacing:0.5px; line-height:1;}
+  .logo-name{font-weight:700; font-size:15px; letter-spacing:0.5px; display:none;}
+  .nav-actions{display:flex; align-items:center; gap:16px;}
+  .icon-btn{width:20px; height:20px; color:var(--ap-white); opacity:0.9; cursor:pointer;}
+  .donate-btn{background:var(--ap-red); color:var(--ap-white); font-weight:700; font-size:12px;
+    padding:8px 14px; border-radius:2px; letter-spacing:0.5px; cursor:pointer; border:none;}
+  .hamburger{display:flex; flex-direction:column; gap:3px; cursor:pointer; padding:4px;}
+  .hamburger span{width:20px; height:2px; background:var(--ap-white); display:block;}
+
+  .ticker{display:flex; gap:16px; padding:10px 20px; overflow-x:auto; border-top:1px solid #2a2a2a;
+    font-size:13px; font-weight:600; white-space:nowrap;}
+  .live-tag{background:var(--ap-red); color:var(--ap-white); font-size:10px; font-weight:800;
+    padding:2px 6px; border-radius:2px; margin-right:6px; letter-spacing:0.5px;}
+  .ticker-item{color:#d8d8d8; cursor:pointer;}
+
+  /* ---------- article ---------- */
+  .article{max-width:640px; margin:0 auto; padding:20px 20px 80px;}
+  .eyebrow{color:var(--ap-red-solid); font-weight:800; font-size:12px; letter-spacing:0.5px;
+    text-transform:uppercase; margin-bottom:10px;}
+  h1{font-size:28px; line-height:1.2; font-weight:800; margin:0 0 16px; letter-spacing:-0.3px;}
+
+  .hero{border-radius:2px; overflow:hidden; margin-bottom:8px; position:relative;}
+  .hero svg{display:block; width:100%; height:auto;}
+  .hero-cap{font-size:12px; color:var(--ink-soft); line-height:1.4; margin-bottom:22px;}
+
+  .byline-row{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+    padding-bottom:16px; border-bottom:1px solid var(--line); margin-bottom:20px;}
+  .byline{font-size:13px; line-height:1.6;}
+  .byline b{font-weight:700;}
+  .byline a{color:var(--ink); text-decoration:underline;}
+  .byline .meta{color:var(--ink-soft); margin-top:2px;}
+  .share-row{display:flex; gap:14px; flex-shrink:0; padding-top:2px;}
+  .share-row .icon-btn{color:var(--ink); width:18px; height:18px;}
+
+  /* ---------- story thread module ---------- */
+  .thread-module{border:1px solid var(--line); border-radius:6px; background:var(--ap-white);
+    padding:14px 16px; margin-bottom:24px; display:flex; align-items:center; gap:14px;}
+  .thread-thumb{width:46px; height:46px; border-radius:6px; flex-shrink:0; overflow:hidden;}
+  .thread-thumb svg{display:block; width:100%; height:100%;}
+  .thread-info{flex:1; min-width:0;}
+  .thread-eyebrow{font-size:10px; font-weight:800; color:var(--ap-red-solid); letter-spacing:0.6px;
+    text-transform:uppercase; margin-bottom:2px;}
+  .thread-name{font-size:15px; font-weight:800; line-height:1.25; margin-bottom:2px;}
+  .thread-count{font-size:12px; color:var(--ink-soft);}
+
+  /* follow button — Maple interactive/outlined tokens (light) */
+  .follow-btn{border:1.5px solid var(--outline-border-enabled); color:var(--outline-label-enabled);
+    background:var(--outline-bg-enabled); font-weight:700; font-size:13px; padding:8px 16px 8px 12px;
+    border-radius:999px; cursor:pointer; flex-shrink:0; display:inline-flex; align-items:center;
+    transition:background .15s ease, border-color .15s ease, color .15s ease; white-space:nowrap;}
+  .follow-btn:hover{background:var(--outline-bg-hover); border-color:var(--outline-border-hover);
+    color:var(--outline-label-hover);}
+  .follow-btn:active{background:var(--outline-bg-active); border-color:var(--outline-border-active);
+    color:var(--outline-label-active);}
+  .follow-btn .plus{display:inline-flex; margin-right:5px; line-height:0;}
+  .follow-btn .plus svg{display:block;}
+
+  .follow-btn.is-following{background:var(--ink); border-color:var(--ink); color:var(--ap-white);}
+  .follow-btn.is-following:hover{background:#333; border-color:#333; color:var(--ap-white);}
+  .follow-btn.is-following .plus{display:none;}
+  .follow-btn .check{display:none; margin-right:5px;}
+  .follow-btn.is-following .check{display:inline;}
+  .follow-btn.is-following .label-default{display:none;}
+  .follow-btn.is-following .label-following{display:inline;}
+  .follow-btn .label-following{display:none;}
+
+  .thread-wrap{position:relative;}
+  .thread-menu{position:absolute; right:0; top:calc(100% + 6px); background:var(--ap-white);
+    border:1px solid var(--line); border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.12);
+    width:200px; overflow:hidden; opacity:0; visibility:hidden; transform:translateY(-4px);
+    transition:all .15s ease; z-index:20;}
+  .thread-menu.open{opacity:1; visibility:visible; transform:translateY(0);}
+  .thread-menu button{display:block; width:100%; text-align:left; background:none; border:none;
+    padding:11px 14px; font-size:13px; cursor:pointer; color:var(--ink); border-bottom:1px solid var(--line-soft);
+    font-family:inherit;}
+  .thread-menu button:last-child{border-bottom:none; color:var(--ap-red-solid); font-weight:600;}
+  .thread-menu button:hover{background:var(--paper);}
+
+  /* article body */
+  .body-text p{font-size:16px; line-height:1.65; margin:0 0 18px; color:var(--ink);}
+  .body-text a{color:var(--ap-red-solid);}
+
+  /* ---------- topic hub ---------- */
+  .hub-hero{background:var(--ap-black); padding:22px 20px 26px;}
+  .hub-hero-accent{width:44px; height:4px; background:var(--ap-red-solid); margin-bottom:14px;}
+  .hub-hero-title{color:var(--ap-white); font-size:34px; font-weight:800; letter-spacing:0.5px;
+    text-transform:uppercase; margin:0;}
+
+  .hub-wrap{max-width:1080px; margin:0 auto; padding:28px 20px 80px;}
+
+  .hub-thread-module{border:1px solid var(--line); border-radius:10px; background:var(--ap-white);
+    margin-bottom:36px; overflow:hidden;}
+  .hub-thread-header{display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    gap:12px; padding:20px 20px 4px;}
+  .hub-thread-eyebrow{color:var(--ap-red-solid); font-weight:800; font-size:12px; letter-spacing:0.6px;
+    text-transform:uppercase; margin-bottom:4px;}
+  .hub-thread-title{font-size:19px; font-weight:800; line-height:1.25; margin-bottom:2px;}
+  .hub-thread-sub{font-size:12px; color:var(--ink-soft);}
+  .hub-thread-more{display:flex; align-items:center; justify-content:center; gap:6px; padding:14px;
+    margin:8px 20px 20px; border:1px solid var(--outline-border-enabled); border-radius:999px;
+    color:var(--outline-label-enabled); font-weight:700; font-size:13px; text-decoration:none;
+    transition:background .15s ease, border-color .15s ease;}
+  .hub-thread-more:hover{background:var(--outline-bg-hover); border-color:var(--outline-border-hover);}
+
+  .hub-lead-row{display:grid; grid-template-columns:1.4fr 1fr; gap:32px; padding-bottom:32px;
+    border-bottom:1px solid var(--line); margin-bottom:32px;}
+  .hub-thumb{border-radius:4px; overflow:hidden; margin-bottom:12px;}
+  .hub-thumb svg{display:block; width:100%; height:auto;}
+  .hub-thumb-lg{margin-bottom:14px;}
+  .hub-lead-headline{font-size:24px; font-weight:800; line-height:1.25; margin-bottom:8px;}
+  .hub-lead-dek{font-size:14px; color:var(--ink-soft); line-height:1.55; margin:0 0 8px;}
+  .hub-date{font-size:11px; font-weight:700; color:var(--ink-soft); letter-spacing:0.3px;}
+
+  .hub-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px 20px;}
+  .hub-grid-headline{font-size:14px; font-weight:800; line-height:1.3; margin-bottom:6px;}
+
+  .hub-more-header{display:flex; align-items:center; gap:10px; margin-bottom:20px; scroll-margin-top:24px;}
+  .hub-more-accent{width:26px; height:3px; background:var(--ap-red-solid); flex-shrink:0;}
+  .hub-more-title{font-size:13px; font-weight:800; letter-spacing:0.4px; text-transform:uppercase;}
+
+  .hub-river-item{display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:18px 0; border-bottom:1px solid var(--line-soft);}
+  .hub-river-item:last-child{border-bottom:none;}
+  .hub-river-headline{font-size:15px; font-weight:700; line-height:1.35; margin-bottom:6px;}
+  .hub-thumb-sm{width:110px; flex-shrink:0; margin-bottom:0;}
+
+  @media (max-width:720px){
+    .hub-lead-row{grid-template-columns:1fr;}
+    .hub-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- timeline embed ---------- */
+  .tl-module{border:1px solid var(--line); border-radius:8px; background:var(--ap-white);
+    padding:20px; margin:8px 0 28px;}
+  .tl-header{display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    gap:12px; margin-bottom:18px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .tl-heading .tl-eyebrow{font-size:11px; font-weight:800; color:var(--ap-red-solid); letter-spacing:0.6px;
+    text-transform:uppercase; margin-bottom:4px;}
+  .tl-heading .tl-title{font-size:20px; font-weight:800; line-height:1.2; margin-bottom:2px;}
+  .tl-heading .tl-sub{font-size:12px; color:var(--ink-soft);}
+  .tl-actions{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+
+  .view-thread-pill{border:1.5px solid var(--outline-border-enabled); color:var(--outline-label-enabled);
+    background:transparent; font-weight:700; font-size:13px; padding:8px 14px; border-radius:999px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; font-family:inherit;
+    transition:background .15s ease, border-color .15s ease;}
+  .view-thread-pill:hover{background:var(--outline-bg-hover); border-color:var(--outline-border-hover);}
+
+  .tl-list{display:flex; flex-direction:column;}
+  .tl-item{display:grid; grid-template-columns:76px 20px 1fr; column-gap:14px; position:relative;}
+  .tl-date{font-size:11px; font-weight:700; color:var(--ink-soft); line-height:1.4; padding-top:2px;
+    text-align:right; white-space:nowrap;}
+  .tl-date .tl-day{color:var(--ink); font-weight:800;}
+
+  .tl-marker{display:flex; flex-direction:column; align-items:center;}
+  .tl-dot{width:10px; height:10px; border-radius:50%; background:var(--ink); flex-shrink:0; margin-top:6px;}
+  .tl-connector{width:2px; background:#c4c4c4; flex:1; margin-top:2px;}
+  .tl-item:last-child .tl-connector{display:none;}
+
+  .tl-content{padding-bottom:24px;}
+  .tl-item:last-child .tl-content{padding-bottom:0;}
+  .tl-new-badge{display:inline-block; background:var(--ap-red-solid); color:var(--ap-white); font-size:10px;
+    font-weight:800; letter-spacing:0.4px; padding:2px 7px; border-radius:3px; margin-bottom:6px;
+    text-transform:uppercase;}
+  .tl-headline{font-size:15px; font-weight:800; line-height:1.3; cursor:pointer;}
+  .tl-headline:hover{text-decoration:underline;}
+  .tl-meta{display:flex; align-items:center; gap:14px; margin-top:6px;}
+  .tl-meta-item{display:flex; align-items:center; gap:5px; font-size:12px; font-weight:400; color:var(--ink-soft);}
+  .tl-meta-item svg{flex-shrink:0;}
+
+  @media (max-width:480px){
+    .tl-item{grid-template-columns:66px 18px 1fr;}
+    .tl-date{font-size:10px;}
+  }
+
+  /* prototype-only quick state preview — clearly marked, not part of real UI */
+  .proto-toggle{display:flex; align-items:center; gap:10px; border:1px dashed #d6d6d6; border-radius:8px;
+    padding:10px 14px; margin-bottom:18px; font-size:12px; color:#9a9a9a;}
+  .proto-toggle span{flex-shrink:0;}
+  .proto-toggle-btns{display:flex; gap:6px;}
+  .proto-toggle-btn{border:1px solid #c4c4c4; background:var(--ap-white); color:var(--ink-soft);
+    font-size:11px; font-weight:700; padding:5px 10px; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .proto-toggle-btn.active{background:var(--ink); border-color:var(--ink); color:var(--ap-white);}
+
+  /* ==================================================================
+     PATTERN 1 — MODAL (centered, disruptive/blocking): used for AUTH
+     ================================================================== */
+  .m-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center;
+    justify-content:center; opacity:0; visibility:hidden; transition:opacity .2s ease; z-index:200; padding:20px;}
+  .m-overlay.open{opacity:1; visibility:visible;}
+  .auth-modal{background:var(--ap-white); width:100%; max-width:430px; border-radius:14px;
+    padding:36px 32px; position:relative; transform:scale(.96); transition:transform .2s ease;
+    max-height:90vh; overflow-y:auto;}
+  .m-overlay.open .auth-modal{transform:scale(1);}
+  .auth-step{display:none;}
+  .auth-step.active{display:block;}
+
+  .auth-title{font-size:21px; font-weight:800; margin:0 0 24px; line-height:1.3;}
+  .field-label{font-size:14px; font-weight:700; margin-bottom:8px; display:block;}
+  .field{width:100%; border:1px solid #c4c4c4; border-radius:8px; padding:14px 16px; font-size:15px;
+    font-family:inherit; margin-bottom:6px; background:var(--ap-white); color:var(--ink);}
+  .field::placeholder{color:#8a8a8a;}
+  .field:focus{outline:none; border-color:var(--ink);}
+  .field-pw-wrap{position:relative;}
+  .field-pw-wrap .field{padding-right:46px;}
+  .eye-btn{position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none;
+    cursor:pointer; color:var(--ink-soft); padding:6px; display:flex;}
+
+  .pill-btn{width:100%; background:var(--ink); color:var(--ap-white); border:none; border-radius:28px;
+    padding:15px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:6px;}
+  .pill-btn:hover{background:#333;}
+  .pill-btn:disabled{background:#e6e6e6; color:#a8a8a9; cursor:not-allowed;}
+  .pill-btn-outline{width:100%; background:var(--ap-white); color:var(--ink); border:1px solid #c4c4c4;
+    border-radius:28px; padding:14px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:12px;}
+  .pill-btn-outline:hover{background:var(--paper);}
+
+  .or-use{text-align:center; color:var(--ink-soft); font-size:14px; margin:16px 0;}
+  .terms-note{font-size:12px; color:var(--ink-soft); text-align:center; line-height:1.5; margin-bottom:20px;}
+  .terms-note a{color:var(--link);}
+
+  .social-btn{width:100%; background:var(--ap-white); border:1px solid #d6d6d6; border-radius:28px;
+    padding:13px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:12px;
+    display:flex; align-items:center; justify-content:center; gap:10px; color:var(--ink);}
+  .social-btn:hover{background:var(--paper);}
+  .social-btn:last-child{margin-bottom:0;}
+
+  .link-btn{color:var(--link); font-size:13px; font-weight:600; background:none; border:none; cursor:pointer;
+    padding:0; font-family:inherit; text-decoration:none;}
+
+  .field-note{font-size:13px; margin:14px 0 4px;}
+  .req-list{list-style:none; margin:14px 0 20px; padding:0;}
+  .req-list li{display:flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-soft); padding:3px 0;}
+  .req-list li svg{flex-shrink:0; color:#c4c4c4;}
+  .req-list li.met{color:var(--ink);}
+  .req-list li.met svg{color:var(--success);}
+  .hr-divider{border:none; border-top:1px solid var(--line); margin:20px 0;}
+
+  .back-btn{width:100%; background:var(--ap-white); color:var(--ink); border:1px solid #c4c4c4;
+    border-radius:28px; padding:13px; font-size:14px; font-weight:600; cursor:pointer; font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:8px; margin-top:10px;}
+  .back-btn:hover{background:var(--paper);}
+
+  /* prototype-only helper strip — clearly not part of the real UI */
+  .proto-hint{margin-top:18px; padding-top:14px; border-top:1px dashed #d6d6d6; font-size:11px;
+    color:#9a9a9a; text-align:center; line-height:1.5;}
+
+  /* ==================================================================
+     PANEL — account dashboard with drill-down navigation, reused here
+     to manage Story Thread follows/notifications from within an article
+     ================================================================== */
+  .p-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; visibility:hidden;
+    transition:opacity .2s ease; z-index:150;}
+  .p-overlay.open{opacity:1; visibility:visible;}
+  .side-panel{position:fixed; top:0; right:0; bottom:0; width:100%; max-width:400px; background:var(--ap-white);
+    box-shadow:-8px 0 24px rgba(0,0,0,0.12); transform:translateX(100%); transition:transform .28s ease;
+    z-index:151; display:flex; flex-direction:column; overflow:hidden;}
+  .p-overlay.open .side-panel{transform:translateX(0);}
+
+  .panel-header{flex-shrink:0; border-bottom:1px solid var(--line); position:relative;}
+  .panel-header-root{display:flex; align-items:center; gap:14px; padding:24px;}
+  .panel-avatar{width:44px; height:44px; border-radius:50%; background:#191919; color:var(--ap-white);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; flex-shrink:0;}
+  .panel-name{font-size:17px; font-weight:800; line-height:1.25;}
+  .panel-name-sub{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .panel-close-root{position:absolute; top:22px; right:20px; background:none; border:none; cursor:pointer;
+    color:var(--ink-soft); padding:4px;}
+
+  .panel-header-sub{display:flex; align-items:center; gap:10px; padding:16px 16px 16px 12px;}
+  .panel-back{background:none; border:none; cursor:pointer; color:var(--ink); padding:8px; display:flex;
+    border-radius:50%; flex-shrink:0;}
+  .panel-back:hover{background:var(--paper);}
+  .panel-sub-title{font-size:16px; font-weight:800; flex:1; min-width:0;}
+  .panel-close-sub{background:none; border:none; cursor:pointer; color:var(--ink-soft); padding:8px; flex-shrink:0;}
+  .panel-home{background:none; border:none; cursor:pointer; color:var(--ink-soft); padding:8px;
+    display:flex; border-radius:50%; flex-shrink:0;}
+  .panel-home:hover{background:var(--paper); color:var(--ink);}
+
+  .panel-body{padding:8px 0; overflow-y:auto; flex:1;}
+
+  .dash-row{display:flex; align-items:center; gap:14px; padding:14px 24px; cursor:pointer; background:none;
+    border:none; width:100%; text-align:left; font-family:inherit;}
+  .dash-row:hover{background:var(--paper);}
+  .dash-icon{width:36px; height:36px; border-radius:8px; background:var(--line-soft); display:flex;
+    align-items:center; justify-content:center; flex-shrink:0; color:var(--ink);}
+  .dash-label-wrap{flex:1; min-width:0;}
+  .dash-label{font-size:15px; font-weight:700;}
+  .dash-sub{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .dash-chevron{color:var(--ink-soft); flex-shrink:0;}
+
+  .placeholder-view{padding:60px 28px; text-align:center; color:var(--ink-soft); font-size:13px; line-height:1.6;}
+  .placeholder-view svg{color:#c4c4c4; margin-bottom:14px;}
+
+  .panel-section-note{padding:4px 24px 14px; font-size:12px; color:var(--ink-soft); line-height:1.5;}
+  .thread-row{display:flex; align-items:center; gap:14px; padding:14px 24px; cursor:pointer; background:none;
+    border:none; width:100%; text-align:left; font-family:inherit; border-top:1px solid var(--line-soft);}
+  .thread-row:hover{background:var(--paper);}
+  .thread-row-thumb{width:42px; height:42px; border-radius:8px; flex-shrink:0; overflow:hidden;}
+  .thread-row-thumb svg{display:block; width:100%; height:100%;}
+  .thread-row-info{flex:1; min-width:0;}
+  .thread-row-name{font-size:14px; font-weight:700; line-height:1.25;}
+  .thread-row-meta{font-size:11px; color:var(--ink-soft); margin-top:2px;}
+  .thread-row-chevron{color:var(--ink-soft); flex-shrink:0;}
+  .empty-threads{padding:40px 24px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  .detail-body{padding:20px 24px;}
+  .panel-section-label{font-size:11px; font-weight:800; letter-spacing:0.5px; color:var(--ink-soft);
+    text-transform:uppercase; margin-bottom:12px;}
+
+  /* thread timeline view (primary, read-first) */
+  .settings-bar{display:flex; justify-content:flex-end; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
+  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; border:1px solid #c4c4c4; background:transparent;
+    color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px; cursor:pointer;
+    font-family:inherit;}
+  .settings-btn-sm:hover{background:var(--paper); border-color:#a8a8a9; color:var(--ink);}
+  .settings-btn-sm svg{flex-shrink:0;}
+
+  .panel-tl-item{display:flex; gap:12px; padding:14px 24px; border-top:1px solid var(--line-soft); cursor:pointer;}
+  .panel-tl-item:hover{background:var(--paper);}
+  .panel-tl-marker{display:flex; flex-direction:column; align-items:center; padding-top:5px;}
+  .panel-tl-dot{width:8px; height:8px; border-radius:50%; background:#191919; flex-shrink:0;}
+  .panel-tl-line{width:2px; background:#c4c4c4; flex:1; margin-top:3px;}
+  .panel-tl-item:last-child .panel-tl-line{display:none;}
+  .panel-tl-content{flex:1; min-width:0;}
+  .panel-tl-new{display:inline-block; background:var(--ap-red-solid); color:var(--ap-white); font-size:9px;
+    font-weight:800; letter-spacing:0.4px; padding:2px 6px; border-radius:3px; margin-bottom:5px; text-transform:uppercase;}
+  .panel-tl-date{font-size:11px; color:var(--ink-soft); margin-bottom:3px;}
+  .panel-tl-headline{font-size:13.5px; font-weight:700; line-height:1.35; margin-bottom:5px;}
+  .panel-tl-meta{display:flex; align-items:center; gap:10px; font-size:11px; font-weight:400; color:var(--ink-soft);}
+  .panel-tl-meta span{display:flex; align-items:center; gap:4px;}
+  .panel-tl-meta svg{flex-shrink:0;}
+
+  .load-more-btn{display:block; width:calc(100% - 48px); margin:16px 24px 8px; padding:12px; border:1px solid #c4c4c4;
+    border-radius:999px; background:transparent; color:#191919; font-weight:700; font-size:13px; cursor:pointer;
+    font-family:inherit;}
+  .load-more-btn:hover{background:var(--paper); border-color:#a8a8a9;}
+  .opt-row{display:flex; align-items:center; justify-content:space-between; padding:9px 0;}
+  .opt-left{display:flex; align-items:center; gap:12px; font-size:15px; font-weight:600;}
+  .opt-left svg{color:var(--ink); flex-shrink:0;}
+  .switch{position:relative; width:44px; height:26px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .switch .track{position:absolute; inset:0; background:#d6d6d6; border-radius:999px; cursor:pointer;
+    transition:background .15s ease;}
+  .switch .track::before{content:""; position:absolute; width:20px; height:20px; left:3px; top:3px;
+    background:var(--ap-white); border-radius:50%; transition:transform .15s ease; box-shadow:0 1px 3px rgba(0,0,0,0.25);}
+  .switch input:checked + .track{background:var(--success);}
+  .switch input:checked + .track::before{transform:translateX(18px);}
+
+  .detail-hr{border:none; border-top:1px solid var(--line); margin:20px 0;}
+  .unfollow-row{display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; cursor:pointer;
+    color:var(--ap-red-solid); font-size:13px; font-weight:700; border:1px solid var(--line); border-radius:8px;
+    background:none; width:100%; font-family:inherit;}
+  .unfollow-row:hover{background:#fdf2f2;}
+
+  .panel-footer{padding:16px 24px; border-top:1px solid var(--line); flex-shrink:0;}
+  .panel-save-btn{width:100%; background:#191919; color:var(--ap-white); border:none;
+    padding:15px; border-radius:999px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit;
+    transition:background .15s ease;}
+  .panel-save-btn:hover{background:#515151;}
+  .panel-save-btn:active{background:#3a3a3a;}
+
+  .panel-view{display:none;}
+  .panel-view.active{display:flex; flex-direction:column; height:100%;}
+
+  /* toast */
+  .toast{position:fixed; left:50%; bottom:24px; transform:translate(-50%, 12px); background:var(--ink);
+    color:var(--ap-white); padding:12px 18px; border-radius:8px; font-size:13px; font-weight:600;
+    display:flex; align-items:center; gap:8px; opacity:0; visibility:hidden; transition:all .2s ease; z-index:300;
+    max-width:88vw; text-align:center;}
+  .toast.show{opacity:1; visibility:visible; transform:translate(-50%, 0);}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-top">
+    <div class="logo">
+      <div class="logo-mark">AP</div>
+      <div class="logo-name">AP NEWS</div>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="navProfileBtn" aria-label="Account" style="background:none; border:none; padding:0;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <button class="donate-btn">DONATE</button>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+  <div class="ticker">
+    <div class="ticker-item"><span class="live-tag">LIVE</span>Dolly Parton dies</div>
+    <div class="ticker-item"><span class="live-tag">LIVE</span>US-Canada tariffs</div>
+    <div class="ticker-item">Measles</div>
+    <div class="ticker-item">Lindsay Clancy trial</div>
+    <div class="ticker-item">Mail-in voting</div>
+  </div>
+</div>
+
+<div class="hub-hero">
+  <div class="hub-hero-accent"></div>
+  <h1 class="hub-hero-title">Tour de France</h1>
+</div>
+
+<div class="hub-wrap">
+
+  <!-- ============ STORY THREAD MODULE — auto-added to an existing topic hub ============ -->
+  <div class="hub-thread-module">
+    <div class="hub-thread-header">
+      <div class="hub-thread-heading">
+        <div class="hub-thread-eyebrow">Story Thread</div>
+        <div class="hub-thread-title">Pogačar's pursuit of a fifth title</div>
+        <div class="hub-thread-sub">12 stories in this thread · updated yesterday</div>
+      </div>
+      <div class="thread-wrap">
+        <button class="follow-btn js-follow-btn" id="followBtn">
+          <span class="plus"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          <span class="check">✓</span><span class="label-default">Follow</span><span class="label-following">Following</span>
+        </button>
+        <div class="thread-menu" id="threadMenu">
+          <button class="js-manage-btn">Notification settings</button>
+          <button class="js-unfollow-btn">Unfollow thread</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-toggle" style="margin:14px 20px 0;">
+      <span>Prototype preview:</span>
+      <div class="proto-toggle-btns">
+        <button class="proto-toggle-btn active" id="previewNotFollowing">Not following</button>
+        <button class="proto-toggle-btn" id="previewFollowing">Following</button>
+      </div>
+    </div>
+
+    <div class="tl-list" style="padding:8px 20px 4px;">
+      <div class="tl-item">
+        <div class="tl-date"><span class="tl-day">JUL 27</span><br>5:32 PM ET</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <span class="tl-new-badge">New</span>
+          <div class="tl-headline">Pogačar closes in on record-equaling fifth Tour de France title as Carapaz wins penultimate stage</div>
+          <div class="tl-meta"><span>5 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>210</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date"><span class="tl-day">JUL 24</span><br>2:15 PM ET</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="tl-headline">Vingegaard abandons hope of overall win after crash on cobblestone stage</div>
+          <div class="tl-meta"><span>4 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>340</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date"><span class="tl-day">JUL 21</span><br>11:03 AM ET</div>
+        <div class="tl-marker"><div class="tl-dot"></div><div class="tl-connector"></div></div>
+        <div class="tl-content">
+          <div class="tl-headline">Groenewegen wins chaotic sprint finish in stage 11</div>
+          <div class="tl-meta"><span>3 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>88</span></div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date"><span class="tl-day">JUL 18</span><br>4:47 PM ET</div>
+        <div class="tl-marker"><div class="tl-dot"></div></div>
+        <div class="tl-content">
+          <div class="tl-headline">Pogačar extends lead atop Mont Ventoux in decisive mountain stage</div>
+          <div class="tl-meta"><span>6 MIN READ</span><span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>275</span></div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#more-coverage" class="hub-thread-more">
+      See all 12 stories in this thread
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+    </a>
+  </div>
+
+  <!-- ============ lead + grid, matching the existing hub layout ============ -->
+  <div class="hub-lead-row">
+    <div class="hub-lead">
+      <div class="hub-thumb hub-thumb-lg">
+        <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg"><rect width="480" height="320" fill="#1a5c1a"/><rect y="240" width="480" height="80" fill="#c9c9c9"/><circle cx="180" cy="160" r="26" fill="#f2d10a"/><circle cx="300" cy="190" r="20" fill="#e8e8e8"/></svg>
+      </div>
+      <div class="hub-lead-headline">Pogačar targets Spanish Vuelta victory to complete Grand Tour hat trick</div>
+      <p class="hub-lead-dek">Tadej Pogačar's pursuit of the Grand Tour hat trick will highlight the Spanish Vuelta that begins this weekend in Monaco.</p>
+      <div class="hub-date">AUGUST 20</div>
+    </div>
+    <div class="hub-grid">
+      <div class="hub-grid-item">
+        <div class="hub-thumb"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#2a4d7a"/><circle cx="70" cy="60" r="20" fill="#f2d10a"/><circle cx="130" cy="80" r="16" fill="#e0e0e0"/></svg></div>
+        <div class="hub-grid-headline">Injured Vingegaard ends season following Tour de France crash</div>
+        <div class="hub-date">AUGUST 17</div>
+      </div>
+      <div class="hub-grid-item">
+        <div class="hub-thumb"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#7a2a4d"/><circle cx="100" cy="65" r="22" fill="#f2d10a"/></svg></div>
+        <div class="hub-grid-headline">Tears of joy for Vollering after winning the Women's Tour de France for the second time</div>
+        <div class="hub-date">AUGUST 9</div>
+      </div>
+      <div class="hub-grid-item">
+        <div class="hub-thumb"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#4d7a2a"/><circle cx="90" cy="60" r="18" fill="#f2d10a"/><circle cx="140" cy="90" r="14" fill="#ddd"/></svg></div>
+        <div class="hub-grid-headline">Vollering wins Stage 8 to take overall lead at Women's Tour de France</div>
+        <div class="hub-date">AUGUST 8</div>
+      </div>
+      <div class="hub-grid-item">
+        <div class="hub-thumb"><svg viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="130" fill="#2a6d7a"/><circle cx="100" cy="70" r="24" fill="#f2d10a"/></svg></div>
+        <div class="hub-grid-headline">Niewiadoma-Phinney wins Mont Ventoux stage to take overall lead</div>
+        <div class="hub-date">AUGUST 7</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="more-coverage" class="hub-more-header">
+    <div class="hub-more-accent"></div>
+    <div class="hub-more-title">More Tour de France coverage</div>
+  </div>
+
+  <div class="hub-river">
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Le Court-Pienaar wins Stage 6 of Women's Tour de France, Reusser retains overall lead</div>
+        <div class="hub-date">AUGUST 6</div>
+      </div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Vollering wins 5th stage of the Women's Tour de France, Reusser keeps yellow jersey</div>
+        <div class="hub-date">AUGUST 5</div>
+      </div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Time trial champion Marlen Reusser takes yellow jersey at Women's Tour de France</div>
+        <div class="hub-date">AUGUST 4</div>
+      </div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Norway's Sigrid Haugset seizes Women's Tour de France yellow jersey with long solo breakaway</div>
+        <div class="hub-date">AUGUST 3</div>
+      </div>
+      <div class="hub-thumb hub-thumb-sm"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#e6b800"/><circle cx="55" cy="45" r="18" fill="#ffd23f"/></svg></div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Pogačar closes in on record-equaling fifth Tour de France title as Carapaz wins penultimate stage</div>
+        <div class="hub-date">JULY 27</div>
+      </div>
+      <div class="hub-thumb hub-thumb-sm"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#c9a000"/><circle cx="60" cy="45" r="20" fill="#f2d10a"/></svg></div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Pogačar launches strong attack on the final climb to extend his overall lead</div>
+        <div class="hub-date">JULY 24</div>
+      </div>
+      <div class="hub-thumb hub-thumb-sm"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#7a5c2a"/><circle cx="60" cy="45" r="18" fill="#f2d10a"/></svg></div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Vingegaard abandons hope of overall win after crash on cobblestone stage</div>
+        <div class="hub-date">JULY 24</div>
+      </div>
+      <div class="hub-thumb hub-thumb-sm"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#2a4d7a"/><circle cx="60" cy="45" r="18" fill="#e0e0e0"/></svg></div>
+    </div>
+    <div class="hub-river-item">
+      <div class="hub-river-text">
+        <div class="hub-river-headline">Groenewegen wins chaotic sprint finish in stage 11</div>
+        <div class="hub-date">JULY 21</div>
+      </div>
+      <div class="hub-thumb hub-thumb-sm"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><rect width="120" height="90" fill="#4d2a7a"/><circle cx="60" cy="45" r="18" fill="#f2d10a"/></svg></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ MODAL PATTERN — auth (login or register) ============ -->
+<div class="m-overlay" id="authOverlay">
+  <div class="auth-modal">
+
+    <!-- Step 1: email entry -->
+    <div class="auth-step active" id="step-email">
+      <div class="auth-title">Log in or register to continue</div>
+      <input type="email" class="field" id="emailInput" placeholder="example@gmail.com" autocomplete="email">
+      <button class="pill-btn" id="emailContinueBtn" disabled>Continue</button>
+      <div class="or-use">Or use</div>
+      <div class="terms-note">By continuing, you agree to AP's <a href="#">Terms of Use</a> and acknowledge that AP may collect and use your data pursuant to our <a href="#">Privacy Policy</a>.</div>
+      <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.7 4.53-4.7 1.31 0 2.68.24 2.68.24v2.96h-1.51c-1.49 0-1.96.93-1.96 1.89v2.27h3.32l-.53 3.49h-2.79V24C19.61 23.1 24 18.1 24 12.07z"/></svg>Continue with Facebook</button>
+      <button class="social-btn"><svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.52 12.27c0-.85-.08-1.67-.22-2.45H12v4.64h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.88c2.27-2.09 3.57-5.17 3.57-8.82z"/><path fill="#34A853" d="M12 24c3.24 0 5.95-1.07 7.93-2.91l-3.88-3c-1.08.72-2.45 1.15-4.05 1.15-3.11 0-5.75-2.1-6.69-4.92H1.3v3.09A12 12 0 0 0 12 24z"/><path fill="#FBBC05" d="M5.31 14.32A7.2 7.2 0 0 1 4.93 12c0-.81.14-1.6.38-2.32V6.59H1.3A12 12 0 0 0 0 12c0 1.94.46 3.77 1.3 5.41z"/><path fill="#EA4335" d="M12 4.75c1.76 0 3.34.6 4.58 1.79l3.44-3.44C17.95 1.19 15.24 0 12 0A12 12 0 0 0 1.3 6.59l4.01 3.09C6.25 6.86 8.89 4.75 12 4.75z"/></svg>Continue with Google</button>
+      <button class="social-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="#000"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.145-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.696.91-1.4 0-2.372-1.25-3.313-2.59-1.938-2.78-3.42-7.85-1.43-11.28.98-1.7 2.732-2.78 4.634-2.81 1.4-.03 2.7.94 3.55.94.83 0 2.5-1.16 4.22-.99.72.03 2.74.29 4.03 2.19-.104.07-2.41 1.4-2.38 4.18.03 3.32 2.92 4.42 2.96 4.44z"/></svg>Continue with Apple</button>
+      <div class="proto-hint">Prototype tip: type an email containing "new" to simulate a new account and see the registration path.</div>
+    </div>
+
+    <!-- Step 2: password (existing account) -->
+    <div class="auth-step" id="step-password">
+      <div class="auth-title">Enter your password to log in</div>
+      <input type="email" class="field" id="pwEmailDisplay" readonly>
+      <div class="field-pw-wrap">
+        <input type="password" class="field" id="passwordInput" placeholder="Password" autocomplete="current-password">
+        <button class="eye-btn" data-target="passwordInput" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <div style="margin-bottom:18px;"><button class="link-btn" type="button">Forgot password?</button></div>
+      <button class="pill-btn" id="loginBtn" disabled>Log in</button>
+      <button class="back-btn" id="backToEmail1">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back
+      </button>
+    </div>
+
+    <!-- Step 3: complete profile (new account) -->
+    <div class="auth-step" id="step-register">
+      <div class="auth-title">Complete your profile</div>
+      <span class="field-label">Code</span>
+      <input type="text" class="field" id="codeInput" placeholder="Enter code" inputmode="numeric">
+      <div style="margin:8px 0 4px;"><button class="link-btn" type="button">Didn't receive a code?</button></div>
+      <hr class="hr-divider">
+      <span class="field-label">Password</span>
+      <div class="field-pw-wrap">
+        <input type="password" class="field" id="regPasswordInput" placeholder="Choose a password" autocomplete="new-password">
+        <button class="eye-btn" data-target="regPasswordInput" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <ul class="req-list" id="reqList">
+        <li data-req="len"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Must include at least 8 characters</li>
+        <li data-req="upper"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Must include an upper case letter</li>
+        <li data-req="num"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Must include a number</li>
+        <li data-req="special"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Must include a special character</li>
+      </ul>
+      <span class="field-label">Confirm password</span>
+      <div class="field-pw-wrap">
+        <input type="password" class="field" id="confirmPasswordInput" placeholder="Confirm your password" autocomplete="new-password">
+        <button class="eye-btn" data-target="confirmPasswordInput" aria-label="Show password">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+      <button class="pill-btn" id="createAccountBtn" disabled style="margin-top:20px;">Create account</button>
+      <button class="back-btn" id="backToEmail2">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============ PANEL — account dashboard with drill-down navigation ============ -->
+<div class="p-overlay" id="panelOverlay">
+  <div class="side-panel">
+
+    <div class="panel-header">
+      <div class="panel-header-root" id="headerRoot">
+        <div class="panel-avatar">AM</div>
+        <div>
+          <div class="panel-name">Amy Morgan</div>
+          <div class="panel-name-sub">AP News account</div>
+        </div>
+        <button class="panel-close-root" id="closeRoot" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="panel-header-sub" id="headerSub" style="display:none;">
+        <button class="panel-back" id="backBtn" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="panel-sub-title" id="subTitle">Section</div>
+        <button class="panel-home" id="homeBtn" aria-label="Go to top level">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </button>
+        <button class="panel-close-sub" id="closeSub" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: dashboard (root) ===== -->
+    <div class="panel-view active" id="view-dashboard">
+      <div class="panel-body">
+        <button class="dash-row" data-goto="profile">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Profile</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="bookmarks">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Bookmarks</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="history">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">History</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="newsletters">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Newsletters</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="story-threads">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="12" r="3"/><circle cx="9" cy="18" r="3"/><path d="M9.5 8.8 14.5 11M15 14l-4 2.5" stroke-width="1.6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Story Threads</div><div class="dash-sub" id="threadCountSub">3 threads followed</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="notifications">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Notifications</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: generic placeholder ===== -->
+    <div class="panel-view" id="view-placeholder">
+      <div class="panel-body">
+        <div class="placeholder-view">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div id="placeholderText">This section is coming soon.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: Story Threads → threads you follow ===== -->
+    <div class="panel-view" id="view-story-threads">
+      <div class="panel-body">
+        <div class="panel-section-note">Threads you're following. Tap one to manage how you're updated.</div>
+        <div id="threadRows"></div>
+        <div class="empty-threads" id="emptyThreads" style="display:none;">You're not following any threads yet.</div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: thread timeline (primary — reading) ===== -->
+    <div class="panel-view" id="view-thread-timeline">
+      <div class="panel-body">
+        <div class="settings-bar">
+          <button class="settings-btn-sm" id="openThreadSettingsBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Notification settings
+          </button>
+        </div>
+        <div id="threadTimelineRows"></div>
+        <button class="load-more-btn" id="loadMoreBtn" style="display:none;">Load more stories</button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: thread notification settings (secondary) ===== -->
+    <div class="panel-view" id="view-thread-detail">
+      <div class="panel-body">
+        <div class="detail-body">
+          <div class="panel-section-label">How would you like to receive updates?</div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+              Push
+            </div>
+            <label class="switch"><input type="checkbox" id="pushToggle"><span class="track"></span></label>
+          </div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg>
+              Email
+            </div>
+            <label class="switch"><input type="checkbox" id="emailToggle"><span class="track"></span></label>
+          </div>
+
+          <div class="panel-section-label" style="margin-top:22px;">How often would you like updates?</div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              Immediately
+            </div>
+            <label class="switch"><input type="checkbox" id="immediateToggle"><span class="track"></span></label>
+          </div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              In a daily summary
+            </div>
+            <label class="switch"><input type="checkbox" id="dailyToggle"><span class="track"></span></label>
+          </div>
+
+          <hr class="detail-hr">
+          <button class="unfollow-row" id="unfollowThreadBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            Unfollow this thread
+          </button>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="panel-save-btn" id="panelSaveBtn">Save changes</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">Unfollowed Cyclospora outbreak</div>
+
+<script>
+  const followBtns = document.querySelectorAll('.js-follow-btn');
+  const toast = document.getElementById('toast');
+
+  // ---------- mock data: threads followed account-wide ----------
+  let threads = [
+    {id:'iran', name:'Iran-Israel ceasefire talks', stories:27, updated:'3 hours ago',
+      push:true, email:false, cadence:'immediate',
+      thumb:'<rect width="42" height="42" fill="#2b3a55"/><circle cx="16" cy="18" r="6" fill="#4a5f8a"/><circle cx="28" cy="14" r="4" fill="#3d5075"/><circle cx="27" cy="28" r="5" fill="#5a729e"/>',
+      storyList:[
+        {headline:'Iran and Israel agree to extend ceasefire terms after marathon negotiating session', date:'AUG 3 · 8:14 AM ET', readTime:'5 MIN READ', comments:890, isNew:true},
+        {headline:'Envoys from both sides return to Geneva as ceasefire monitoring dispute continues', date:'AUG 1 · 6:40 PM ET', readTime:'4 MIN READ', comments:512},
+        {headline:'U.N. inspectors granted access to disputed border zone under ceasefire terms', date:'JUL 29 · 10:22 AM ET', readTime:'6 MIN READ', comments:388},
+        {headline:'Ceasefire holds for third straight day despite scattered border skirmishes', date:'JUL 27 · 7:05 PM ET', readTime:'3 MIN READ', comments:201},
+        {headline:'Iran and Israel reach initial ceasefire agreement after weeks of shadow diplomacy', date:'JUL 25 · 11:58 PM ET', readTime:'7 MIN READ', comments:1204}
+      ]},
+    {id:'tdf', name:'Pogačar\u2019s pursuit of a fifth title', stories:12, updated:'yesterday',
+      push:true, email:true, cadence:'immediate', following:false,
+      thumb:'<rect width="42" height="42" fill="#e6b800"/><circle cx="14" cy="14" r="7" fill="#ffd23f"/><circle cx="29" cy="24" r="6" fill="#f2c200"/>',
+      storyList:[
+        {headline:'Pogačar closes in on record-equaling fifth Tour de France title as Carapaz wins penultimate stage', date:'JUL 27 · 5:32 PM ET', readTime:'5 MIN READ', comments:210, isNew:true},
+        {headline:'Vingegaard abandons hope of overall win after crash on cobblestone stage', date:'JUL 24 · 2:15 PM ET', readTime:'4 MIN READ', comments:340},
+        {headline:'Groenewegen wins chaotic sprint finish in stage 11', date:'JUL 21 · 11:03 AM ET', readTime:'3 MIN READ', comments:88},
+        {headline:'Pogačar extends lead atop Mont Ventoux in decisive mountain stage', date:'JUL 18 · 4:47 PM ET', readTime:'6 MIN READ', comments:275},
+        {headline:'Tour de France peloton observes moment of silence for late cycling great', date:'JUL 12 · 9:20 AM ET', readTime:'2 MIN READ', comments:64}
+      ]}
+  ];
+  threads.forEach(t => { if (t.following === undefined) t.following = true; });
+
+  // filler generator for stories beyond the authored storyList, so large threads
+  // can demonstrate pagination realistically
+  function fillerStory(thread, idx){
+    const daysAgo = idx + 3;
+    return {
+      headline: thread.name + ': developments from day ' + (thread.storyList.length + idx),
+      date: daysAgo + ' days ago',
+      readTime: (2 + (idx % 4)) + ' MIN READ',
+      comments: 15 + (idx * 7) % 140
+    };
+  }
+  function storiesFor(thread){
+    const authored = thread.storyList;
+    if (thread.stories <= authored.length) return authored.slice(0, thread.stories);
+    const extra = [];
+    for (let i = 0; i < thread.stories - authored.length; i++) extra.push(fillerStory(thread, i + 1));
+    return authored.concat(extra);
+  }
+  const PAGE_SIZE = 5;
+
+  const placeholderContent = {
+    profile: 'Profile details would live here — name, email, password, and connected sign-in methods.',
+    bookmarks: 'Saved articles would live here. Any bookmarked story that\u2019s part of a thread would show a small thread badge.',
+    history: 'A reverse-chronological list of recently read articles would live here.',
+    newsletters: 'Newsletter subscriptions and delivery preferences would live here.',
+    notifications: 'General notification settings would live here. Story Threads has its own area since it\u2019s the main driver of follow-based alerts.'
+  };
+
+  function followedThreads(){ return threads.filter(t => t.following); }
+  function getThread(id){ return threads.find(t => t.id === id); }
+
+  let isAuthenticated = false;
+  let pendingAction = null; // 'follow' when auth was triggered by a follow attempt
+  let stack = ['dashboard'];
+  let activeThreadId = null;
+
+  // ---------- helpers ----------
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+  function closeAllMenus(){
+    document.querySelectorAll('.thread-menu').forEach(m => m.classList.remove('open'));
+  }
+  function syncFollowUI(){
+    const followedTdf = getThread('tdf');
+    followBtns.forEach(btn => btn.classList.toggle('is-following', followedTdf.following));
+  }
+
+  // ================= AUTH MODAL =================
+  const authOverlay = document.getElementById('authOverlay');
+  const stepEmail = document.getElementById('step-email');
+  const stepPassword = document.getElementById('step-password');
+  const stepRegister = document.getElementById('step-register');
+
+  const emailInput = document.getElementById('emailInput');
+  const emailContinueBtn = document.getElementById('emailContinueBtn');
+  const pwEmailDisplay = document.getElementById('pwEmailDisplay');
+  const passwordInput = document.getElementById('passwordInput');
+  const loginBtn = document.getElementById('loginBtn');
+  const codeInput = document.getElementById('codeInput');
+  const regPasswordInput = document.getElementById('regPasswordInput');
+  const confirmPasswordInput = document.getElementById('confirmPasswordInput');
+  const createAccountBtn = document.getElementById('createAccountBtn');
+  const reqList = document.getElementById('reqList');
+
+  function openAuth(){
+    authOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    goToStep(stepEmail);
+    emailInput.value = '';
+    emailContinueBtn.disabled = true;
+  }
+  function closeAuth(){
+    authOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function goToStep(step){
+    [stepEmail, stepPassword, stepRegister].forEach(s => s.classList.remove('active'));
+    step.classList.add('active');
+  }
+
+  emailInput.addEventListener('input', () => {
+    emailContinueBtn.disabled = !emailInput.value.includes('@');
+  });
+
+  emailContinueBtn.addEventListener('click', () => {
+    const email = emailInput.value.trim();
+    pwEmailDisplay.value = email;
+    if (email.toLowerCase().includes('new')) {
+      goToStep(stepRegister);
+    } else {
+      goToStep(stepPassword);
+    }
+  });
+
+  document.getElementById('backToEmail1').addEventListener('click', () => goToStep(stepEmail));
+  document.getElementById('backToEmail2').addEventListener('click', () => goToStep(stepEmail));
+
+  passwordInput.addEventListener('input', () => {
+    loginBtn.disabled = passwordInput.value.length === 0;
+  });
+
+  loginBtn.addEventListener('click', () => {
+    isAuthenticated = true;
+    closeAuth();
+    resumeAfterAuth();
+  });
+
+  // password requirement validation
+  function checkRequirements(){
+    const val = regPasswordInput.value;
+    const checks = {
+      len: val.length >= 8,
+      upper: /[A-Z]/.test(val),
+      num: /[0-9]/.test(val),
+      special: /[^A-Za-z0-9]/.test(val)
+    };
+    Object.keys(checks).forEach(key => {
+      const li = reqList.querySelector('[data-req="' + key + '"]');
+      li.classList.toggle('met', checks[key]);
+    });
+    return Object.values(checks).every(Boolean);
+  }
+  function validateRegisterForm(){
+    const codeOk = codeInput.value.trim().length > 0;
+    const pwOk = checkRequirements();
+    const matchOk = confirmPasswordInput.value.length > 0 && confirmPasswordInput.value === regPasswordInput.value;
+    createAccountBtn.disabled = !(codeOk && pwOk && matchOk);
+  }
+  [codeInput, regPasswordInput, confirmPasswordInput].forEach(el => {
+    el.addEventListener('input', validateRegisterForm);
+  });
+
+  createAccountBtn.addEventListener('click', () => {
+    isAuthenticated = true;
+    closeAuth();
+    resumeAfterAuth();
+  });
+
+  // eye toggles
+  document.querySelectorAll('.eye-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = document.getElementById(btn.dataset.target);
+      target.type = target.type === 'password' ? 'text' : 'password';
+    });
+  });
+
+  authOverlay.addEventListener('click', (e) => {
+    if (e.target === authOverlay) { closeAuth(); pendingAction = null; }
+  });
+
+  function resumeAfterAuth(){
+    if (pendingAction === 'follow') {
+      pendingAction = null;
+      followThread('tdf');
+    }
+  }
+
+  // ================= PANEL — dashboard with drill-down navigation =================
+  const panelOverlay = document.getElementById('panelOverlay');
+  const headerRoot = document.getElementById('headerRoot');
+  const headerSub = document.getElementById('headerSub');
+  const subTitle = document.getElementById('subTitle');
+  const views = {
+    dashboard: document.getElementById('view-dashboard'),
+    placeholder: document.getElementById('view-placeholder'),
+    'story-threads': document.getElementById('view-story-threads'),
+    'thread-timeline': document.getElementById('view-thread-timeline'),
+    'thread-detail': document.getElementById('view-thread-detail')
+  };
+  const titles = {
+    profile:'Profile', bookmarks:'Bookmarks', history:'History', newsletters:'Newsletters',
+    notifications:'Notifications', 'story-threads':'Story Threads', 'thread-detail':'Notification settings'
+  };
+
+  function render(){
+    const top = stack[stack.length - 1];
+    Object.values(views).forEach(v => v.classList.remove('active'));
+
+    if (top === 'dashboard') {
+      headerRoot.style.display = 'flex';
+      headerSub.style.display = 'none';
+      views.dashboard.classList.add('active');
+      const n = followedThreads().length;
+      document.getElementById('threadCountSub').textContent = n + (n === 1 ? ' thread followed' : ' threads followed');
+      return;
+    }
+
+    headerRoot.style.display = 'none';
+    headerSub.style.display = 'flex';
+
+    if (['profile','bookmarks','history','newsletters','notifications'].includes(top)) {
+      subTitle.textContent = titles[top];
+      document.getElementById('placeholderText').textContent = placeholderContent[top];
+      views.placeholder.classList.add('active');
+    } else if (top === 'story-threads') {
+      subTitle.textContent = 'Story Threads';
+      renderThreadRows();
+      views['story-threads'].classList.add('active');
+    } else if (top === 'thread-timeline') {
+      const t = getThread(activeThreadId);
+      subTitle.textContent = t ? t.name : 'Thread';
+      renderThreadTimeline();
+      views['thread-timeline'].classList.add('active');
+    } else if (top === 'thread-detail') {
+      const t = getThread(activeThreadId);
+      subTitle.textContent = titles['thread-detail'];
+      if (t) {
+        document.getElementById('pushToggle').checked = t.push;
+        document.getElementById('emailToggle').checked = t.email;
+        document.getElementById('immediateToggle').checked = t.cadence === 'immediate';
+        document.getElementById('dailyToggle').checked = t.cadence === 'daily';
+      }
+      views['thread-detail'].classList.add('active');
+    }
+  }
+
+  function renderThreadRows(){
+    const container = document.getElementById('threadRows');
+    const empty = document.getElementById('emptyThreads');
+    const list = followedThreads();
+    if (list.length === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    container.innerHTML = list.map(t => {
+      const parts = [];
+      if (t.push) parts.push('Push');
+      if (t.email) parts.push('Email');
+      const cadenceText = t.cadence === 'daily' ? 'Daily summary' : 'Immediately';
+      const deliveryText = parts.length ? parts.join(' + ') + ' · ' + cadenceText : 'No delivery selected';
+      return '<button class="thread-row" data-thread="' + t.id + '">' +
+        '<div class="thread-row-thumb"><svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">' + t.thumb + '</svg></div>' +
+        '<div class="thread-row-info"><div class="thread-row-name">' + t.name + '</div>' +
+        '<div class="thread-row-meta">' + t.stories + ' stories · ' + deliveryText + '</div></div>' +
+        '<svg class="thread-row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>' +
+        '</button>';
+    }).join('');
+    container.querySelectorAll('.thread-row').forEach(row => {
+      row.addEventListener('click', () => {
+        activeThreadId = row.dataset.thread;
+        stack.push('thread-timeline');
+        render();
+      });
+    });
+  }
+
+  function renderThreadTimeline(){
+    const t = getThread(activeThreadId);
+    if (!t) return;
+    if (!t.visibleCount) t.visibleCount = Math.min(PAGE_SIZE, t.stories);
+    const all = storiesFor(t);
+    const visible = all.slice(0, t.visibleCount);
+
+    const container = document.getElementById('threadTimelineRows');
+    container.innerHTML = visible.map((s, i) => {
+      const isLast = i === visible.length - 1;
+      return '<div class="panel-tl-item">' +
+        '<div class="panel-tl-marker"><div class="panel-tl-dot"></div>' + (isLast ? '' : '<div class="panel-tl-line"></div>') + '</div>' +
+        '<div class="panel-tl-content">' +
+        (s.isNew ? '<span class="panel-tl-new">New</span><br>' : '') +
+        '<div class="panel-tl-date">' + s.date + '</div>' +
+        '<div class="panel-tl-headline">' + s.headline + '</div>' +
+        '<div class="panel-tl-meta"><span>' + s.readTime + '</span>' +
+        '<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + s.comments + '</span></div>' +
+        '</div></div>';
+    }).join('');
+
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    loadMoreBtn.style.display = t.visibleCount < t.stories ? 'block' : 'none';
+  }
+
+  document.getElementById('loadMoreBtn').addEventListener('click', () => {
+    const t = getThread(activeThreadId);
+    if (!t) return;
+    t.visibleCount = Math.min(t.visibleCount + PAGE_SIZE, t.stories);
+    renderThreadTimeline();
+  });
+
+  document.getElementById('openThreadSettingsBtn').addEventListener('click', () => {
+    stack.push('thread-detail');
+    render();
+  });
+
+  function openPanelAt(targetStack){
+    stack = targetStack;
+    panelOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    render();
+  }
+  function closePanel(){
+    panelOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('navProfileBtn').addEventListener('click', () => openPanelAt(['dashboard']));
+  document.getElementById('closeRoot').addEventListener('click', closePanel);
+  document.getElementById('closeSub').addEventListener('click', closePanel);
+  panelOverlay.addEventListener('click', (e) => { if (e.target === panelOverlay) closePanel(); });
+
+  document.getElementById('backBtn').addEventListener('click', () => {
+    if (stack.length > 1) stack.pop();
+    render();
+  });
+
+  document.getElementById('homeBtn').addEventListener('click', () => {
+    stack = ['dashboard'];
+    render();
+  });
+
+  document.querySelectorAll('.dash-row').forEach(row => {
+    row.addEventListener('click', () => {
+      stack.push(row.dataset.goto);
+      render();
+    });
+  });
+
+  const immediateToggle = document.getElementById('immediateToggle');
+  const dailyToggle = document.getElementById('dailyToggle');
+  immediateToggle.addEventListener('change', () => { if (immediateToggle.checked) dailyToggle.checked = false; });
+  dailyToggle.addEventListener('change', () => { if (dailyToggle.checked) immediateToggle.checked = false; });
+
+  document.getElementById('panelSaveBtn').addEventListener('click', () => {
+    const t = getThread(activeThreadId);
+    if (!t) return;
+    t.push = document.getElementById('pushToggle').checked;
+    t.email = document.getElementById('emailToggle').checked;
+    t.cadence = document.getElementById('immediateToggle').checked ? 'immediate' : 'daily';
+    syncFollowUI();
+    showToast('Preferences updated for ' + t.name);
+    stack.pop(); // back to the thread timeline
+    render();
+  });
+
+  document.getElementById('unfollowThreadBtn').addEventListener('click', () => {
+    const t = getThread(activeThreadId);
+    if (!t) return;
+    t.following = false;
+    syncFollowUI();
+    showToast('Unfollowed ' + t.name);
+    stack = stack.slice(0, -2); // unfollowing drops both settings and timeline, back to the list
+    render();
+  });
+
+  function followThread(id){
+    const t = getThread(id);
+    t.following = true; // preferences already carry sensible defaults in the mock data
+    syncFollowUI();
+    showToast('You\u2019re following ' + t.name);
+  }
+
+  // ================= FOLLOW BUTTON entry points (one per instance) =================
+  followBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const wrap = btn.closest('.thread-wrap');
+      const menu = wrap ? wrap.querySelector('.thread-menu') : null;
+      const followedTdf = getThread('tdf');
+      if (followedTdf.following) {
+        if (menu) {
+          const willOpen = !menu.classList.contains('open');
+          closeAllMenus();
+          if (willOpen) menu.classList.add('open');
+        }
+        return;
+      }
+      if (!isAuthenticated) {
+        pendingAction = 'follow';
+        openAuth();
+      } else {
+        followThread('tdf');
+      }
+    });
+  });
+
+  document.querySelectorAll('.js-unfollow-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const followedTdf = getThread('tdf');
+      followedTdf.following = false;
+      syncFollowUI();
+      closeAllMenus();
+      showToast('Unfollowed ' + followedTdf.name);
+    });
+  });
+
+  document.querySelectorAll('.js-manage-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      closeAllMenus();
+      activeThreadId = 'tdf';
+      openPanelAt(['dashboard', 'story-threads', 'thread-timeline', 'thread-detail']);
+    });
+  });
+
+  // (no 'view full thread' control on this page — it's either the thread page itself or resolved via the hub link)
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.thread-wrap')) closeAllMenus();
+  });
+
+  // ================= Prototype-only quick preview toggle =================
+  const previewNotFollowing = document.getElementById('previewNotFollowing');
+  const previewFollowing = document.getElementById('previewFollowing');
+  if (previewNotFollowing && previewFollowing) {
+    previewNotFollowing.addEventListener('click', () => {
+      getThread('tdf').following = false;
+      syncFollowUI();
+      previewNotFollowing.classList.add('active');
+      previewFollowing.classList.remove('active');
+    });
+    previewFollowing.addEventListener('click', () => {
+      isAuthenticated = true;
+      getThread('tdf').following = true;
+      syncFollowUI();
+      previewFollowing.classList.add('active');
+      previewNotFollowing.classList.remove('active');
+    });
+  }
+
+  syncFollowUI();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Account Panel — Dashboard</title>
+<style>
+  :root{
+    --ap-black:#000000;
+    --ap-red:#ff1818;
+    --ap-red-solid:#da1026;
+    --ap-white:#ffffff;
+    --ink:#1a1a1a;
+    --ink-soft:#4a4a4a;
+    --line:#e2e2e2;
+    --line-soft:#ececec;
+    --paper:#fafafa;
+    --success:#1c6c00;
+    --link:#0042a9;
+
+    --outline-bg-hover:#f2f2f2;
+    --outline-border-hover:#191919;
+    --outline-border-active:#0042a9;
+    --outline-label-active:#3a3a3a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink);
+    font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;}
+
+  /* ---------- top nav ---------- */
+  .nav{background:var(--ap-black); color:var(--ap-white);}
+  .nav-top{display:flex; align-items:center; justify-content:space-between; padding:10px 20px;}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{background:var(--ap-white); color:var(--ap-black); font-weight:800; font-size:20px;
+    padding:4px 8px; border-bottom:3px solid var(--ap-red); letter-spacing:0.5px; line-height:1;}
+  .nav-actions{display:flex; align-items:center; gap:16px;}
+  .icon-btn{width:20px; height:20px; color:var(--ap-white); opacity:0.9; cursor:pointer; background:none; border:none; padding:0;}
+  .profile-btn{position:relative;}
+  .donate-btn{background:var(--ap-red); color:var(--ap-white); font-weight:700; font-size:12px;
+    padding:8px 14px; border-radius:2px; letter-spacing:0.5px; cursor:pointer; border:none;}
+  .hamburger{display:flex; flex-direction:column; gap:3px; cursor:pointer; padding:4px;}
+  .hamburger span{width:20px; height:2px; background:var(--ap-white); display:block;}
+
+  /* ---------- placeholder backdrop ---------- */
+  .backdrop{max-width:640px; margin:0 auto; padding:80px 20px; text-align:center; color:var(--ink-soft);}
+  .backdrop h1{font-size:20px; color:var(--ink); margin-bottom:10px;}
+  .open-panel-btn{margin-top:18px; border:1.5px solid #a8a8a9; background:transparent; color:#191919;
+    font-weight:700; font-size:14px; padding:10px 20px; border-radius:999px; cursor:pointer; font-family:inherit;}
+  .open-panel-btn:hover{background:var(--outline-bg-hover); border-color:var(--outline-border-hover);}
+
+  /* ==================================================================
+     PANEL — account dashboard with drill-down navigation
+     ================================================================== */
+  .p-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; visibility:hidden;
+    transition:opacity .2s ease; z-index:150;}
+  .p-overlay.open{opacity:1; visibility:visible;}
+  .side-panel{position:fixed; top:0; right:0; bottom:0; width:100%; max-width:400px; background:var(--ap-white);
+    box-shadow:-8px 0 24px rgba(0,0,0,0.12); transform:translateX(100%); transition:transform .28s ease;
+    z-index:151; display:flex; flex-direction:column; overflow:hidden;}
+  .p-overlay.open .side-panel{transform:translateX(0);}
+
+  /* headers: root (name) vs sub-view (back + title) */
+  .panel-header{flex-shrink:0; border-bottom:1px solid var(--line); position:relative;}
+  .panel-header-root{display:flex; align-items:center; gap:14px; padding:24px;}
+  .panel-avatar{width:44px; height:44px; border-radius:50%; background:#191919; color:var(--ap-white);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:16px; flex-shrink:0;}
+  .panel-name{font-size:17px; font-weight:800; line-height:1.25;}
+  .panel-name-sub{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .panel-close-root{position:absolute; top:22px; right:20px; background:none; border:none; cursor:pointer;
+    color:var(--ink-soft); padding:4px;}
+
+  .panel-header-sub{display:flex; align-items:center; gap:10px; padding:16px 16px 16px 12px;}
+  .panel-back{background:none; border:none; cursor:pointer; color:var(--ink); padding:8px; display:flex;
+    border-radius:50%; flex-shrink:0;}
+  .panel-back:hover{background:var(--paper);}
+  .panel-sub-title{font-size:16px; font-weight:800; flex:1; min-width:0;}
+  .panel-close-sub{background:none; border:none; cursor:pointer; color:var(--ink-soft); padding:8px; flex-shrink:0;}
+  .panel-home{background:none; border:none; cursor:pointer; color:var(--ink-soft); padding:8px;
+    display:flex; border-radius:50%; flex-shrink:0;}
+  .panel-home:hover{background:var(--paper); color:var(--ink);}
+
+  .panel-body{padding:8px 0; overflow-y:auto; flex:1;}
+
+  /* dashboard rows */
+  .dash-row{display:flex; align-items:center; gap:14px; padding:14px 24px; cursor:pointer; background:none;
+    border:none; width:100%; text-align:left; font-family:inherit;}
+  .dash-row:hover{background:var(--paper);}
+  .dash-icon{width:36px; height:36px; border-radius:8px; background:var(--line-soft); display:flex;
+    align-items:center; justify-content:center; flex-shrink:0; color:var(--ink);}
+  .dash-label-wrap{flex:1; min-width:0;}
+  .dash-label{font-size:15px; font-weight:700;}
+  .dash-sub{font-size:12px; color:var(--ink-soft); margin-top:1px;}
+  .dash-chevron{color:var(--ink-soft); flex-shrink:0;}
+
+  /* placeholder view */
+  .placeholder-view{padding:60px 28px; text-align:center; color:var(--ink-soft); font-size:13px; line-height:1.6;}
+  .placeholder-view svg{color:#c4c4c4; margin-bottom:14px;}
+
+  /* thread list (inside Notifications) */
+  .panel-section-note{padding:4px 24px 14px; font-size:12px; color:var(--ink-soft); line-height:1.5;}
+  .thread-row{display:flex; align-items:center; gap:14px; padding:14px 24px; cursor:pointer; background:none;
+    border:none; width:100%; text-align:left; font-family:inherit; border-top:1px solid var(--line-soft);}
+  .thread-row:hover{background:var(--paper);}
+  .thread-row-thumb{width:42px; height:42px; border-radius:8px; flex-shrink:0; overflow:hidden;}
+  .thread-row-thumb svg{display:block; width:100%; height:100%;}
+  .thread-row-info{flex:1; min-width:0;}
+  .thread-row-name{font-size:14px; font-weight:700; line-height:1.25;}
+  .thread-row-meta{font-size:11px; color:var(--ink-soft); margin-top:2px;}
+  .thread-row-chevron{color:var(--ink-soft); flex-shrink:0;}
+  .empty-threads{padding:40px 24px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  /* thread detail (preferences) */
+  .detail-body{padding:20px 24px;}
+  .panel-section-label{font-size:11px; font-weight:800; letter-spacing:0.5px; color:var(--ink-soft);
+    text-transform:uppercase; margin-bottom:12px;}
+
+  /* thread timeline view (primary, read-first) */
+  .settings-bar{display:flex; justify-content:flex-end; padding:10px 20px; border-bottom:1px solid var(--line-soft);}
+  .settings-btn-sm{display:inline-flex; align-items:center; gap:6px; border:1px solid #c4c4c4; background:transparent;
+    color:var(--ink-soft); font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px; cursor:pointer;
+    font-family:inherit;}
+  .settings-btn-sm:hover{background:var(--paper); border-color:#a8a8a9; color:var(--ink);}
+  .settings-btn-sm svg{flex-shrink:0;}
+  .thread-hub-link{margin-right:auto; display:none; align-items:center; gap:6px; font-size:12px;
+    font-weight:700; color:var(--link); text-decoration:none;}
+  .thread-hub-link:hover{text-decoration:underline;}
+  .thread-hub-link.show{display:inline-flex;}
+
+  .panel-tl-item{display:flex; gap:12px; padding:14px 24px; border-top:1px solid var(--line-soft); cursor:pointer;}
+  .panel-tl-item:hover{background:var(--paper);}
+  .panel-tl-marker{display:flex; flex-direction:column; align-items:center; padding-top:5px;}
+  .panel-tl-dot{width:8px; height:8px; border-radius:50%; background:#191919; flex-shrink:0;}
+  .panel-tl-line{width:2px; background:#c4c4c4; flex:1; margin-top:3px;}
+  .panel-tl-item:last-child .panel-tl-line{display:none;}
+  .panel-tl-content{flex:1; min-width:0;}
+  .panel-tl-new{display:inline-block; background:var(--ap-red-solid); color:var(--ap-white); font-size:9px;
+    font-weight:800; letter-spacing:0.4px; padding:2px 6px; border-radius:3px; margin-bottom:5px; text-transform:uppercase;}
+  .panel-tl-date{font-size:11px; color:var(--ink-soft); margin-bottom:3px;}
+  .panel-tl-headline{font-size:13.5px; font-weight:700; line-height:1.35; margin-bottom:5px;}
+  .panel-tl-meta{display:flex; align-items:center; gap:10px; font-size:11px; font-weight:400; color:var(--ink-soft);}
+  .panel-tl-meta span{display:flex; align-items:center; gap:4px;}
+  .panel-tl-meta svg{flex-shrink:0;}
+
+  .load-more-btn{display:block; width:calc(100% - 48px); margin:16px 24px 8px; padding:12px; border:1px solid #c4c4c4;
+    border-radius:999px; background:transparent; color:#191919; font-weight:700; font-size:13px; cursor:pointer;
+    font-family:inherit;}
+  .load-more-btn:hover{background:var(--paper); border-color:#a8a8a9;}
+  .opt-row{display:flex; align-items:center; justify-content:space-between; padding:9px 0;}
+  .opt-left{display:flex; align-items:center; gap:12px; font-size:15px; font-weight:600;}
+  .opt-left svg{color:var(--ink); flex-shrink:0;}
+  .switch{position:relative; width:44px; height:26px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .switch .track{position:absolute; inset:0; background:#d6d6d6; border-radius:999px; cursor:pointer;
+    transition:background .15s ease;}
+  .switch .track::before{content:""; position:absolute; width:20px; height:20px; left:3px; top:3px;
+    background:var(--ap-white); border-radius:50%; transition:transform .15s ease; box-shadow:0 1px 3px rgba(0,0,0,0.25);}
+  .switch input:checked + .track{background:var(--success);}
+  .switch input:checked + .track::before{transform:translateX(18px);}
+
+  .detail-hr{border:none; border-top:1px solid var(--line); margin:20px 0;}
+  .unfollow-row{display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; cursor:pointer;
+    color:var(--ap-red-solid); font-size:13px; font-weight:700; border:1px solid var(--line); border-radius:8px;
+    background:none; width:100%; font-family:inherit;}
+  .unfollow-row:hover{background:#fdf2f2;}
+
+  .panel-footer{padding:16px 24px; border-top:1px solid var(--line); flex-shrink:0;}
+  .panel-save-btn{width:100%; background:#191919; color:var(--ap-white); border:none;
+    padding:15px; border-radius:999px; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit;
+    transition:background .15s ease;}
+  .panel-save-btn:hover{background:#515151;}
+  .panel-save-btn:active{background:#3a3a3a;}
+
+  /* view visibility */
+  .panel-view{display:none;}
+  .panel-view.active{display:flex; flex-direction:column; height:100%;}
+
+  /* toast */
+  .toast{position:fixed; left:50%; bottom:24px; transform:translate(-50%, 12px); background:var(--ink);
+    color:var(--ap-white); padding:12px 18px; border-radius:8px; font-size:13px; font-weight:600;
+    display:flex; align-items:center; gap:8px; opacity:0; visibility:hidden; transition:all .2s ease; z-index:300;
+    max-width:88vw; text-align:center;}
+  .toast.show{opacity:1; visibility:visible; transform:translate(-50%, 0);}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-top">
+    <div class="logo">
+      <div class="logo-mark">AP</div>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn profile-btn" id="navProfileBtn" aria-label="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="20" height="20"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      </button>
+      <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <button class="donate-btn">DONATE</button>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="backdrop">
+  <h1>Account dashboard, reimagined as a drill-down panel</h1>
+  <p>Tap the account icon in the nav to open it, or use the button below.</p>
+  <button class="open-panel-btn" id="openPanelBtn">Open account panel</button>
+</div>
+
+<!-- ============ PANEL — dashboard with drill-down navigation ============ -->
+<div class="p-overlay" id="panelOverlay">
+  <div class="side-panel">
+
+    <!-- shared header: swaps between root (name) and sub-view (back + title) -->
+    <div class="panel-header">
+      <div class="panel-header-root" id="headerRoot">
+        <div class="panel-avatar">AM</div>
+        <div>
+          <div class="panel-name">Amy Morgan</div>
+          <div class="panel-name-sub">AP News account</div>
+        </div>
+        <button class="panel-close-root" id="closeRoot" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="panel-header-sub" id="headerSub" style="display:none;">
+        <button class="panel-back" id="backBtn" aria-label="Back">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="panel-sub-title" id="subTitle">Section</div>
+        <button class="panel-home" id="homeBtn" aria-label="Go to top level">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        </button>
+        <button class="panel-close-sub" id="closeSub" aria-label="Close">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: dashboard (root) ===== -->
+    <div class="panel-view active" id="view-dashboard">
+      <div class="panel-body">
+        <button class="dash-row" data-goto="profile">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Profile</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="bookmarks">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Bookmarks</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="history">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">History</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="newsletters">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Newsletters</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="story-threads">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="7" cy="7" r="3"/><circle cx="17" cy="12" r="3"/><circle cx="9" cy="18" r="3"/><path d="M9.5 8.8 14.5 11M15 14l-4 2.5" stroke-width="1.6"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Story Threads</div><div class="dash-sub" id="threadCountSub">3 threads followed</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <button class="dash-row" data-goto="notifications">
+          <div class="dash-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+          <div class="dash-label-wrap"><div class="dash-label">Notifications</div></div>
+          <svg class="dash-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: generic placeholder (Profile / Bookmarks / History / Newsletters) ===== -->
+    <div class="panel-view" id="view-placeholder">
+      <div class="panel-body">
+        <div class="placeholder-view">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div id="placeholderText">This section is coming soon.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: Story Threads → threads you follow ===== -->
+    <div class="panel-view" id="view-story-threads">
+      <div class="panel-body">
+        <div class="panel-section-note">Threads you're following. Tap one to manage how you're updated.</div>
+        <div id="threadRows"></div>
+        <div class="empty-threads" id="emptyThreads" style="display:none;">You're not following any threads yet.</div>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: thread timeline (primary — reading) ===== -->
+    <div class="panel-view" id="view-thread-timeline">
+      <div class="panel-body">
+        <div class="settings-bar">
+          <a class="thread-hub-link" id="threadHubLink" href="hub-tour-de-france.html">
+            View Tour de France hub
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 17 17 7M7 7h10v10"/></svg>
+          </a>
+          <button class="settings-btn-sm" id="openThreadSettingsBtn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Notification settings
+          </button>
+        </div>
+        <div id="threadTimelineRows"></div>
+        <button class="load-more-btn" id="loadMoreBtn" style="display:none;">Load more stories</button>
+      </div>
+    </div>
+
+    <!-- ===== VIEW: thread notification settings (secondary) ===== -->
+    <div class="panel-view" id="view-thread-detail">
+      <div class="panel-body">
+        <div class="detail-body">
+          <div class="panel-section-label">How would you like to receive updates?</div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg>
+              Push
+            </div>
+            <label class="switch"><input type="checkbox" id="pushToggle"><span class="track"></span></label>
+          </div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 6 10 7L22 6"/></svg>
+              Email
+            </div>
+            <label class="switch"><input type="checkbox" id="emailToggle"><span class="track"></span></label>
+          </div>
+
+          <div class="panel-section-label" style="margin-top:22px;">How often would you like updates?</div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              Immediately
+            </div>
+            <label class="switch"><input type="checkbox" id="immediateToggle"><span class="track"></span></label>
+          </div>
+          <div class="opt-row">
+            <div class="opt-left">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              In a daily summary
+            </div>
+            <label class="switch"><input type="checkbox" id="dailyToggle"><span class="track"></span></label>
+          </div>
+
+          <hr class="detail-hr">
+          <button class="unfollow-row" id="unfollowThreadBtn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            Unfollow this thread
+          </button>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <button class="panel-save-btn" id="panelSaveBtn">Save changes</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast" id="toast">Saved</div>
+
+<script>
+  // ---------- mock data ----------
+  let threads = [
+    {id:'cyclospora', name:'Cyclospora outbreak', stories:5, updated:'today',
+      push:true, email:true, cadence:'immediate',
+      thumb:'<rect width="42" height="42" fill="#6b1f8a"/><circle cx="15" cy="16" r="6" fill="#a94fc9"/><circle cx="27" cy="13" r="5" fill="#9640b8"/><circle cx="26" cy="27" r="7" fill="#7d2ea0"/>',
+      storyList:[
+        {headline:'Michigan reports first 2 U.S. deaths related to diarrhea-causing parasite', date:'AUG 3 · 12:42 PM ET', readTime:'4 MIN READ', comments:100, isNew:true},
+        {headline:'Between prices and a diarrhea-causing parasite, lettuce is causing hard times at some restaurants', date:'JUL 30 · 1:10 AM ET', readTime:'6 MIN READ', comments:42},
+        {headline:'Outbreak of diarrhea-causing parasite linked to 4 more states', date:'JUL 24 · 12:12 PM ET', readTime:'3 MIN READ', comments:78},
+        {headline:'Foodborne illnesses at restaurant chains are rare but can sicken customers, roil businesses', date:'JUL 17 · 12:43 PM ET', readTime:'4 MIN READ', comments:55},
+        {headline:'Lettuce at Taco Bell in 5 states confirmed as source of a diarrhea-causing parasite outbreak', date:'JUL 17 · 7:46 AM ET', readTime:'5 MIN READ', comments:163}
+      ]},
+    {id:'tdf', name:'Tour de France 2026', stories:12, updated:'yesterday',
+      push:false, email:true, cadence:'daily',
+      thumb:'<rect width="42" height="42" fill="#e6b800"/><circle cx="14" cy="14" r="7" fill="#ffd23f"/><circle cx="29" cy="24" r="6" fill="#f2c200"/>',
+      storyList:[
+        {headline:'Pogacar closes in on record-equaling fifth Tour de France title as Carapaz wins penultimate stage', date:'JUL 27 · 5:32 PM ET', readTime:'5 MIN READ', comments:210, isNew:true},
+        {headline:'Vingegaard abandons hope of overall win after crash on cobblestone stage', date:'JUL 24 · 2:15 PM ET', readTime:'4 MIN READ', comments:340},
+        {headline:'Groenewegen wins chaotic sprint finish in stage 11', date:'JUL 21 · 11:03 AM ET', readTime:'3 MIN READ', comments:88},
+        {headline:'Pogacar extends lead atop Mont Ventoux in decisive mountain stage', date:'JUL 18 · 4:47 PM ET', readTime:'6 MIN READ', comments:275},
+        {headline:'Tour de France peloton observes moment of silence for late cycling great', date:'JUL 12 · 9:20 AM ET', readTime:'2 MIN READ', comments:64}
+      ]},
+    {id:'iran', name:'Iran-Israel ceasefire talks', stories:27, updated:'3 hours ago',
+      push:true, email:false, cadence:'immediate',
+      thumb:'<rect width="42" height="42" fill="#2b3a55"/><circle cx="16" cy="18" r="6" fill="#4a5f8a"/><circle cx="28" cy="14" r="4" fill="#3d5075"/><circle cx="27" cy="28" r="5" fill="#5a729e"/>',
+      storyList:[
+        {headline:'Iran and Israel agree to extend ceasefire terms after marathon negotiating session', date:'AUG 3 · 8:14 AM ET', readTime:'5 MIN READ', comments:890, isNew:true},
+        {headline:'Envoys from both sides return to Geneva as ceasefire monitoring dispute continues', date:'AUG 1 · 6:40 PM ET', readTime:'4 MIN READ', comments:512},
+        {headline:'U.N. inspectors granted access to disputed border zone under ceasefire terms', date:'JUL 29 · 10:22 AM ET', readTime:'6 MIN READ', comments:388},
+        {headline:'Ceasefire holds for third straight day despite scattered border skirmishes', date:'JUL 27 · 7:05 PM ET', readTime:'3 MIN READ', comments:201},
+        {headline:'Iran and Israel reach initial ceasefire agreement after weeks of shadow diplomacy', date:'JUL 25 · 11:58 PM ET', readTime:'7 MIN READ', comments:1204}
+      ]}
+  ];
+
+  // filler generator for stories beyond the authored storyList, so large threads
+  // (like the 27-story Iran-Israel thread) can demonstrate pagination realistically
+  function fillerStory(thread, idx){
+    const daysAgo = idx + 3;
+    return {
+      headline: thread.name + ': developments from day ' + (thread.storyList.length + idx),
+      date: daysAgo + ' days ago',
+      readTime: (2 + (idx % 4)) + ' MIN READ',
+      comments: 15 + (idx * 7) % 140
+    };
+  }
+  function storiesFor(thread){
+    const authored = thread.storyList;
+    if (thread.stories <= authored.length) return authored.slice(0, thread.stories);
+    const extra = [];
+    for (let i = 0; i < thread.stories - authored.length; i++) extra.push(fillerStory(thread, i + 1));
+    return authored.concat(extra);
+  }
+
+  const PAGE_SIZE = 5;
+
+  const placeholderContent = {
+    profile: 'Profile details would live here — name, email, password, and connected sign-in methods.',
+    bookmarks: 'Saved articles would live here. Any bookmarked story that\u2019s part of a thread would show a small thread badge.',
+    history: 'A reverse-chronological list of recently read articles would live here.',
+    newsletters: 'Newsletter subscriptions and delivery preferences would live here.',
+    notifications: 'General notification settings would live here — breaking news alerts, app updates, and account activity. Story Threads has its own dedicated area since it\u2019s the main driver of follow-based alerts.'
+  };
+
+  // ---------- nav stack ----------
+  let stack = ['dashboard'];
+  let activeThreadId = null;
+
+  const panelOverlay = document.getElementById('panelOverlay');
+  const headerRoot = document.getElementById('headerRoot');
+  const headerSub = document.getElementById('headerSub');
+  const subTitle = document.getElementById('subTitle');
+  const views = {
+    dashboard: document.getElementById('view-dashboard'),
+    placeholder: document.getElementById('view-placeholder'),
+    'story-threads': document.getElementById('view-story-threads'),
+    'thread-timeline': document.getElementById('view-thread-timeline'),
+    'thread-detail': document.getElementById('view-thread-detail')
+  };
+  const toast = document.getElementById('toast');
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  const titles = {
+    profile:'Profile', bookmarks:'Bookmarks', history:'History', newsletters:'Newsletters',
+    notifications:'Notifications', 'story-threads':'Story Threads', 'thread-detail':'Notification settings'
+  };
+
+  function render(){
+    const top = stack[stack.length - 1];
+    Object.values(views).forEach(v => v.classList.remove('active'));
+
+    if (top === 'dashboard') {
+      headerRoot.style.display = 'flex';
+      headerSub.style.display = 'none';
+      views.dashboard.classList.add('active');
+      document.getElementById('threadCountSub').textContent = threads.length + (threads.length === 1 ? ' thread followed' : ' threads followed');
+      return;
+    }
+
+    headerRoot.style.display = 'none';
+    headerSub.style.display = 'flex';
+
+    if (['profile','bookmarks','history','newsletters','notifications'].includes(top)) {
+      subTitle.textContent = titles[top];
+      document.getElementById('placeholderText').textContent = placeholderContent[top];
+      views.placeholder.classList.add('active');
+    } else if (top === 'story-threads') {
+      subTitle.textContent = 'Story Threads';
+      renderThreadRows();
+      views['story-threads'].classList.add('active');
+    } else if (top === 'thread-timeline') {
+      const t = threads.find(x => x.id === activeThreadId);
+      subTitle.textContent = t ? t.name : 'Thread';
+      renderThreadTimeline();
+      views['thread-timeline'].classList.add('active');
+    } else if (top === 'thread-detail') {
+      const t = threads.find(x => x.id === activeThreadId);
+      subTitle.textContent = titles['thread-detail'];
+      if (t) {
+        document.getElementById('pushToggle').checked = t.push;
+        document.getElementById('emailToggle').checked = t.email;
+        document.getElementById('immediateToggle').checked = t.cadence === 'immediate';
+        document.getElementById('dailyToggle').checked = t.cadence === 'daily';
+      }
+      views['thread-detail'].classList.add('active');
+    }
+  }
+
+  function renderThreadRows(){
+    const container = document.getElementById('threadRows');
+    const empty = document.getElementById('emptyThreads');
+    if (threads.length === 0) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    container.innerHTML = threads.map(t => {
+      const parts = [];
+      if (t.push) parts.push('Push');
+      if (t.email) parts.push('Email');
+      const cadenceText = t.cadence === 'daily' ? 'Daily summary' : 'Immediately';
+      const deliveryText = parts.length ? parts.join(' + ') + ' · ' + cadenceText : 'No delivery selected';
+      return '<button class="thread-row" data-thread="' + t.id + '">' +
+        '<div class="thread-row-thumb"><svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">' + t.thumb + '</svg></div>' +
+        '<div class="thread-row-info"><div class="thread-row-name">' + t.name + '</div>' +
+        '<div class="thread-row-meta">' + t.stories + ' stories · ' + deliveryText + '</div></div>' +
+        '<svg class="thread-row-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>' +
+        '</button>';
+    }).join('');
+    container.querySelectorAll('.thread-row').forEach(row => {
+      row.addEventListener('click', () => {
+        activeThreadId = row.dataset.thread;
+        stack.push('thread-timeline');
+        render();
+      });
+    });
+  }
+
+  function renderThreadTimeline(){
+    const t = threads.find(x => x.id === activeThreadId);
+    if (!t) return;
+    document.getElementById('threadHubLink').classList.toggle('show', t.id === 'tdf');
+    if (!t.visibleCount) t.visibleCount = Math.min(PAGE_SIZE, t.stories);
+    const all = storiesFor(t);
+    const visible = all.slice(0, t.visibleCount);
+
+    const container = document.getElementById('threadTimelineRows');
+    container.innerHTML = visible.map((s, i) => {
+      const isLast = i === visible.length - 1;
+      return '<div class="panel-tl-item">' +
+        '<div class="panel-tl-marker"><div class="panel-tl-dot"></div>' + (isLast ? '' : '<div class="panel-tl-line"></div>') + '</div>' +
+        '<div class="panel-tl-content">' +
+        (s.isNew ? '<span class="panel-tl-new">New</span><br>' : '') +
+        '<div class="panel-tl-date">' + s.date + '</div>' +
+        '<div class="panel-tl-headline">' + s.headline + '</div>' +
+        '<div class="panel-tl-meta"><span>' + s.readTime + '</span>' +
+        '<span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' + s.comments + '</span></div>' +
+        '</div></div>';
+    }).join('');
+
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    if (t.visibleCount < t.stories) {
+      loadMoreBtn.style.display = 'block';
+    } else {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  document.getElementById('loadMoreBtn').addEventListener('click', () => {
+    const t = threads.find(x => x.id === activeThreadId);
+    if (!t) return;
+    t.visibleCount = Math.min(t.visibleCount + PAGE_SIZE, t.stories);
+    renderThreadTimeline();
+  });
+
+  document.getElementById('openThreadSettingsBtn').addEventListener('click', () => {
+    stack.push('thread-detail');
+    render();
+  });
+
+  function openPanel(){
+    stack = ['dashboard'];
+    panelOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    render();
+  }
+  function closePanel(){
+    panelOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('navProfileBtn').addEventListener('click', openPanel);
+  document.getElementById('openPanelBtn').addEventListener('click', openPanel);
+  document.getElementById('closeRoot').addEventListener('click', closePanel);
+  document.getElementById('closeSub').addEventListener('click', closePanel);
+  panelOverlay.addEventListener('click', (e) => { if (e.target === panelOverlay) closePanel(); });
+
+  document.getElementById('backBtn').addEventListener('click', () => {
+    if (stack.length > 1) stack.pop();
+    render();
+  });
+
+  document.getElementById('homeBtn').addEventListener('click', () => {
+    stack = ['dashboard'];
+    render();
+  });
+
+  document.querySelectorAll('.dash-row').forEach(row => {
+    row.addEventListener('click', () => {
+      stack.push(row.dataset.goto);
+      render();
+    });
+  });
+
+  const immediateToggle = document.getElementById('immediateToggle');
+  const dailyToggle = document.getElementById('dailyToggle');
+  immediateToggle.addEventListener('change', () => { if (immediateToggle.checked) dailyToggle.checked = false; });
+  dailyToggle.addEventListener('change', () => { if (dailyToggle.checked) immediateToggle.checked = false; });
+
+  document.getElementById('panelSaveBtn').addEventListener('click', () => {
+    const t = threads.find(x => x.id === activeThreadId);
+    if (!t) return;
+    t.push = document.getElementById('pushToggle').checked;
+    t.email = document.getElementById('emailToggle').checked;
+    t.cadence = document.getElementById('immediateToggle').checked ? 'immediate' : 'daily';
+    showToast('Preferences updated for ' + t.name);
+    stack.pop(); // back to the thread timeline
+    render();
+  });
+
+  document.getElementById('unfollowThreadBtn').addEventListener('click', () => {
+    const t = threads.find(x => x.id === activeThreadId);
+    if (!t) return;
+    threads = threads.filter(x => x.id !== activeThreadId);
+    showToast('Unfollowed ' + t.name);
+    stack = stack.slice(0, -2); // unfollowing drops both settings and timeline, back to the list
+    render();
+  });
+</script>
+
+</body>
+</html>
