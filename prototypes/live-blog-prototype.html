@@ -335,9 +335,6 @@
     white-space:nowrap;
     display:flex; align-items:baseline; gap:6px;
   }
-  .tab .tab-count{
-    font-size:.75rem; font-weight:500; color:var(--text-secondary);
-  }
   .tab::after{
     content:""; position:absolute; left:0; right:0; bottom:-1px; height:3px;
     background:transparent; border-radius:2px 2px 0 0;
@@ -345,7 +342,6 @@
   .tab:hover{color:var(--text-primary);}
   .tab[aria-selected="true"]{color:var(--text-primary);}
   .tab[aria-selected="true"]::after{background:var(--text-primary);} /* black underline, per Mike's note */
-  .tab[aria-selected="true"] .tab-count{color:var(--text-primary);}
 
   .filter-status{
     display:flex; align-items:center; gap:var(--space-08);
@@ -527,11 +523,11 @@
           <span class="live-dot" aria-hidden="true"></span>
           <span class="visually-hidden">Live coverage</span>
           <div class="tab-bar" role="tablist" aria-label="Filter posts by state" id="tabBar">
-            <button class="tab" role="tab" aria-selected="true" data-tag="all">All <span class="tab-count">(14)</span></button>
-            <button class="tab" role="tab" aria-selected="false" data-tag="florida">Florida <span class="tab-count">(5)</span></button>
-            <button class="tab" role="tab" aria-selected="false" data-tag="alaska">Alaska <span class="tab-count">(4)</span></button>
-            <button class="tab" role="tab" aria-selected="false" data-tag="california">California <span class="tab-count">(2)</span></button>
-            <button class="tab" role="tab" aria-selected="false" data-tag="wyoming">Wyoming <span class="tab-count">(3)</span></button>
+            <button class="tab" role="tab" aria-selected="true" data-tag="all">All</button>
+            <button class="tab" role="tab" aria-selected="false" data-tag="florida">Florida</button>
+            <button class="tab" role="tab" aria-selected="false" data-tag="alaska">Alaska</button>
+            <button class="tab" role="tab" aria-selected="false" data-tag="california">California</button>
+            <button class="tab" role="tab" aria-selected="false" data-tag="wyoming">Wyoming</button>
           </div>
         </div>
         <div class="filter-status" id="filterStatus">
