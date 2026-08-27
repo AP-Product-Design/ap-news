@@ -13,10 +13,10 @@
     --card-bg: var(--ap-color-backgrounds-primary);
     --ink: var(--ap-color-text-primary);
     --ink-soft: var(--ap-color-text-secondary);
-    --ink-faint: var(--ap-color-text-secondary);
-    --rule: var(--ap-color-elements-border-subtle);
-    --rule-strong: var(--ap-color-elements-border-moderate);
-    --accent-red: var(--ap-color-brand-ap-solid-red);
+    --ink-hover: var(--ap-color-text-primary-hover);
+    --rule-bold: var(--ap-color-elements-border-bold);
+    --rule-subtle: var(--ap-color-elements-border-subtle);
+    --status-red: var(--ap-color-text-ap-adaptive-red);
     --focus: var(--ap-color-interactive-text-link-enabled);
     --max: 1180px;
     font-size: 16px;
@@ -33,411 +33,426 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  a{ color: inherit; }
-  :focus-visible{ outline: 2px solid var(--focus); outline-offset: 3px; }
+  a{ color: inherit; text-decoration: none; }
+  :focus-visible{ outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--ap-layout-border-radius-sm); }
 
-  .slug{
-    font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
-    text-transform: uppercase;
-    letter-spacing: 0.11em;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: var(--ink-soft);
-  }
-
-  /* ---------- quick nav ---------- */
-  .quicknav{
-    position: sticky;
-    top: 0;
-    z-index: 39;
-    background: color-mix(in srgb, var(--paper) 92%, transparent);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid var(--rule);
-  }
-  .quicknav-inner{
+  .page{
     max-width: var(--max);
     margin: 0 auto;
-    padding: 10px 24px;
-    display: flex;
-    gap: 4px;
-    flex-wrap: wrap;
-  }
-  .quicknav a{
-    text-decoration: none;
-    color: var(--ink-soft);
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 0.88rem;
-    transition: background 0.15s ease, color 0.15s ease;
-  }
-  .quicknav a:hover{ background: var(--card-bg); color: var(--ink); }
-
-  /* ---------- layout ---------- */
-  .layout{
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 48px 24px 0;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    align-items: start;
+    padding: var(--ap-layout-size-56) var(--ap-layout-size-64) var(--ap-layout-size-48);
   }
 
-  .intro{
-    grid-column: 1 / 2;
-    position: sticky;
-    top: 58px;
-  }
-  h1.wordmark{
-    font-size: 2.75rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    margin: 0 0 8px;
-  }
-
-  .subhead{
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--ink-soft);
-    margin: 0 0 22px;
-  }
-
-  .lead{
-    font-size: 0.92rem;
-    line-height: 1.6;
-    color: var(--ink-soft);
-    margin: 0 0 22px;
-  }
-
-  .btn{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    font-family: inherit;
-    font-size: 0.875rem;
-    font-weight: var(--ap-font-weight-medium);
-    letter-spacing: var(--ap-letter-spacing-tight);
-    text-decoration: none;
-    padding: 11px 20px;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
-  }
-  .btn:hover{ transform: translateY(-1px); }
-
-  /* Filled */
-  .btn-solid{
-    background: var(--ap-color-interactive-filled-background-enabled-bg);
-    color: var(--ap-color-interactive-filled-label-enabled-label);
-  }
-  .btn-solid:hover{ background: var(--ap-color-interactive-filled-background-hover-bg); }
-
-  /* Outlined */
-  .btn-ghost{
-    background: var(--ap-color-interactive-outlined-background-enabled-bg);
-    color: var(--ap-color-interactive-outlined-label-enabled-label);
-    border-color: var(--ap-color-interactive-outlined-border-enabled-border);
-  }
-  .btn-ghost:hover{
-    background: var(--ap-color-interactive-outlined-background-hover-bg);
-    border-color: var(--ap-color-interactive-outlined-border-hover-border);
-  }
-
-  /* ---------- content column ---------- */
-  .content{
-    grid-column: 2 / 5;
-    display: flex;
-    flex-direction: column;
-  }
-
-  section.group{
-    padding: 40px 0 8px;
-    border-top: 1px solid var(--rule);
-    scroll-margin-top: 68px;
-  }
-  section.group:first-of-type{ border-top: none; padding-top: 0; }
-
-  .group-head{
+  /* ---------- masthead ---------- */
+  .masthead{
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--ap-layout-size-48);
+    border-bottom: 2px solid var(--rule-bold);
+    padding-bottom: var(--ap-layout-size-20);
+  }
+  .brand-logo{
+    display: block;
+    width: 48px;
+    height: 57px;
+    margin-bottom: var(--ap-layout-size-20);
+  }
+  .brand-row{
+    display: flex;
     align-items: baseline;
-    gap: 24px;
-    margin-bottom: 26px;
+    gap: var(--ap-layout-size-12);
+    font-size: var(--ap-text-size-x2);
+    line-height: 1.2;
+  }
+  .wordmark{
+    margin: 0;
+    font-size: inherit;
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-normal);
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .subhead{
+    margin: 0;
+    font-weight: var(--ap-font-weight-regular);
+    font-stretch: var(--ap-font-stretch-normal);
+    color: var(--ink-soft);
+  }
+  .nav-row{
+    display: flex;
+    gap: var(--ap-layout-size-24);
+    padding-bottom: var(--ap-layout-size-04);
     flex-wrap: wrap;
   }
-  .group-label{
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.01em;
-    margin: 0;
-  }
-  .group-desc{
-    color: var(--ink-faint);
-    opacity: 0.8;
-    font-size: 0.9rem;
-    max-width: 380px;
-    text-align: right;
-  }
-  @media (max-width: 700px){ .group-desc{ text-align: left; } }
-
-  .subgroup{ margin-bottom: 40px; }
-  .subgroup:last-child{ margin-bottom: 0; }
-  .subgroup-label{ margin: 0 0 14px; }
-
-  .grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1px;
-    background: var(--ap-color-backgrounds-tertiary);
-    border: 1px solid var(--rule);
-  }
-  .card{
-    background: var(--card-bg);
-    padding: 20px 20px 18px;
-    text-decoration: none;
+  .nav-link{
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-nav-link);
+    text-transform: uppercase;
     color: var(--ink);
+    transition: color 0.15s ease;
+  }
+  .nav-link:hover{ color: var(--ink-hover); }
+
+  /* ---------- intro ---------- */
+  .intro{
+    max-width: 620px;
+    margin: var(--ap-layout-size-24) 0 0;
+    font-weight: var(--ap-font-weight-regular);
+    font-size: var(--ap-text-size-fixed-lg);
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- section ---------- */
+  .section{
+    margin-top: var(--ap-layout-size-64);
+    border-top: 2px solid var(--rule-bold);
+    padding-top: var(--ap-layout-size-12);
+    scroll-margin-top: var(--ap-layout-size-24);
+  }
+  .section-head{
+    display: flex;
+    align-items: baseline;
+    gap: var(--ap-layout-size-12);
+    flex-wrap: wrap;
+  }
+  .section-name{
+    margin: 0;
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: var(--ap-text-size-x2);
+    line-height: 1.1;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .section-count{
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-normal);
+    font-size: var(--ap-text-size-metadata);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    color: var(--ink-soft);
+  }
+  .section-spacer{ flex: 1; }
+  .section-tagline{
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-fixed-sm);
+    color: var(--ink-soft);
+  }
+  @media (max-width: 700px){ .section-tagline{ flex-basis: 100%; } }
+
+  /* ---------- group ---------- */
+  .group{ margin-top: var(--ap-layout-size-32); }
+  .group:first-child{ margin-top: var(--ap-layout-size-24); }
+  .group-label{
+    margin: 0 0 var(--ap-layout-size-08);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: var(--ap-text-size-x-2);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- card grid ---------- */
+  .card-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ap-layout-size-16);
+  }
+  @media (max-width: 1023px){ .card-grid{ grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px){ .card-grid{ grid-template-columns: 1fr; } }
+
+  .card{
     position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    min-height: 120px;
-    border-left: 2px solid transparent;
-    transition: border-color 0.15s ease, background 0.15s ease;
+    display: block;
+    background: var(--card-bg);
+    border-top: 1px solid var(--rule-subtle);
+    padding: var(--ap-layout-size-20) var(--ap-layout-size-24) var(--ap-layout-size-24);
+    color: var(--ink);
+    transition: color 0.15s ease;
   }
-  .card:hover{ border-left-color: var(--accent-red); }
+  .card::before{
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--ap-color-brand-ap-solid-red);
+    transition: width 0.2s ease;
+  }
+  a.card:hover{ color: var(--ink-hover); }
+  a.card:hover::before{ width: 100%; }
+  .card-eyebrow{
+    margin: 0 0 var(--ap-layout-size-08);
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-condensed);
+    font-size: var(--ap-text-size-x-3);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--status-red);
+  }
   .card-title{
-    font-weight: 700;
-    font-size: 0.98rem;
-    line-height: 1.3;
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
+    font-weight: var(--ap-font-weight-bold);
+    font-stretch: var(--ap-font-stretch-semi-condensed);
+    font-size: var(--ap-text-size-x1);
+    line-height: 1.25;
+    color: inherit;
   }
-  .card-title svg{ flex: none; margin-top: 3px; opacity: 0.35; transition: transform 0.15s ease, opacity 0.15s ease; }
-  .card:hover .card-title svg{ opacity: 0.9; transform: translate(1px,-1px); }
   .card-desc{
-    font-size: 0.85rem;
+    margin-top: var(--ap-layout-size-08);
+    font-size: var(--ap-text-size-fixed-sm);
     line-height: 1.5;
     color: var(--ink-soft);
+    text-wrap: pretty;
   }
-
-  /* Featured card — visually calls out a not-yet-built entry within a
-     grid of otherwise equal-weight, clickable cards. Uses an inverse
-     (dark) surface, and disables the hover/link affordances since
-     there's nowhere for it to go yet. */
-  .card--featured{
-    background: var(--ap-color-backgrounds-header-primary);
-    color: var(--ap-color-text-inverse-primary);
-    cursor: default;
-  }
-  .card--featured:hover{ border-left-color: transparent; }
-  .card--featured .card-desc{ color: var(--ap-color-text-inverse-secondary); }
-  .card-badge{
-    font-family: ui-monospace, 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+  .card-kind{
+    margin-top: var(--ap-layout-size-12);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-normal);
+    font-size: var(--ap-text-size-x-3);
+    letter-spacing: var(--ap-letter-spacing-wide);
     text-transform: uppercase;
-    letter-spacing: 0.11em;
-    font-size: 0.65rem;
-    font-weight: 700;
-    color: var(--ap-color-text-inverse-primary);
+    color: var(--ink-hover);
   }
 
-  footer{
-    max-width: var(--max);
-    margin: 0 auto;
-    padding: 40px 24px 64px;
+  /* ---------- footer ---------- */
+  .site-footer{
+    margin-top: var(--ap-layout-size-72);
+    border-top: 2px solid var(--rule-bold);
+    padding-top: var(--ap-layout-size-12);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    color: var(--ink-faint);
-    opacity: 0.8;
-    font-size: 0.82rem;
+    gap: var(--ap-layout-size-12);
+    font-weight: var(--ap-font-weight-medium);
+    font-stretch: var(--ap-font-stretch-normal);
+    font-size: var(--ap-text-size-metadata);
+    letter-spacing: var(--ap-letter-spacing-wide);
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
-  .arrow-icon{ width: 13px; height: 13px; }
-
-  @media (max-width: 900px){
-    .layout{ grid-template-columns: 1fr; }
-    .intro{ position: static; grid-column: 1 / -1; margin-bottom: 8px; }
-    .content{ grid-column: 1 / -1; }
+  @media (max-width: 700px){
+    .page{ padding: var(--ap-layout-size-40) var(--ap-spacing-screen-margins) var(--ap-layout-size-40); }
+    .masthead{ flex-direction: column; align-items: flex-start; gap: var(--ap-layout-size-16); }
+    .nav-row{ padding-bottom: 0; }
   }
 
 </style>
 </head>
 <body>
 
-  <nav class="quicknav">
-    <div class="quicknav-inner">
-      <a href="#documentation">Documentation</a>
-      <a href="#prototypes">Prototypes</a>
-      <a href="#research">Research</a>
-      <a href="#tools">Tools</a>
-    </div>
-  </nav>
+  <div class="page">
 
-  <div class="layout">
-
-    <aside class="intro">
-      <h1 class="wordmark">Maple</h1>
-      <p class="subhead">AP News design system</p>
-      <p class="lead">The shared design resource for product, editorial, and engineering. See how it should look and behave before you build it. Full usage rules live in Zeroheight.</p>
-    </aside>
-
-    <div class="content">
-
-      <section class="group" id="documentation">
-        <div class="group-head">
-          <h2 class="group-label">Documentation</h2>
+    <header class="masthead">
+      <div>
+        <img class="brand-logo" src="images/ap-logo.png" alt="AP" width="48" height="57">
+        <div class="brand-row">
+          <h1 class="wordmark">Maple</h1>
+          <span class="subhead">AP News design system</span>
         </div>
-        <div class="grid">
+      </div>
+      <nav class="nav-row">
+        <a class="nav-link" href="#documentation">Documentation</a>
+        <a class="nav-link" href="#prototypes">Prototypes</a>
+        <a class="nav-link" href="#research">Research</a>
+        <a class="nav-link" href="#tools">Tools</a>
+      </nav>
+    </header>
+
+    <p class="intro">The shared design resource for product, editorial, and engineering. See how it should look and behave before you build it. Full usage rules live in Zeroheight.</p>
+
+    <section class="section" id="documentation">
+      <div class="section-head">
+        <h2 class="section-name">Documentation</h2>
+        <span class="section-count">3 items</span>
+        <span class="section-spacer"></span>
+        <span class="section-tagline">Rules, governance, and reference</span>
+      </div>
+      <div class="group">
+        <div class="card-grid">
           <a class="card" href="https://zeroheight.com/9d662119e/p/99befa-introduction" target="_blank" rel="noopener">
-            <div class="card-title">Zeroheight documentation<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+            <div class="card-title">Design System Documentation</div>
             <div class="card-desc">Usage rules, do's and don'ts, and governance for every component — organized with a Design tab and a Usage tab for each one.</div>
+            <div class="card-kind">Reference</div>
           </a>
-          <a class="card" href="https://ap-product-design.github.io/ap-news/apds-styleguide.html" target="_blank" rel="noopener">
-            <div class="card-title">Quick-start styleguide<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-            <div class="card-desc">A quick start styleguide for prototyping and vibe coding.</div>
+          <a class="card" href="/apds-styleguide.html" target="_blank" rel="noopener">
+            <div class="card-title">Quick-Start Guide</div>
+            <div class="card-desc">A quick-start styleguide for prototyping and vibe coding.</div>
+            <div class="card-kind">Reference</div>
           </a>
-          <a class="card" href="https://ap-product-design.github.io/ap-news/apvar/ap-font-styleguide.html" target="_blank" rel="noopener">
-            <div class="card-title">AP Var deep dive<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+          <a class="card" href="/apvar/ap-font-styleguide.html" target="_blank" rel="noopener">
+            <div class="card-title">AP Variable Font Guide</div>
             <div class="card-desc">A deep dive into the AP variable font and how we use it in AP News.</div>
+            <div class="card-kind">Typography</div>
           </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="group" id="prototypes">
-        <div class="group-head">
-          <h2 class="group-label">Prototypes</h2>
-          <p class="group-desc">Working examples, grouped by what they're for</p>
-        </div>
+    <section class="section" id="prototypes">
+      <div class="section-head">
+        <h2 class="section-name">Prototypes</h2>
+        <span class="section-count">17 items</span>
+        <span class="section-spacer"></span>
+        <span class="section-tagline">Working examples, grouped by what they're for</span>
+      </div>
 
-        <div class="subgroup">
-          <h3 class="subgroup-label slug">Components &amp; patterns</h3>
-          <div class="grid">
-            <div class="card card--featured" data-theme="dark">
-              <span class="card-badge">Coming soon</span>
-              <div class="card-title">Maple component sandbox</div>
-              <div class="card-desc">A growing collection of coded examples of our system components</div>
-            </div>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/list-items.html" target="_blank" rel="noopener">
-              <div class="card-title">List items<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Core list configurations used across section fronts and search</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/list-e.html" target="_blank" rel="noopener">
-              <div class="card-title">List E<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">A responsive list built on container queries, not viewport width</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/image-containers.html" target="_blank" rel="noopener">
-              <div class="card-title">Image containers<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Cropping, aspect ratio, and caption rules for editorial imagery</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/tablet-gallery.html" target="_blank" rel="noopener">
-              <div class="card-title">Tablet gallery<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Gallery layout behavior across tablet breakpoints</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/coach-mark.html" target="_blank" rel="noopener">
-              <div class="card-title">Coach mark<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">In-product guidance pattern for introducing new features</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/html-embeds/anonymous-sources.html" target="_blank" rel="noopener">
-              <div class="card-title">Anonymous sources embed<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Standard callout for stories that rely on anonymous sourcing</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/html-embeds/anonymous-sources-video.html" target="_blank" rel="noopener">
-              <div class="card-title">Anonymous sources, with video image<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Same callout, adapted for video-led stories</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/html-embeds/ap-embed-vertical.html" target="_blank" rel="noopener">
-              <div class="card-title">AP embed vertical<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Vertical embed for syndicated and partner placements</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/html-embeds/news-tips.html" target="_blank" rel="noopener">
-              <div class="card-title">AP news tips<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Reader-facing prompt for submitting a tip</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/modals/ap_breaking_news_modal.html" target="_blank" rel="noopener">
-              <div class="card-title">Breaking news alerts modal<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Push notification opt-in prompt</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/modals/ap_donation_modals.html" target="_blank" rel="noopener">
-              <div class="card-title">Donation modals, combined<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Full set of donation prompt variants in one view</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/modals/ap-donation-modal-full.html" target="_blank" rel="noopener">
-              <div class="card-title">Donation modal, full<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Single, full-size donation ask</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/modals/ap-donation-modal-lite.html" target="_blank" rel="noopener">
-              <div class="card-title">Donation modal, lite<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Lightweight, ad-adjacent donation ask</div>
-            </a>
+      <div class="group">
+        <h3 class="group-label">Components &amp; patterns</h3>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-eyebrow">Coming soon</div>
+            <div class="card-title">Maple component sandbox</div>
+            <div class="card-desc">A growing collection of coded examples of our system components</div>
+            <div class="card-kind">Sandbox</div>
           </div>
+          <a class="card" href="/prototypes/list-items.html" target="_blank" rel="noopener">
+            <div class="card-title">List items</div>
+            <div class="card-desc">Core list configurations used across section fronts and search</div>
+            <div class="card-kind">Pattern</div>
+          </a>
+          <a class="card" href="/prototypes/list-e.html" target="_blank" rel="noopener">
+            <div class="card-title">List E</div>
+            <div class="card-desc">A responsive list built on container queries, not viewport width</div>
+            <div class="card-kind">Pattern</div>
+          </a>
+          <a class="card" href="/prototypes/image-containers.html" target="_blank" rel="noopener">
+            <div class="card-title">Image containers</div>
+            <div class="card-desc">Cropping, aspect ratio, and caption rules for editorial imagery</div>
+            <div class="card-kind">Pattern</div>
+          </a>
+          <a class="card" href="/prototypes/tablet-gallery.html" target="_blank" rel="noopener">
+            <div class="card-title">Tablet gallery</div>
+            <div class="card-desc">Gallery layout behavior across tablet breakpoints</div>
+            <div class="card-kind">Pattern</div>
+          </a>
+          <a class="card" href="/prototypes/coach-mark.html" target="_blank" rel="noopener">
+            <div class="card-title">Coach mark</div>
+            <div class="card-desc">In-product guidance pattern for introducing new features</div>
+            <div class="card-kind">Pattern</div>
+          </a>
+          <a class="card" href="/html-embeds/anonymous-sources.html" target="_blank" rel="noopener">
+            <div class="card-title">Anonymous sources embed</div>
+            <div class="card-desc">Standard callout for stories that rely on anonymous sourcing</div>
+            <div class="card-kind">Embed</div>
+          </a>
+          <a class="card" href="/html-embeds/anonymous-sources-video.html" target="_blank" rel="noopener">
+            <div class="card-title">Anonymous sources, with video image</div>
+            <div class="card-desc">Same callout, adapted for video-led stories</div>
+            <div class="card-kind">Embed</div>
+          </a>
+          <a class="card" href="/html-embeds/ap-embed-vertical.html" target="_blank" rel="noopener">
+            <div class="card-title">AP embed vertical</div>
+            <div class="card-desc">Vertical embed for syndicated and partner placements</div>
+            <div class="card-kind">Embed</div>
+          </a>
+          <a class="card" href="/html-embeds/news-tips.html" target="_blank" rel="noopener">
+            <div class="card-title">AP news tips</div>
+            <div class="card-desc">Reader-facing prompt for submitting a tip</div>
+            <div class="card-kind">Modal</div>
+          </a>
+          <a class="card" href="/modals/ap_breaking_news_modal.html" target="_blank" rel="noopener">
+            <div class="card-title">Breaking news alerts modal</div>
+            <div class="card-desc">Push notification opt-in prompt</div>
+            <div class="card-kind">Modal</div>
+          </a>
+          <a class="card" href="/modals/ap_donation_modals.html" target="_blank" rel="noopener">
+            <div class="card-title">Donation modals, combined</div>
+            <div class="card-desc">Full set of donation prompt variants in one view</div>
+            <div class="card-kind">Modal</div>
+          </a>
+          <a class="card" href="/modals/ap-donation-modal-full.html" target="_blank" rel="noopener">
+            <div class="card-title">Donation modal, full</div>
+            <div class="card-desc">Single, full-size donation ask</div>
+            <div class="card-kind">Modal</div>
+          </a>
+          <a class="card" href="/modals/ap-donation-modal-lite.html" target="_blank" rel="noopener">
+            <div class="card-title">Donation modal, lite</div>
+            <div class="card-desc">Lightweight, ad-adjacent donation ask</div>
+            <div class="card-kind">Modal</div>
+          </a>
         </div>
+      </div>
 
-        <div class="subgroup">
-          <h3 class="subgroup-label slug">Experiences</h3>
-          <div class="grid">
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/live-blog-prototype.html" target="_blank" rel="noopener">
-              <div class="card-title">Live blog prototype<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Sticky filtering, live indicators, and real-time update patterns</div>
-            </a>
-            <a class="card" href="https://ap-product-design.github.io/ap-news/prototypes/story-threads/index.html" target="_blank" rel="noopener">
-              <div class="card-title">Story threads<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Follow and unfollow interactions for narrative threading</div>
-            </a>
-          </div>
+      <div class="group">
+        <h3 class="group-label">Experiences</h3>
+        <div class="card-grid">
+          <a class="card" href="/prototypes/live-blog-prototype.html" target="_blank" rel="noopener">
+            <div class="card-title">Live blog prototype</div>
+            <div class="card-desc">Sticky filtering, live indicators, and real-time update patterns</div>
+            <div class="card-kind">Flow</div>
+          </a>
+          <a class="card" href="/prototypes/story-threads/index.html" target="_blank" rel="noopener">
+            <div class="card-title">Story threads</div>
+            <div class="card-desc">Follow and unfollow interactions for narrative threading</div>
+            <div class="card-kind">Flow</div>
+          </a>
         </div>
+      </div>
 
-        <div class="subgroup">
-          <h3 class="subgroup-label slug">Animations</h3>
-          <div class="grid">
-            <a class="card" href="https://ap-product-design.github.io/ap-news/animation/confirmation-animation.html" target="_blank" rel="noopener">
-              <div class="card-title">Confirmation animation<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
-              <div class="card-desc">Motion feedback for a completed action</div>
-            </a>
-          </div>
+      <div class="group">
+        <h3 class="group-label">Animations</h3>
+        <div class="card-grid">
+          <a class="card" href="/animation/confirmation-animation.html" target="_blank" rel="noopener">
+            <div class="card-title">Confirmation animation</div>
+            <div class="card-desc">Motion feedback for a completed action</div>
+            <div class="card-kind">Motion</div>
+          </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="group" id="research">
-        <div class="group-head">
-          <h2 class="group-label">Research</h2>
-          <p class="group-desc">What we've learned from readers and stakeholders</p>
-        </div>
-        <div class="grid">
-          <a class="card" href="https://ap-product-design.github.io/ap-news/projects/ap-news-article-redesign-research.html" target="_blank" rel="noopener">
-            <div class="card-title">Article redesign research<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+    <section class="section" id="research">
+      <div class="section-head">
+        <h2 class="section-name">Research</h2>
+        <span class="section-count">1 item</span>
+        <span class="section-spacer"></span>
+        <span class="section-tagline">What we've learned from readers and stakeholders</span>
+      </div>
+      <div class="group">
+        <div class="card-grid">
+          <a class="card" href="/projects/ap-news-article-redesign-research.html" target="_blank" rel="noopener">
+            <div class="card-title">Article redesign research</div>
             <div class="card-desc">Synthesis from interviews and workshops shaping the article page rewrite</div>
+            <div class="card-kind">Synthesis</div>
           </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="group" id="tools" style="padding-bottom: 56px;">
-        <div class="group-head">
-          <h2 class="group-label">Tools</h2>
-          <p class="group-desc">Working tools for running design as a practice</p>
-        </div>
-        <div class="grid">
-          <a class="card" href="https://ap-product-design.github.io/ap-news/tools/priority-matrix.html" target="_blank" rel="noopener">
-            <div class="card-title">Priority matrix<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+    <section class="section" id="tools">
+      <div class="section-head">
+        <h2 class="section-name">Tools</h2>
+        <span class="section-count">2 items</span>
+        <span class="section-spacer"></span>
+        <span class="section-tagline">Working tools for running design as a practice</span>
+      </div>
+      <div class="group">
+        <div class="card-grid">
+          <a class="card" href="/tools/priority-matrix.html" target="_blank" rel="noopener">
+            <div class="card-title">Priority matrix</div>
             <div class="card-desc">Impact, urgency, and ease scoring for prioritizing design work</div>
+            <div class="card-kind">Tool</div>
           </a>
           <a class="card" href="https://maple-component-tracker.web.app/" target="_blank" rel="noopener">
-            <div class="card-title">Maple component tracker<svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M9 7h8v8"/></svg></div>
+            <div class="card-title">Maple component tracker</div>
             <div class="card-desc">Status tracking for components across the system. Login required — contact mbowser@ap.org for access.</div>
+            <div class="card-kind">Tool</div>
           </a>
         </div>
-      </section>
+      </div>
+    </section>
 
-    </div>
+    <footer class="site-footer">
+      <span>AP News Design — Consumer Product &amp; Technology</span>
+      <span>Maple design system · apnews.design</span>
+    </footer>
+
   </div>
-
-  <footer>
-    <span>AP News Design — Consumer Product &amp; Technology</span>
-    <span>Maple design system · apnews.design</span>
-  </footer>
 
 </body>
 </html>
