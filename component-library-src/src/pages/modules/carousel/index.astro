@@ -38,6 +38,18 @@ const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
 >
 
   <div class="detail-actions">
+    <div class="gallery-toggles" role="group" aria-label="Display options">
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-lead" checked>
+        <span class="toggle-track" aria-hidden="true"></span>
+        <span class="toggle-label">Lead story</span>
+      </label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="toggle-title" checked>
+        <span class="toggle-track" aria-hidden="true"></span>
+        <span class="toggle-label">Module title</span>
+      </label>
+    </div>
     <a href={`${base}modules/carousel/in-context/`} class="detail-action-link">
       View in context →
     </a>
@@ -57,9 +69,9 @@ const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
   <section class="detail-section">
     <h2 class="detail-section-title">Image row</h2>
     <p class="detail-section-note">
-      Supporting stories carry a 3:2 thumbnail. Compact / Sidebar / Mobile / Tablet
-      swipe one story at a time; Split / Full / Wide paginate 2 / 3 / 4 stories with
-      prev / next buttons.
+      Supporting stories carry a 3:2 thumbnail. Compact / Sidebar / Mobile swipe
+      one story at a time; Split / Tablet / Full / Wide paginate 2 / 3 / 3 / 4
+      stories with prev / next buttons.
     </p>
     <SizeGallery heading="Image row — 7 sizes">
       <CarouselListB slot="compact" size="compact" variant="image-row" title="This is a module title" lead={lead} stories={storiesWithImages} />
@@ -91,7 +103,101 @@ const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
 
 </DetailLayout>
 
+<script>
+  const leadToggle  = document.getElementById('toggle-lead')  as HTMLInputElement | null;
+  const titleToggle = document.getElementById('toggle-title') as HTMLInputElement | null;
+
+  const sync = () => {
+    document.body.classList.toggle('demo-hide-lead', !!leadToggle && !leadToggle.checked);
+    document.body.classList.toggle('demo-hide-title', !!titleToggle && !titleToggle.checked);
+  };
+
+  leadToggle?.addEventListener('change', sync);
+  titleToggle?.addEventListener('change', sync);
+</script>
+
 <style>
+  .gallery-toggles {
+    display: flex;
+    gap: var(--maple-space-fixed-expanded);
+    margin-right: auto;
+  }
+
+  .toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-compact);
+    cursor: pointer;
+    font-family: var(--maple-font-family);
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-primary);
+  }
+
+  .toggle-switch input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .toggle-track {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    background: var(--maple-border-moderate);
+    border-radius: var(--maple-radius-lg, 999px);
+    transition: background 0.15s ease;
+  }
+
+  .toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+  }
+
+  .toggle-switch input:checked + .toggle-track {
+    background: var(--maple-bg-header-primary);
+  }
+
+  .toggle-switch input:checked + .toggle-track::before {
+    transform: translateX(16px);
+  }
+
+  .toggle-switch input:focus-visible + .toggle-track {
+    outline: 2px solid var(--maple-link-500, #0042a9);
+    outline-offset: 2px;
+  }
+
+  /* Demo-only visibility toggles — reach into the CarouselListB component's
+     own scoped markup from the page level. */
+  :global(body.demo-hide-lead) :global(.clb-lead) {
+    display: none;
+  }
+  :global(body.demo-hide-title) :global(.clb-title-block) {
+    display: none;
+  }
+
+  /* White page background (this page only, not a site-wide change) — the
+     component itself is also white, so each instance needs its own subtle
+     stroke to stay legible against the page. `outline` rather than `border`
+     so it doesn't affect the component's own box size/layout, and is drawn
+     at the component's real edge — the prev/next nav buttons, which are
+     positioned to straddle that same edge, paint on top of it naturally. */
+  :global(body) {
+    background: var(--maple-bg-primary);
+  }
+  :global(.carousel-list-b) {
+    outline: 1px solid var(--maple-border-subtle);
+  }
+
   .detail-section-title {
     font-size: var(--maple-text-x1);
     font-weight: var(--maple-font-weight-bold);
@@ -148,6 +254,7 @@ const storiesTextOnly = storiesWithImages.map(({ image, imageAlt, ...s }) => s);
 
   .detail-actions {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     margin-bottom: var(--maple-space-fixed-generous);
   }
