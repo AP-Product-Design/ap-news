@@ -124,6 +124,18 @@ combos.forEach(c => {
   availability[c.template] ??= [];
   if (!availability[c.template].includes(c.layout)) availability[c.template].push(c.layout);
 });
+
+// SM 412 and MD 800 full-width both keep the bleed/peek look (mode='swipe')
+// rather than the grid slots' hard-edge pagination. MD 800 (tablet) also
+// shows prev/next arrows alongside that native scroll; SM 412 (mobile) does
+// not — matching the design intent for those two template sizes.
+function modeFor(layout: string, size: string): 'auto' | 'grid' | 'swipe' {
+  if (layout !== 'full-width') return 'grid';
+  return size === 'tablet' ? 'swipe' : 'auto';
+}
+function showArrowsFor(layout: string, size: string): boolean | undefined {
+  return layout === 'full-width' && size === 'tablet' ? true : undefined;
+}
 ---
 
 <BaseLayout title="Carousel List B — In Context" section="modules">
@@ -169,6 +181,22 @@ combos.forEach(c => {
       </div>
     </div>
 
+    <div class="ic-filter-group">
+      <p class="ic-filter-label">Display</p>
+      <div class="ic-toggle-row">
+        <label class="ic-toggle-switch">
+          <input type="checkbox" id="ic-toggle-lead" checked>
+          <span class="ic-toggle-track" aria-hidden="true"></span>
+          <span class="ic-toggle-label">Lead story</span>
+        </label>
+        <label class="ic-toggle-switch">
+          <input type="checkbox" id="ic-toggle-title" checked>
+          <span class="ic-toggle-track" aria-hidden="true"></span>
+          <span class="ic-toggle-label">Module title</span>
+        </label>
+      </div>
+    </div>
+
   </div>
 
   <p class="ic-meta" id="ic-meta"></p>
@@ -192,7 +220,8 @@ combos.forEach(c => {
                         <CarouselListB
                           size={slot.size}
                           variant="image-row"
-                          mode={c.layout === 'full-width' ? 'auto' : 'grid'}
+                          mode={modeFor(c.layout, slot.size)}
+                          showArrows={showArrowsFor(c.layout, slot.size)}
                           title="This is a module title"
                           lead={lead}
                           stories={storiesWithImages}
@@ -222,7 +251,8 @@ combos.forEach(c => {
                         <CarouselListB
                           size={slot.size}
                           variant="text-row"
-                          mode={c.layout === 'full-width' ? 'auto' : 'grid'}
+                          mode={modeFor(c.layout, slot.size)}
+                          showArrows={showArrowsFor(c.layout, slot.size)}
                           title="This is a module title"
                           lead={lead}
                           stories={storiesTextOnly}
@@ -250,6 +280,8 @@ combos.forEach(c => {
       template: 'lg-1024',
       layout:   'full-width',
       variant:  'image-row',
+      lead:     true,
+      title:    true,
     };
 
     // Restore state from URL params if present.
@@ -257,10 +289,16 @@ combos.forEach(c => {
     if (params.get('template')) state.template = params.get('template');
     if (params.get('layout'))   state.layout   = params.get('layout');
     if (params.get('variant'))  state.variant  = params.get('variant');
+    if (params.get('lead'))     state.lead     = params.get('lead') !== '0';
+    if (params.get('title'))    state.title    = params.get('title') !== '0';
 
-    const chipRows = document.querySelectorAll('.ic-chip-row');
-    const views    = document.querySelectorAll('.ic-view');
-    const meta     = document.getElementById('ic-meta');
+    const chipRows    = document.querySelectorAll('.ic-chip-row');
+    const views       = document.querySelectorAll('.ic-view');
+    const meta        = document.getElementById('ic-meta');
+    const leadToggle  = document.getElementById('ic-toggle-lead');
+    const titleToggle = document.getElementById('ic-toggle-title');
+    if (leadToggle)  leadToggle.checked  = state.lead;
+    if (titleToggle) titleToggle.checked = state.title;
 
     function update() {
       // If current layout isn't available for current template, fall back to first valid.
@@ -301,11 +339,17 @@ combos.forEach(c => {
         meta.innerHTML = `Rendering <strong>${variantLabel}</strong> at <strong>${size}</strong> size inside <strong>${templateLabel} · ${layoutLabel}</strong>.`;
       }
 
+      // Show/hide lead + title block across every rendered instance.
+      document.body.classList.toggle('ic-hide-lead',  !state.lead);
+      document.body.classList.toggle('ic-hide-title', !state.title);
+
       // Update URL (replaceState, no history spam).
       const url = new URL(window.location.href);
       url.searchParams.set('template', state.template);
       url.searchParams.set('layout',   state.layout);
       url.searchParams.set('variant',  state.variant);
+      url.searchParams.set('lead',     state.lead  ? '1' : '0');
+      url.searchParams.set('title',    state.title ? '1' : '0');
       history.replaceState(null, '', url);
     }
 
@@ -318,6 +362,9 @@ combos.forEach(c => {
         update();
       });
     });
+
+    leadToggle?.addEventListener('change', () => { state.lead = leadToggle.checked; update(); });
+    titleToggle?.addEventListener('change', () => { state.title = titleToggle.checked; update(); });
 
     update();
   })();
@@ -401,6 +448,73 @@ combos.forEach(c => {
     display: flex;
     flex-wrap: wrap;
     gap: var(--maple-space-fixed-tight);
+  }
+
+  .ic-toggle-row {
+    display: flex;
+    gap: var(--maple-space-fixed-default);
+  }
+
+  .ic-toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: var(--maple-space-fixed-compact);
+    cursor: pointer;
+    font-family: var(--maple-font-family);
+    font-size: var(--maple-text-x-2);
+    font-weight: var(--maple-font-weight-medium);
+    color: var(--maple-text-primary);
+  }
+
+  .ic-toggle-switch input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .ic-toggle-track {
+    position: relative;
+    width: 36px;
+    height: 20px;
+    flex-shrink: 0;
+    background: var(--maple-border-moderate);
+    border-radius: var(--maple-radius-lg, 999px);
+    transition: background 0.15s ease;
+  }
+
+  .ic-toggle-track::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+  }
+
+  .ic-toggle-switch input:checked + .ic-toggle-track {
+    background: var(--maple-bg-header-primary);
+  }
+
+  .ic-toggle-switch input:checked + .ic-toggle-track::before {
+    transform: translateX(16px);
+  }
+
+  .ic-toggle-switch input:focus-visible + .ic-toggle-track {
+    outline: 2px solid var(--maple-link-500, #0042a9);
+    outline-offset: 2px;
+  }
+
+  /* Demo-only visibility toggles — reach into the CarouselListB component's
+     own scoped markup from the page level. */
+  :global(body.ic-hide-lead) :global(.clb-lead) {
+    display: none;
+  }
+  :global(body.ic-hide-title) :global(.clb-title-block) {
+    display: none;
   }
 
   .ic-chip {
