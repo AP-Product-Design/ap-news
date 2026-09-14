@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AP News</title>
+<style>
+  :root{
+    --ap-black:#000000;
+    --ap-red:#ff1818;
+    --ap-red-solid:#da1026;
+    --ap-white:#ffffff;
+    --ink:#1a1a1a;
+    --ink-soft:#4a4a4a;
+    --line:#e2e2e2;
+    --paper:#fafafa;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink); min-height:100vh;
+    font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;}
+
+  .nav{background:var(--ap-black); color:var(--ap-white);}
+  .nav-top{display:flex; align-items:center; justify-content:space-between; padding:10px 20px;}
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{height:32px; width:auto; display:block;}
+
+  .wrap{max-width:520px; margin:0 auto; padding:56px 24px 60px; text-align:center;}
+  .eyebrow{color:var(--ap-red-solid); font-weight:800; font-size:12px; letter-spacing:0.6px;
+    text-transform:uppercase; margin-bottom:14px;}
+  h1{font-size:26px; font-weight:800; line-height:1.3; margin:0 0 20px;}
+  .scenario{font-size:16px; line-height:1.65; color:var(--ink); text-align:left; margin:0 0 16px;}
+
+  .how-box{background:#eef4ff; border:1px solid #c7dbff; border-radius:10px; padding:18px 20px;
+    text-align:left; margin:24px 0 32px;}
+  .how-title{font-size:12px; font-weight:800; letter-spacing:0.5px; text-transform:uppercase;
+    color:#1a3a6b; margin-bottom:8px;}
+  .how-box p{font-size:14px; line-height:1.6; color:#1a3a6b; margin:0 0 8px;}
+  .how-box p:last-child{margin-bottom:0;}
+
+  .begin-btn{display:inline-flex; align-items:center; gap:8px; background:#191919; color:var(--ap-white);
+    border:none; padding:15px 28px; border-radius:999px; font-size:15px; font-weight:700; cursor:pointer;
+    font-family:inherit; text-decoration:none;}
+  .begin-btn:hover{background:#333;}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="nav-top">
+    <div class="logo">
+      <img src="ap-logo.png" alt="AP" class="logo-mark">
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Before you begin</div>
+  <h1>A quick scenario to set the scene</h1>
+  <p class="scenario">Yesterday, you came across an AP News article about a foodborne illness outbreak that had just claimed its first U.S. lives.</p>
+  <p class="scenario">Today, you're back on AP News, and there's a new story with the latest developments on that same outbreak.</p>
+  <div class="how-box">
+    <div class="how-title">How this works</div>
+    <p>You'll get 5 short tasks. For each one, do whatever feels natural to you — there's no right or wrong path. Once you feel like you've finished a task, move on to the next one.</p>
+    <p>We're testing the design, not you.</p>
+  </div>
+  <a class="begin-btn" href="article-timeline.html">
+    Begin
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+</body>
+</html>
