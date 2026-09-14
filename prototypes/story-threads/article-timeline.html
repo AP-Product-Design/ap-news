@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Story Threads — Follow Prototype</title>
@@ -37,8 +36,7 @@
   .nav{background:var(--ap-black); color:var(--ap-white);}
   .nav-top{display:flex; align-items:center; justify-content:space-between; padding:10px 20px;}
   .logo{display:flex; align-items:center; gap:10px;}
-  .logo-mark{background:var(--ap-white); color:var(--ap-black); font-weight:800; font-size:20px;
-    padding:4px 8px; border-bottom:3px solid var(--ap-red); letter-spacing:0.5px; line-height:1;}
+  .logo-mark{height:32px; width:auto; display:block;}
   .logo-name{font-weight:700; font-size:15px; letter-spacing:0.5px; display:none;}
   .nav-actions{display:flex; align-items:center; gap:16px;}
   .icon-btn{width:20px; height:20px; color:var(--ap-white); opacity:0.9; cursor:pointer;}
@@ -63,14 +61,18 @@
   .hero svg, .hero img{display:block; width:100%; height:auto;}
   .hero-cap{font-size:12px; color:var(--ink-soft); line-height:1.4; margin-bottom:22px;}
 
-  .byline-row{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-    padding-bottom:16px; border-bottom:1px solid var(--line); margin-bottom:20px;}
+  .byline-row{display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap;
+    gap:12px; padding-bottom:16px; border-bottom:1px solid var(--line); margin-bottom:20px;}
   .byline{font-size:13px; line-height:1.6;}
-  .byline b{font-weight:700;}
-  .byline a{color:var(--ink); text-decoration:underline;}
+  .byline-name{font-size:13px; font-weight:700; letter-spacing:0.2px;}
+  .byline-name a{color:var(--ink); text-decoration:underline;}
   .byline .meta{color:var(--ink-soft); margin-top:2px;}
-  .share-row{display:flex; gap:14px; flex-shrink:0; padding-top:2px;}
-  .share-row .icon-btn{color:var(--ink); width:18px; height:18px;}
+  .article-actions{display:flex; align-items:center; gap:8px; flex-wrap:wrap; flex-shrink:0;}
+  .action-btn{display:inline-flex; align-items:center; gap:6px; border:1px solid #c4c4c4; border-radius:4px;
+    padding:8px 12px; font-size:12.5px; font-weight:700; background:var(--ap-white); color:var(--ink);
+    font-family:inherit; cursor:pointer; white-space:nowrap;}
+  .action-btn:hover{background:var(--paper);}
+  .action-btn svg{flex-shrink:0;}
 
   /* ---------- story thread module ---------- */
   .thread-module{border:1px solid var(--line); border-radius:6px; background:var(--ap-white);
@@ -131,6 +133,7 @@
   /* article body */
   .body-text p{font-size:16px; line-height:1.65; margin:0 0 18px; color:var(--ink);}
   .body-text a{color:var(--ap-red-solid);}
+  .body-subhead{font-size:19px; font-weight:800; margin:28px 0 8px; color:var(--ink); line-height:1.3;}
 
   /* ---------- timeline embed ---------- */
   .tl-module{border:1px solid var(--line); border-radius:8px; background:var(--ap-white);
@@ -177,20 +180,11 @@
     .tl-date{font-size:10px;}
   }
 
-  /* prototype-only quick state preview — clearly marked, not part of real UI */
-  .proto-toggle{display:flex; align-items:center; gap:10px; border:1px dashed #d6d6d6; border-radius:8px;
-    padding:10px 14px; margin-bottom:18px; font-size:12px; color:#9a9a9a;}
-  .proto-toggle span{flex-shrink:0;}
-  .proto-toggle-btns{display:flex; gap:6px;}
-  .proto-toggle-btn{border:1px solid #c4c4c4; background:var(--ap-white); color:var(--ink-soft);
-    font-size:11px; font-weight:700; padding:5px 10px; border-radius:999px; cursor:pointer; font-family:inherit;}
-  .proto-toggle-btn.active{background:var(--ink); border-color:var(--ink); color:var(--ap-white);}
-
   /* ==================================================================
      PATTERN 1 — MODAL (centered, disruptive/blocking): used for AUTH
      ================================================================== */
   .m-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); display:flex; align-items:center;
-    justify-content:center; opacity:0; visibility:hidden; transition:opacity .2s ease; z-index:200; padding:20px;}
+    justify-content:center; opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s ease; z-index:200; padding:20px;}
   .m-overlay.open{opacity:1; visibility:visible;}
   .auth-modal{background:var(--ap-white); width:100%; max-width:430px; border-radius:14px;
     padding:36px 32px; position:relative; transform:scale(.96); transition:transform .2s ease;
@@ -257,7 +251,7 @@
      to manage Story Thread follows/notifications from within an article
      ================================================================== */
   .p-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.35); opacity:0; visibility:hidden;
-    transition:opacity .2s ease; z-index:150;}
+    transition:opacity .28s ease, visibility .28s ease; z-index:150;}
   .p-overlay.open{opacity:1; visibility:visible;}
   .side-panel{position:fixed; top:0; right:0; bottom:0; width:100%; max-width:400px; background:var(--ap-white);
     box-shadow:-8px 0 24px rgba(0,0,0,0.12); transform:translateX(100%); transition:transform .28s ease;
@@ -309,6 +303,32 @@
   .thread-row-meta{font-size:11px; color:var(--ink-soft); margin-top:2px;}
   .thread-row-chevron{color:var(--ink-soft); flex-shrink:0;}
   .empty-threads{padding:40px 24px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  /* search + discovery */
+  .search-row{padding:14px 24px; border-bottom:1px solid var(--line);}
+  .search-input-wrap{position:relative; display:flex; align-items:center;}
+  .search-icon{position:absolute; left:12px; color:var(--ink-soft); pointer-events:none;}
+  .search-input{width:100%; border:1px solid #c4c4c4; border-radius:999px; padding:10px 14px 10px 36px;
+    font-size:14px; font-family:inherit; background:var(--paper); color:var(--ink);}
+  .search-input:focus{outline:none; border-color:#191919; background:var(--ap-white);}
+  .search-empty{padding:30px 24px; text-align:center; color:var(--ink-soft); font-size:13px;}
+
+  .suggested-section-label{padding:18px 24px 4px; font-size:11px; font-weight:800; letter-spacing:0.5px;
+    color:var(--ink-soft); text-transform:uppercase;}
+
+  .discover-row{display:flex; align-items:center; gap:12px; padding:12px 24px; border-top:1px solid var(--line-soft);}
+  .discover-thumb{width:38px; height:38px; border-radius:8px; flex-shrink:0; overflow:hidden; cursor:pointer;}
+  .discover-thumb svg{display:block; width:100%; height:100%;}
+  .discover-info{flex:1; min-width:0; cursor:pointer;}
+  .discover-name{font-size:13px; font-weight:700; line-height:1.3;}
+  .discover-meta{font-size:11px; color:var(--ink-soft); margin-top:1px;}
+  .discover-follow-btn{border:1.5px solid var(--outline-border-enabled); color:var(--outline-label-enabled);
+    background:transparent; font-weight:700; font-size:12px; padding:6px 12px; border-radius:999px;
+    cursor:pointer; flex-shrink:0; display:inline-flex; align-items:center; gap:4px; font-family:inherit;
+    white-space:nowrap;}
+  .discover-follow-btn:hover{background:var(--outline-bg-hover); border-color:var(--outline-border-hover);}
+  .discover-following-badge{font-size:11px; font-weight:700; color:var(--success); display:flex;
+    align-items:center; gap:4px; flex-shrink:0; white-space:nowrap;}
 
   .detail-body{padding:20px 24px;}
   .panel-section-label{font-size:11px; font-weight:800; letter-spacing:0.5px; color:var(--ink-soft);
@@ -379,6 +399,25 @@
     display:flex; align-items:center; gap:8px; opacity:0; visibility:hidden; transition:all .2s ease; z-index:300;
     max-width:88vw; text-align:center;}
   .toast.show{opacity:1; visibility:visible; transform:translate(-50%, 0);}
+
+  /* "not part of this test" modal — gates links/buttons outside the tested flow */
+  .np-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.5); display:flex; align-items:center;
+    justify-content:center; opacity:0; visibility:hidden; transition:opacity .2s ease, visibility .2s ease;
+    z-index:400; padding:20px;}
+  .np-overlay.open{opacity:1; visibility:visible;}
+  .np-modal{background:var(--ap-white); border-radius:14px; padding:28px 26px; max-width:320px; width:100%;
+    text-align:center;}
+  .np-icon{width:40px; height:40px; border-radius:50%; background:#f2f2f2; color:var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 14px;}
+  .np-title{font-size:16px; font-weight:800; margin-bottom:8px;}
+  .np-text{font-size:13px; color:var(--ink-soft); line-height:1.5; margin-bottom:20px;}
+  .np-close-btn{width:100%; background:#191919; color:var(--ap-white); border:none; padding:12px;
+    border-radius:999px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit;}
+  .np-close-btn:hover{background:#333;}
+
+  /* prototype-only instructional note inside the auth modal */
+  .proto-note{background:#eef4ff; border:1px solid #c7dbff; border-radius:8px; padding:12px 14px;
+    font-size:13px; color:#1a3a6b; line-height:1.5; margin-bottom:18px;}
 </style>
 </head>
 <body>
@@ -386,7 +425,7 @@
 <div class="nav">
   <div class="nav-top">
     <div class="logo">
-      <div class="logo-mark">AP</div>
+      <img src="ap-logo.png" alt="AP" class="logo-mark">
       <div class="logo-name">AP NEWS</div>
     </div>
     <div class="nav-actions">
@@ -407,36 +446,38 @@
 
 <div class="article">
   <div class="eyebrow">U.S. News</div>
-  <h1>Michigan reports the first 2 US deaths related to a diarrhea-causing parasite</h1>
+  <h1>As cyclospora illnesses surge to a record, Michigan officials eye lettuce as a possible cause</h1>
 
   <div class="hero">
-    <img src="lettuce.webp" alt="Lettuce growing in containers">
+    <img src="cyclospora-img.webp" alt="Microscope image of cyclospora parasite">
   </div>
-  <div class="hero-cap">1 of 2 | Lettuce grows in a container. Federal health officials have linked cyclospora-contaminated lettuce to the outbreak. (AP Photo)</div>
+  <div class="hero-cap">1 of 2 | This microscope image shows cyclospora, a microscopic parasite that causes watery, sometimes explosive diarrhea. (CDC via AP)</div>
 
   <div class="byline-row">
     <div class="byline">
-      <div><b>BY MIKE HOUSEHOLDER</b> and <a href="#">SUDHIN THANAWALA</a></div>
-      <div class="meta">Updated 6:00 PM EDT, August 3, 2026</div>
-      <div class="meta"><a href="#">Leer en español</a></div>
+      <div class="byline-name">BY <a href="#">SAVANNAH PETERS</a></div>
+      <div class="meta">Updated 4:15 PM EDT, August 5, 2026</div>
     </div>
-    <div class="share-row">
-      <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z"/></svg>
-      <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>
-    </div>
-  </div>
-
-  <div class="proto-toggle">
-    <span>Prototype preview:</span>
-    <div class="proto-toggle-btns">
-      <button class="proto-toggle-btn active" id="previewNotFollowing">Not following</button>
-      <button class="proto-toggle-btn" id="previewFollowing">Following</button>
+    <div class="article-actions">
+      <button class="action-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+        Add AP News on Google
+      </button>
+      <button class="action-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>
+        Share
+      </button>
+      <button class="action-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        112
+      </button>
     </div>
   </div>
 
   <div class="body-text">
-    <p><b>DETROIT (AP)</b> — Two people have died in the <a href="#">cyclospora outbreak</a> in Michigan, state health officials said Monday, marking the first U.S. deaths tied to the diarrhea-causing parasite this year.</p>
-    <p>Both people had underlying health conditions that may have been worsened by the intestinal illness and dehydration, the Michigan Department of Health and Human Services said. Health officials did not release the ages or hometowns of the two people who died.</p>
+    <p><b>NEW YORK (AP)</b> — Infections from the diarrhea-causing parasite cyclospora are surging, with state-level data suggesting that 2026 is already the nation&rsquo;s worst year for reported cases.</p>
+    <p>More than 30 states have reported infections this year, and current data from them shows the number of infections surpassing the record U.S. mark of about 4,700 set in 2019. The illness is not usually life threatening and is typically treated with antibiotics.</p>
+    <p>Health officials have not yet definitively identified what is causing <a href="https://apnews.com/article/cyclospora-outbreak-michigan-31e5e0034d39e85c844065a2bd593ecb">the infections</a>. On Tuesday, federal health officials said there may be different infection patterns in different places, although they believe cases in at least four states — Michigan, Ohio, Kentucky and West Virginia — are linked.</p>
   </div>
 
   <div class="tl-module">
@@ -520,8 +561,19 @@
   </div>
 
   <div class="body-text">
-    <p>The outbreak has now been linked to four additional states, federal health officials said last week, as investigators trace contaminated produce through the restaurant supply chain.</p>
-    <p>Cyclosporiasis is caused by a microscopic parasite typically spread through contaminated food or water. Symptoms include watery diarrhea, loss of appetite, and fatigue, and can last for weeks if untreated.</p>
+    <div class="body-subhead">Michigan officials blame lettuce</div>
+    <p>In Michigan — where more than 3,300 cases have been reported — officials say early information points to lettuce or salad greens as a possible culprit.</p>
+    <p>After conducting more than 1,000 interviews with patients, &ldquo;early information has shown lettuce as a common product that regularly comes up during the investigation,&rdquo; said Natasha Bagdasarian, the Michigan health department&rsquo;s chief medical executive.</p>
+    <p>Because of that commonality and because produce has been behind some past cyclospora outbreaks, Michigan officials advised consumers to buy whole heads of lettuce, discard the outer layers and <a href="https://apnews.com/article/cyclospora-produce-washing-tips-022730ccbc514e15b1f0021c47bf1b68">thoroughly wash</a> what is left. They also suggested people avoid bagged lettuce and pre-mixed salad kits.</p>
+    <p>On Tuesday, the Taco Bell restaurant chain issued a statement saying it had &ldquo;voluntarily and temporarily removed limited ingredients at select restaurants as a precautionary measure. We will continue to closely monitor the situation and follow the guidance of public health authorities.&rdquo;</p>
+    <p>In a call with reporters on Tuesday, federal health officials did not directly respond to a question about whether they are looking at Taco Bell or any specific food vendor or distributor.</p>
+    <p>&ldquo;FDA certainly is continuing its traceback investigation on multiple produce items, also including locations that are reported by the case patients before they became sick,&rdquo; said Donald Prater, The U.S. Food and Drug Administration&rsquo;s Acting Deputy Commissioner for Food, in response.</p>
+
+    <div class="body-subhead">Cyclospora causes &lsquo;explosive&rsquo; diarrhea</div>
+    <p>Cyclospora is a microscopic, spherical parasite that commonly causes watery diarrhea &ldquo;with frequent and sometimes explosive bowel movements,&rdquo; according to the U.S. Centers for Disease Control and Prevention. <a href="https://apnews.com/general-news-13270ed6ed8a43619cee596d8d2d3cfc">Outbreaks</a> tend to occur most often in the late spring and summer.</p>
+    <p>The heat-loving parasite infects the bowels and spreads through feces. In the past, people have been infected by consuming fruits or <a href="https://apnews.com/general-news-national-national-6792758649d74e3d921d9e0f5bb2ce46">vegetables</a> that were exposed to feces-contaminated irrigation water.</p>
+    <p>The illness, called cyclosporiasis, is less common than foodborne illnesses caused by other germs, including salmonella and E. coli. Many cases are never linked to a specific food or other source and, for years, few U.S. cyclospora outbreaks were reported. But the number started rising about a decade ago, with a particularly notable spike in 2018 and 2019.</p>
+    <p>Experts say it&rsquo;s likely that cyclospora cases historically were underreported, in part because some common tests used to check for food poisoning have not been geared to detect cyclospora. They attribute the increasing trend in cases to climate change and better detection.</p>
   </div>
 </div>
 
@@ -532,6 +584,7 @@
     <!-- Step 1: email entry -->
     <div class="auth-step active" id="step-email">
       <div class="auth-title">Log in or register to continue</div>
+      <div class="proto-note">This is a prototype — no real account is created. Enter any email (e.g., <b>example@email.com</b>) and any password (e.g., <b>1234</b>) to continue.</div>
       <input type="email" class="field" id="emailInput" placeholder="example@gmail.com" autocomplete="email">
       <button class="pill-btn" id="emailContinueBtn" disabled>Continue</button>
       <div class="or-use">Or use</div>
@@ -545,6 +598,7 @@
     <!-- Step 2: password (existing account) -->
     <div class="auth-step" id="step-password">
       <div class="auth-title">Enter your password to log in</div>
+      <div class="proto-note">Prototype only — any password (e.g., <b>1234</b>) will work.</div>
       <input type="email" class="field" id="pwEmailDisplay" readonly>
       <div class="field-pw-wrap">
         <input type="password" class="field" id="passwordInput" placeholder="Password" autocomplete="current-password">
@@ -562,6 +616,7 @@
     <!-- Step 3: complete profile (new account) -->
     <div class="auth-step" id="step-register">
       <div class="auth-title">Complete your profile</div>
+      <div class="proto-note">Prototype only — any code and password will work.</div>
       <span class="field-label">Code</span>
       <input type="text" class="field" id="codeInput" placeholder="Enter code" inputmode="numeric">
       <div style="margin:8px 0 4px;"><button class="link-btn" type="button">Didn't receive a code?</button></div>
@@ -673,9 +728,23 @@
     <!-- ===== VIEW: Story Threads → threads you follow ===== -->
     <div class="panel-view" id="view-story-threads">
       <div class="panel-body">
-        <div class="panel-section-note">Threads you're following. Tap one to manage how you're updated.</div>
-        <div id="threadRows"></div>
-        <div class="empty-threads" id="emptyThreads" style="display:none;">You're not following any threads yet.</div>
+        <div class="search-row">
+          <div class="search-input-wrap">
+            <svg class="search-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="search-input" id="threadSearchInput" placeholder="Search story threads" autocomplete="off">
+          </div>
+        </div>
+
+        <div id="searchResults" style="display:none;"></div>
+
+        <div id="followedSection">
+          <div class="panel-section-note">Threads you're following. Tap one to manage how you're updated.</div>
+          <div id="threadRows"></div>
+          <div class="empty-threads" id="emptyThreads" style="display:none;">You're not following any threads yet.</div>
+
+          <div class="suggested-section-label">Suggested threads</div>
+          <div id="suggestedRows"></div>
+        </div>
       </div>
     </div>
 
@@ -748,6 +817,17 @@
   </div>
 </div>
 
+<div class="np-overlay" id="notPartOverlay">
+  <div class="np-modal">
+    <div class="np-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+    </div>
+    <div class="np-title">Not part of this test</div>
+    <div class="np-text">This is outside of what we're asking you to try today. Feel free to continue with your task.</div>
+    <button class="np-close-btn" id="npCloseBtn">Got it</button>
+  </div>
+</div>
+
 <div class="toast" id="toast">Unfollowed Cyclospora outbreak</div>
 
 <script>
@@ -785,6 +865,34 @@
         {headline:'Outbreak of diarrhea-causing parasite linked to 4 more states', date:'JUL 24 · 12:12 PM ET', readTime:'3 MIN READ', comments:78},
         {headline:'Foodborne illnesses at restaurant chains are rare but can sicken customers, roil businesses', date:'JUL 17 · 12:43 PM ET', readTime:'4 MIN READ', comments:55},
         {headline:'Lettuce at Taco Bell in 5 states confirmed as source of a diarrhea-causing parasite outbreak', date:'JUL 17 · 7:46 AM ET', readTime:'5 MIN READ', comments:163}
+      ]},
+    {id:'measles', name:'Measles outbreak', stories:9, updated:'today', following:false,
+      push:true, email:true, cadence:'immediate',
+      thumb:'<rect width="42" height="42" fill="#7a2a2a"/><circle cx="16" cy="17" r="6" fill="#c94f4f"/><circle cx="28" cy="14" r="4" fill="#b83c3c"/><circle cx="26" cy="28" r="6" fill="#e06868"/>',
+      storyList:[
+        {headline:'Measles cases climb past 200 as outbreak spreads to third state', date:'AUG 4 · 9:10 AM ET', readTime:'4 MIN READ', comments:340, isNew:true},
+        {headline:'Health officials urge vaccination as school year approaches', date:'JUL 31 · 3:22 PM ET', readTime:'3 MIN READ', comments:180}
+      ]},
+    {id:'mail-voting', name:'Mail-in voting rules fight', stories:14, updated:'yesterday', following:false,
+      push:false, email:true, cadence:'daily',
+      thumb:'<rect width="42" height="42" fill="#1f3a5c"/><circle cx="17" cy="16" r="6" fill="#4a7ab8"/><circle cx="28" cy="15" r="5" fill="#3968a3"/><circle cx="25" cy="28" r="6" fill="#6a95c4"/>',
+      storyList:[
+        {headline:'Court blocks state effort to shorten mail ballot deadlines', date:'AUG 2 · 5:45 PM ET', readTime:'5 MIN READ', comments:420, isNew:true},
+        {headline:'Election officials brace for legal fight over ballot rules', date:'JUL 26 · 1:15 PM ET', readTime:'4 MIN READ', comments:210}
+      ]},
+    {id:'nba-finals', name:'NBA Finals: Celtics-Nuggets rematch', stories:6, updated:'2 days ago', following:false,
+      push:true, email:false, cadence:'immediate',
+      thumb:'<rect width="42" height="42" fill="#3a2a1f"/><circle cx="16" cy="17" r="6" fill="#d97b2e"/><circle cx="28" cy="14" r="4" fill="#c26a22"/><circle cx="26" cy="28" r="6" fill="#e89147"/>',
+      storyList:[
+        {headline:'Celtics even series with dominant Game 4 win', date:'AUG 1 · 11:40 PM ET', readTime:'4 MIN READ', comments:560, isNew:true},
+        {headline:'Nuggets take 2-1 series lead behind triple-double', date:'JUL 29 · 11:15 PM ET', readTime:'3 MIN READ', comments:410}
+      ]},
+    {id:'fed-rates', name:'Federal Reserve rate decision', stories:4, updated:'3 days ago', following:false,
+      push:false, email:true, cadence:'daily',
+      thumb:'<rect width="42" height="42" fill="#1f3a2a"/><circle cx="17" cy="16" r="6" fill="#3f9c5c"/><circle cx="28" cy="15" r="4" fill="#2f8a4a"/><circle cx="25" cy="28" r="6" fill="#5fb87c"/>',
+      storyList:[
+        {headline:'Fed holds rates steady, signals possible cut in fall', date:'JUL 30 · 2:00 PM ET', readTime:'5 MIN READ', comments:290, isNew:true},
+        {headline:'Markets weigh odds of a September rate cut', date:'JUL 24 · 10:30 AM ET', readTime:'3 MIN READ', comments:150}
       ]}
   ];
   threads.forEach(t => { if (t.following === undefined) t.following = true; });
@@ -992,7 +1100,11 @@
       views.placeholder.classList.add('active');
     } else if (top === 'story-threads') {
       subTitle.textContent = 'Story Threads';
+      document.getElementById('threadSearchInput').value = '';
+      document.getElementById('searchResults').style.display = 'none';
+      document.getElementById('followedSection').style.display = 'block';
       renderThreadRows();
+      renderSuggestedRows();
       views['story-threads'].classList.add('active');
     } else if (top === 'thread-timeline') {
       const t = getThread(activeThreadId);
@@ -1043,6 +1155,76 @@
       });
     });
   }
+
+  // shared row template for discovery contexts (suggested threads + search results)
+  function discoverRowHTML(t){
+    const actionHTML = t.following
+      ? '<span class="discover-following-badge"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>Following</span>'
+      : '<button class="discover-follow-btn js-discover-follow" data-thread="' + t.id + '">' +
+          '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Follow</button>';
+    return '<div class="discover-row">' +
+      '<div class="discover-thumb js-discover-open" data-thread="' + t.id + '"><svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">' + t.thumb + '</svg></div>' +
+      '<div class="discover-info js-discover-open" data-thread="' + t.id + '">' +
+        '<div class="discover-name">' + t.name + '</div>' +
+        '<div class="discover-meta">' + t.stories + ' stories · updated ' + t.updated + '</div>' +
+      '</div>' +
+      actionHTML +
+      '</div>';
+  }
+
+  function wireDiscoverRows(container){
+    container.querySelectorAll('.js-discover-open').forEach(el => {
+      el.addEventListener('click', () => {
+        activeThreadId = el.dataset.thread;
+        stack.push('thread-timeline');
+        render();
+      });
+    });
+    container.querySelectorAll('.js-discover-follow').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        followThread(btn.dataset.thread);
+        renderThreadRows();
+        renderSuggestedRows();
+        const q = document.getElementById('threadSearchInput').value.trim();
+        if (q) renderSearchResults(q);
+      });
+    });
+  }
+
+  function renderSuggestedRows(){
+    const container = document.getElementById('suggestedRows');
+    const suggestions = threads.filter(t => !t.following).slice(0, 4);
+    container.innerHTML = suggestions.map(discoverRowHTML).join('');
+    wireDiscoverRows(container);
+  }
+
+  function renderSearchResults(query){
+    const container = document.getElementById('searchResults');
+    const q = query.toLowerCase();
+    const matches = threads.filter(t => t.name.toLowerCase().includes(q));
+    if (matches.length === 0) {
+      container.innerHTML = '<div class="search-empty">No threads match \u201c' + query + '\u201d</div>';
+    } else {
+      container.innerHTML = matches.map(discoverRowHTML).join('');
+      wireDiscoverRows(container);
+    }
+  }
+
+  const threadSearchInput = document.getElementById('threadSearchInput');
+  threadSearchInput.addEventListener('input', () => {
+    const q = threadSearchInput.value.trim();
+    const searchResults = document.getElementById('searchResults');
+    const followedSection = document.getElementById('followedSection');
+    if (q) {
+      followedSection.style.display = 'none';
+      searchResults.style.display = 'block';
+      renderSearchResults(q);
+    } else {
+      followedSection.style.display = 'block';
+      searchResults.style.display = 'none';
+    }
+  });
 
   function renderThreadTimeline(){
     const t = getThread(activeThreadId);
@@ -1227,24 +1409,41 @@
     if (!e.target.closest('.thread-eyebrow-row')) threadInfoTooltip.classList.remove('open');
   });
 
-  // ================= Prototype-only quick preview toggle =================
-  const previewNotFollowing = document.getElementById('previewNotFollowing');
-  const previewFollowing = document.getElementById('previewFollowing');
-  if (previewNotFollowing && previewFollowing) {
-    previewNotFollowing.addEventListener('click', () => {
-      getThread('cyclospora').following = false;
-      syncFollowUI();
-      previewNotFollowing.classList.add('active');
-      previewFollowing.classList.remove('active');
-    });
-    previewFollowing.addEventListener('click', () => {
-      isAuthenticated = true;
-      getThread('cyclospora').following = true;
-      syncFollowUI();
-      previewFollowing.classList.add('active');
-      previewNotFollowing.classList.remove('active');
-    });
+  // ================= Usability-test scaffolding: gate anything not part of the test =================
+  const notPartOverlay = document.getElementById('notPartOverlay');
+  function showNotPartOfTest(){
+    notPartOverlay.classList.add('open');
   }
+  document.getElementById('npCloseBtn').addEventListener('click', () => {
+    notPartOverlay.classList.remove('open');
+  });
+  notPartOverlay.addEventListener('click', (e) => {
+    if (e.target === notPartOverlay) notPartOverlay.classList.remove('open');
+  });
+
+  const nonTestSelectors = [
+    '.nav .icon-btn:not(#navProfileBtn)',
+    '.donate-btn',
+    '.hamburger',
+    '.ticker-item',
+    '.byline-name a',
+    '.article-actions .action-btn',
+    '.body-text a',
+    '.terms-note a',
+    '.social-btn',
+    '.link-btn',
+    '.hub-lead',
+    '.hub-grid-item',
+    '.hub-river-item'
+  ];
+  document.querySelectorAll(nonTestSelectors.join(',')).forEach(el => {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      showNotPartOfTest();
+    });
+  });
 
   syncFollowUI();
 </script>
