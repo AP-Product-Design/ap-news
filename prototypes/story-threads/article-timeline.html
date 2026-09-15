@@ -112,8 +112,9 @@
   .follow-btn.is-following{background:var(--ink); border-color:var(--ink); color:var(--ap-white);}
   .follow-btn.is-following:hover{background:#333; border-color:#333; color:var(--ap-white);}
   .follow-btn.is-following .plus{display:none;}
-  .follow-btn .check{display:none; margin-right:5px;}
-  .follow-btn.is-following .check{display:inline;}
+  .follow-btn .chevron{display:none; margin-left:6px; line-height:0;}
+  .follow-btn .chevron svg{display:block;}
+  .follow-btn.is-following .chevron{display:inline-flex;}
   .follow-btn.is-following .label-default{display:none;}
   .follow-btn.is-following .label-following{display:inline;}
   .follow-btn .label-following{display:none;}
@@ -426,7 +427,7 @@
         <div class="thread-wrap">
           <button class="follow-btn js-follow-btn" id="followBtn2">
             <span class="plus"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
-            <span class="check">✓</span><span class="label-default">Follow</span><span class="label-following">Following</span>
+            <span class="label-default">Follow</span><span class="label-following">Following</span><span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
           </button>
           <div class="thread-menu" id="threadMenu2">
             <button class="js-manage-btn">Notification settings</button>
