@@ -1,0 +1,13 @@
+---
+import ArticleTemplate from '../../layouts/ArticleTemplate.astro';
+import { articleVariants, createArticleFixture, type ArticleVariant } from '../../data/article-fixtures';
+
+export function getStaticPaths() {
+  return articleVariants.map(({ id }) => ({ params: { variant: id } }));
+}
+
+const variant = Astro.params.variant as ArticleVariant;
+const article = createArticleFixture(import.meta.env.BASE_URL);
+---
+
+<ArticleTemplate article={article} variant={variant} />

@@ -1,0 +1,59 @@
+---
+import type { RelatedStory } from '../../data/article-fixtures';
+
+interface Props {
+  stories: RelatedStory[];
+}
+
+const { stories } = Astro.props;
+---
+
+<aside class="related" aria-labelledby="related-heading">
+  <h2 id="related-heading">Related coverage</h2>
+  <div class="related-list">
+    {stories.map((story) => (
+      <article>
+        <p>{story.eyebrow}</p>
+        <h3>{story.headline}</h3>
+      </article>
+    ))}
+  </div>
+</aside>
+
+<style>
+  .related {
+    border-top: var(--maple-stroke-02) solid var(--maple-border-bold);
+    padding-top: var(--maple-space-fixed-snug);
+  }
+
+  h2 {
+    font-size: var(--maple-text-x1);
+    font-variation-settings: "wdth" 75, "wght" 700;
+    line-height: var(--maple-line-height-heading-120);
+    text-transform: uppercase;
+  }
+
+  .related-list {
+    display: grid;
+    margin-top: var(--maple-space-fixed-expanded);
+  }
+
+  article {
+    border-top: var(--maple-stroke-01) solid var(--maple-border-subtle);
+    display: grid;
+    gap: var(--maple-space-fixed-compact);
+    padding: var(--maple-space-fixed-default) 0;
+  }
+
+  p {
+    color: var(--maple-text-adaptive-red);
+    font-size: var(--maple-text-size-metadata);
+    font-weight: var(--maple-font-weight-bold);
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-size: var(--maple-text-size-fixed-lg);
+    line-height: var(--maple-line-height-heading-120);
+  }
+</style>

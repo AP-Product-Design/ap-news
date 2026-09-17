@@ -1,0 +1,54 @@
+---
+interface Props {
+  eyebrow: string;
+  headline: string;
+  dek: string;
+  align?: 'left' | 'center';
+}
+
+const { eyebrow, headline, dek, align = 'left' } = Astro.props;
+---
+
+<header class:list={['article-header', `article-header--${align}`]}>
+  <p class="article-eyebrow">{eyebrow}</p>
+  <h1>{headline}</h1>
+  <p class="article-dek">{dek}</p>
+</header>
+
+<style>
+  .article-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--maple-space-fixed-default);
+    max-width: 968px;
+  }
+
+  .article-header--center {
+    align-items: center;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .article-eyebrow {
+    color: var(--maple-text-adaptive-red);
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    color: var(--maple-text-primary);
+    font-size: var(--maple-text-headline-lg);
+    font-variation-settings: "wdth" 75, "wght" 700;
+    letter-spacing: var(--maple-letter-spacing-tight);
+    line-height: var(--maple-line-height-tight);
+  }
+
+  .article-dek {
+    color: var(--maple-text-secondary);
+    font-size: var(--maple-text-x1);
+    line-height: var(--maple-line-height-heading-130);
+    max-width: 64ch;
+  }
+</style>

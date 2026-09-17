@@ -1,5 +1,8 @@
 ---
 import DetailLayout from '../../layouts/DetailLayout.astro';
+import { articleVariants } from '../../data/article-fixtures';
+
+const base = import.meta.env.BASE_URL;
 ---
 
 <DetailLayout
@@ -9,17 +12,23 @@ import DetailLayout from '../../layouts/DetailLayout.astro';
   description="Standard article template with header, byline, lead media, body, and related content rail."
 >
   <section class="detail-section">
-    <h2 class="detail-section-title">Preview</h2>
-    <div class="detail-placeholder">
-      <p>Article Page preview will render here.</p>
+    <div class="detail-section-header">
+      <h2 class="detail-section-title">Template prototypes</h2>
+      <a href={`${base}article-redesign/compare/`}>Compare all templates</a>
+    </div>
+    <div class="variant-grid">
+      {articleVariants.map((variant) => (
+        <a class="variant-card" href={`${base}article-redesign/${variant.id}/`}>
+          <span>{variant.label}</span>
+          <p>{variant.description}</p>
+        </a>
+      ))}
     </div>
   </section>
 
   <section class="detail-section">
     <h2 class="detail-section-title">Usage</h2>
-    <div class="detail-placeholder">
-      <p>API, props, and code samples coming soon.</p>
-    </div>
+    <p class="usage-copy">All variants use the same fixture data and reusable article components, making structural differences easier to evaluate.</p>
   </section>
 </DetailLayout>
 
@@ -33,16 +42,48 @@ import DetailLayout from '../../layouts/DetailLayout.astro';
     font-variation-settings: "wght" 700;
   }
 
-  .detail-placeholder {
+  .detail-section-header {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 160px;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--maple-space-fixed-default);
+  }
+
+  .detail-section-header a {
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+  }
+
+  .variant-grid {
+    display: grid;
+    gap: var(--maple-space-fixed-default);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .variant-card {
     background: var(--maple-bg-elevated);
-    border: var(--maple-stroke-01) dashed var(--maple-border-moderate);
+    border-top: var(--maple-stroke-02) solid var(--maple-border-bold);
     border-radius: var(--maple-radius-md);
+    color: var(--maple-text-primary);
+    display: grid;
+    gap: var(--maple-space-fixed-compact);
+    padding: var(--maple-space-fixed-expanded);
+    text-decoration: none;
+  }
+
+  .variant-card span {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-bold);
+  }
+
+  .variant-card p,
+  .usage-copy {
     color: var(--maple-text-secondary);
-    font-size: var(--maple-text-size-body-sm);
-    padding: var(--maple-space-fixed-default);
+    font-size: var(--maple-text-size-body-base);
+    line-height: var(--maple-line-height-body);
+  }
+
+  .usage-copy {
+    max-width: 64ch;
   }
 </style>

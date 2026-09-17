@@ -1,0 +1,47 @@
+---
+interface Props {
+  src: string;
+  alt: string;
+  caption: string;
+  credit: string;
+}
+
+const { src, alt, caption, credit } = Astro.props;
+---
+
+<figure class="lead-media">
+  <img src={src} alt={alt} />
+  <figcaption>
+    <span>{caption}</span>
+    <span class="lead-media-credit">{credit}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .lead-media {
+    display: grid;
+    gap: var(--maple-space-fixed-compact);
+    margin: 0;
+  }
+
+  img {
+    aspect-ratio: 16 / 9;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  figcaption {
+    color: var(--maple-text-secondary);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: var(--maple-text-size-metadata);
+    gap: var(--maple-space-fixed-tight) var(--maple-space-fixed-compact);
+    line-height: var(--maple-line-height-heading-130);
+  }
+
+  .lead-media-credit {
+    font-weight: var(--maple-font-weight-bold);
+    text-transform: uppercase;
+  }
+</style>

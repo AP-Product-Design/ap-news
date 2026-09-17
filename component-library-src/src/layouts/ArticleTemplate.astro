@@ -1,0 +1,166 @@
+---
+import '../styles/global.css';
+import ArticleHeader from '../components/article/ArticleHeader.astro';
+import LeadMedia from '../components/article/LeadMedia.astro';
+import ArticleBody from '../components/article/ArticleBody.astro';
+import RelatedContent from '../components/article/RelatedContent.astro';
+import Byline from '../components/slot/Byline.astro';
+import AuthorBio from '../components/slot/AuthorBio.astro';
+import type { ArticleFixture, ArticleVariant } from '../data/article-fixtures';
+
+interface Props {
+  article: ArticleFixture;
+  variant: ArticleVariant;
+}
+
+const { article, variant } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const centered = variant === 'immersive';
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+  <title>{article.headline} — Article prototype</title>
+  <link rel="icon" type="image/png" href={`${base}ap-logo-32.png`} />
+</head>
+<body>
+  <header class="prototype-header">
+    <a href={`${base}article-redesign/compare/`} aria-label="Return to article comparison">
+      <img src={`${base}ap-logo.png`} alt="AP" width="34" height="40" />
+    </a>
+    <p>Article redesign prototype</p>
+    <span>{variant}</span>
+  </header>
+
+  <main class:list={['article-page', `article-page--${variant}`]}>
+    <ArticleHeader
+      eyebrow={article.eyebrow}
+      headline={article.headline}
+      dek={article.dek}
+      align={centered ? 'center' : 'left'}
+    />
+
+    <div class="article-byline">
+      <Byline
+        layout={centered ? 'row' : 'stack'}
+        authors={article.authors}
+        timestamp={article.timestamp}
+        showBeat={variant !== 'compact'}
+      />
+    </div>
+
+    <div class="article-media">
+      <LeadMedia {...article.leadMedia} />
+    </div>
+
+    <div class="article-content">
+      <ArticleBody paragraphs={article.body} />
+      {variant !== 'compact' && <RelatedContent stories={article.relatedStories} />}
+    </div>
+
+    <footer class="article-footer">
+      <AuthorBio
+        authorName={article.authors[0].name.replace(/^By /, '')}
+        beat={article.authors[0].beat}
+        bio={article.authors[0].bio}
+        photoSrc={article.authors[0].photoSrc}
+        photoAlt={article.authors[0].photoAlt}
+      />
+    </footer>
+  </main>
+</body>
+</html>
+
+<style>
+  :global(body) {
+    background: var(--maple-bg-primary);
+  }
+
+  .prototype-header {
+    align-items: center;
+    background: var(--maple-bg-header-primary);
+    color: var(--maple-text-header);
+    display: flex;
+    gap: var(--maple-space-fixed-default);
+    min-height: 64px;
+    padding: var(--maple-space-fixed-snug) var(--maple-screen-margins);
+  }
+
+  .prototype-header a,
+  .prototype-header img {
+    display: block;
+  }
+
+  .prototype-header p {
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  .prototype-header span {
+    color: var(--maple-text-inv-secondary);
+    font-size: var(--maple-text-size-metadata);
+    margin-left: auto;
+    text-transform: capitalize;
+  }
+
+  .article-page {
+    display: grid;
+    gap: var(--maple-space-expanded);
+    margin: 0 auto;
+    max-width: 1360px;
+    padding: var(--maple-space-generous) var(--maple-screen-margins) var(--maple-space-spacious);
+  }
+
+  .article-byline {
+    border-top: var(--maple-stroke-01) solid var(--maple-border-subtle);
+    max-width: 760px;
+    padding-top: var(--maple-space-fixed-default);
+  }
+
+  .article-content {
+    display: grid;
+    gap: var(--maple-space-generous);
+  }
+
+  .article-footer {
+    border-top: var(--maple-stroke-01) solid var(--maple-border-bold);
+    max-width: 680px;
+    padding-top: var(--maple-space-fixed-default);
+  }
+
+  .article-page--immersive .article-byline {
+    margin-inline: auto;
+  }
+
+  .article-page--immersive .article-media {
+    margin-inline: calc(var(--maple-screen-margins) * -1);
+  }
+
+  .article-page--compact {
+    max-width: 760px;
+  }
+
+  @media (min-width: 800px) {
+    .article-page--immersive .article-media {
+      margin-inline: 0;
+    }
+
+    .article-page--standard .article-content,
+    .article-page--immersive .article-content {
+      align-items: start;
+      grid-template-columns: minmax(0, 2fr) minmax(260px, 1fr);
+    }
+
+    .article-page--immersive .article-content {
+      margin-inline: auto;
+      max-width: 1040px;
+      width: 100%;
+    }
+  }
+</style>

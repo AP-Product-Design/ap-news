@@ -1,0 +1,33 @@
+---
+interface Props {
+  paragraphs: string[];
+}
+
+const { paragraphs } = Astro.props;
+---
+
+<div class="article-body">
+  {paragraphs.map((paragraph, index) => (
+    <p class:list={{ 'article-lede': index === 0 }}>{paragraph}</p>
+  ))}
+</div>
+
+<style>
+  .article-body {
+    display: grid;
+    gap: var(--maple-space-expanded);
+    max-width: 680px;
+  }
+
+  p {
+    color: var(--maple-text-primary);
+    font-size: var(--maple-text-x-base);
+    line-height: var(--maple-line-height-relaxed);
+  }
+
+  .article-lede {
+    font-size: var(--maple-text-x1);
+    font-weight: var(--maple-font-weight-medium);
+    line-height: var(--maple-line-height-body);
+  }
+</style>

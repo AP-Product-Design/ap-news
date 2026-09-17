@@ -1,0 +1,164 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { articleVariants } from '../../data/article-fixtures';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Article template comparison" section="page-structures">
+  <header class="comparison-header">
+    <p class="comparison-kicker">Article redesign</p>
+    <h1>Compare page templates</h1>
+    <p>Each preview runs in its own viewport so page-level responsive behavior remains accurate.</p>
+  </header>
+
+  <fieldset class="viewport-picker">
+    <legend>Preview width</legend>
+    <label><input type="radio" name="viewport" value="412" /> Mobile · 412</label>
+    <label><input type="radio" name="viewport" value="800" /> Tablet · 800</label>
+    <label><input type="radio" name="viewport" value="1024" checked /> Desktop · 1024</label>
+    <label><input type="radio" name="viewport" value="1440" /> Large · 1440</label>
+  </fieldset>
+
+  <div class="comparison-list" data-viewport="1024">
+    {articleVariants.map((variant) => (
+      <section class="comparison-item">
+        <header>
+          <div>
+            <h2>{variant.label}</h2>
+            <p>{variant.description}</p>
+          </div>
+          <a href={`${base}article-redesign/${variant.id}/`} target="_blank" rel="noopener">Open page</a>
+        </header>
+        <div class="comparison-frame-scroll">
+          <iframe
+            src={`${base}article-redesign/${variant.id}/`}
+            title={`${variant.label} article template`}
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>
+
+<script>
+  const list = document.querySelector<HTMLElement>('.comparison-list');
+  document.querySelectorAll<HTMLInputElement>('input[name="viewport"]').forEach((input) => {
+    input.addEventListener('change', () => {
+      if (list) list.dataset.viewport = input.value;
+    });
+  });
+</script>
+
+<style>
+  .comparison-header {
+    border-bottom: var(--maple-stroke-01) solid var(--maple-border-bold);
+    display: grid;
+    gap: var(--maple-space-fixed-compact);
+    padding-bottom: var(--maple-space-fixed-expanded);
+  }
+
+  .comparison-kicker {
+    color: var(--maple-text-adaptive-red);
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+    letter-spacing: var(--maple-letter-spacing-wide);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-size: var(--maple-text-x3);
+    font-variation-settings: "wdth" 75, "wght" 700;
+    line-height: var(--maple-line-height-heading-120);
+  }
+
+  .comparison-header > p:last-child {
+    color: var(--maple-text-secondary);
+    font-size: var(--maple-text-size-body-base);
+  }
+
+  .viewport-picker {
+    border: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--maple-space-fixed-compact);
+    margin-top: var(--maple-space-fixed-expanded);
+  }
+
+  legend {
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+    margin-bottom: var(--maple-space-fixed-compact);
+    width: 100%;
+  }
+
+  label {
+    background: var(--maple-bg-elevated);
+    border: var(--maple-stroke-01) solid var(--maple-border-moderate);
+    border-radius: var(--maple-radius-xl);
+    cursor: pointer;
+    font-size: var(--maple-text-size-fixed-sm);
+    padding: var(--maple-space-fixed-compact) var(--maple-space-fixed-default);
+  }
+
+  input {
+    margin-right: var(--maple-space-fixed-tight);
+  }
+
+  .comparison-list {
+    display: grid;
+    gap: var(--maple-space-fixed-spacious);
+    margin-top: var(--maple-space-fixed-expanded);
+  }
+
+  .comparison-item {
+    display: grid;
+    gap: var(--maple-space-fixed-default);
+  }
+
+  .comparison-item > header {
+    align-items: end;
+    display: flex;
+    gap: var(--maple-space-fixed-default);
+    justify-content: space-between;
+  }
+
+  h2 {
+    font-size: var(--maple-text-x1);
+    line-height: var(--maple-line-height-heading-120);
+  }
+
+  .comparison-item header p {
+    color: var(--maple-text-secondary);
+    font-size: var(--maple-text-size-fixed-sm);
+    margin-top: var(--maple-space-fixed-tight);
+  }
+
+  .comparison-item a {
+    flex-shrink: 0;
+    font-size: var(--maple-text-size-fixed-sm);
+    font-weight: var(--maple-font-weight-bold);
+  }
+
+  .comparison-frame-scroll {
+    background: var(--maple-bg-tertiary);
+    border: var(--maple-stroke-01) solid var(--maple-border-moderate);
+    overflow-x: auto;
+    padding: var(--maple-space-fixed-default);
+  }
+
+  iframe {
+    background: var(--maple-bg-primary);
+    border: 0;
+    display: block;
+    height: 760px;
+    margin: 0 auto;
+    width: 1024px;
+  }
+
+  .comparison-list[data-viewport="412"] iframe { width: 412px; }
+  .comparison-list[data-viewport="800"] iframe { width: 800px; }
+  .comparison-list[data-viewport="1024"] iframe { width: 1024px; }
+  .comparison-list[data-viewport="1440"] iframe { width: 1440px; }
+</style>
