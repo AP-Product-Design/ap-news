@@ -1,0 +1,998 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>AP News registration gate prototype</title>
+    <style>
+      @font-face {
+        font-family: "AP Var";
+        src: url("fonts/APVarW05-Regular.woff2") format("woff2");
+        font-display: swap;
+        font-style: normal;
+        font-stretch: 50% 100%;
+        font-weight: 400 700;
+      }
+
+      :root {
+        color-scheme: light;
+        --ap-color-bg-primary: #ffffff;
+        --ap-color-bg-secondary: #f2f2f2;
+        --ap-color-text-primary: #191919;
+        --ap-color-text-secondary: #666666;
+        --ap-color-border-subtle: #e6e6e7;
+        --ap-color-border-moderate: #c4c4c4;
+        --ap-color-outline: #a8a8a9;
+        --ap-color-overlay: rgb(0 0 0 / 50%);
+        --ap-color-facebook: #1877f2;
+        --ap-color-red: #ff1818;
+        --ap-font: "AP Var", Arial, sans-serif;
+        --sheet-radius: 24px;
+        --sheet-height: 487px;
+        --sheet-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        min-height: 100%;
+      }
+
+      body {
+        min-height: 100dvh;
+        margin: 0;
+        overflow: hidden;
+        background:
+          radial-gradient(circle at 30% 15%, rgb(255 255 255 / 14%), transparent 28rem),
+          #242424;
+        color: var(--ap-color-text-primary);
+        font-family: var(--ap-font);
+      }
+
+      button,
+      input {
+        font: inherit;
+      }
+
+      button {
+        color: inherit;
+      }
+
+      .prototype-stage {
+        display: grid;
+        min-height: 100dvh;
+        place-items: center;
+        padding: 20px;
+      }
+
+      .device {
+        position: relative;
+        width: 432px;
+        height: min(959px, calc(100dvh - 40px));
+        padding: 10px;
+        overflow: hidden;
+        border: 1px solid #4e4e4e;
+        border-radius: 52px;
+        background: #090909;
+        box-shadow: 0 34px 80px rgb(0 0 0 / 45%);
+      }
+
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+        border-radius: 42px;
+        background: var(--ap-color-bg-primary);
+        isolation: isolate;
+      }
+
+      .status-bar {
+        position: relative;
+        z-index: 5;
+        display: flex;
+        width: 100%;
+        height: 40px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 24px 0;
+        background: var(--ap-color-bg-primary);
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .system-icons {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .system-icons img {
+        display: block;
+        width: 18px;
+        height: 18px;
+      }
+
+      .system-icons img:last-child {
+        width: 24px;
+        height: 16px;
+      }
+
+      .feed-screen,
+      .article-screen {
+        position: absolute;
+        inset: 0;
+        background: var(--ap-color-bg-primary);
+      }
+
+      .feed-screen {
+        z-index: 1;
+        transition: transform 380ms var(--sheet-ease), opacity 280ms ease;
+      }
+
+      .feed-screen.is-behind {
+        transform: scale(0.975);
+        opacity: 0;
+      }
+
+      .feed-header {
+        display: flex;
+        height: 58px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px;
+        border-bottom: 1px solid var(--ap-color-border-subtle);
+      }
+
+      .ap-mark {
+        display: inline-flex;
+        align-items: flex-end;
+        gap: 7px;
+        font-size: 25px;
+        font-stretch: 75%;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.6px;
+      }
+
+      .ap-mark::before {
+        width: 26px;
+        height: 5px;
+        margin-bottom: 1px;
+        background: var(--ap-color-red);
+        content: "";
+      }
+
+      .feed-header-actions {
+        display: flex;
+        gap: 10px;
+      }
+
+      .round-icon {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border: 1px solid var(--ap-color-border-subtle);
+        border-radius: 50%;
+        background: transparent;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 17px;
+      }
+
+      .search-icon::before {
+        content: "\2315";
+      }
+
+      .more-icon::before {
+        content: "...";
+        transform: translateY(-3px);
+      }
+
+      .feed-scroll {
+        height: calc(100% - 98px);
+        overflow: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: none;
+      }
+
+      .feed-scroll::-webkit-scrollbar,
+      .article-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      .feed-intro {
+        padding: 23px 20px 15px;
+      }
+
+      .feed-date {
+        margin: 0 0 3px;
+        color: var(--ap-color-text-secondary);
+        font-size: 12px;
+        font-weight: 530;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+      }
+
+      .feed-intro h1 {
+        margin: 0;
+        font-size: 33px;
+        font-stretch: 75%;
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.5px;
+      }
+
+      .lead-card,
+      .story-row {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        text-align: left;
+      }
+
+      .lead-card {
+        padding: 0 20px 24px;
+        cursor: pointer;
+      }
+
+      .lead-image {
+        position: relative;
+        height: 210px;
+        overflow: hidden;
+        border-radius: 3px;
+        background:
+          linear-gradient(140deg, transparent 25%, rgb(255 255 255 / 17%) 25.5% 31%, transparent 31.5%),
+          linear-gradient(25deg, #0b3250, #59788c 47%, #aebfc6 48% 62%, #526e7e 63%);
+      }
+
+      .lead-image::after {
+        position: absolute;
+        inset: auto 0 0;
+        height: 70%;
+        background: linear-gradient(transparent, rgb(0 0 0 / 55%));
+        content: "";
+      }
+
+      .gate-label {
+        position: absolute;
+        z-index: 1;
+        right: 12px;
+        bottom: 12px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 9px;
+        border-radius: 3px;
+        background: rgb(25 25 25 / 88%);
+        color: white;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+
+      .gate-label::before {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ap-color-red);
+        content: "";
+      }
+
+      .story-kicker {
+        margin: 13px 0 5px;
+        color: #ad1320;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+      }
+
+      .lead-card h2,
+      .story-row h2 {
+        margin: 0;
+        font-stretch: 75%;
+        font-weight: 700;
+        line-height: 1.13;
+      }
+
+      .lead-card h2 {
+        font-size: 26px;
+      }
+
+      .lead-card p,
+      .story-row p {
+        margin: 7px 0 0;
+        color: var(--ap-color-text-secondary);
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .story-list {
+        border-top: 8px solid var(--ap-color-bg-secondary);
+        padding: 0 20px 35px;
+      }
+
+      .story-row {
+        display: grid;
+        grid-template-columns: 1fr 104px;
+        gap: 16px;
+        padding: 19px 0;
+        border-bottom: 1px solid var(--ap-color-border-subtle);
+      }
+
+      .story-row h2 {
+        font-size: 19px;
+      }
+
+      .story-thumb {
+        min-height: 86px;
+        border-radius: 2px;
+        background: linear-gradient(145deg, #4e2420, #c17a58 55%, #e6b98b);
+      }
+
+      .story-row:nth-child(2) .story-thumb {
+        background: linear-gradient(145deg, #183d25, #6d9768 55%, #c9d0a4);
+      }
+
+      .tab-bar {
+        position: absolute;
+        z-index: 4;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: grid;
+        height: 56px;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid var(--ap-color-border-subtle);
+        background: rgb(255 255 255 / 96%);
+        backdrop-filter: blur(15px);
+      }
+
+      .tab-bar span {
+        display: grid;
+        place-items: center;
+        color: var(--ap-color-text-secondary);
+        font-size: 10px;
+        font-weight: 530;
+      }
+
+      .tab-bar .is-current {
+        color: var(--ap-color-text-primary);
+      }
+
+      .article-screen {
+        z-index: 2;
+        visibility: hidden;
+        transform: translateX(24px);
+        opacity: 0;
+        transition: transform 380ms var(--sheet-ease), opacity 260ms ease, visibility 0s 380ms;
+      }
+
+      .article-screen.is-active {
+        visibility: visible;
+        transform: translateX(0);
+        opacity: 1;
+        transition: transform 380ms var(--sheet-ease), opacity 260ms ease, visibility 0s;
+      }
+
+      .article-header {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        height: 56px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 20px 0 16px;
+        border-bottom: 1px solid var(--ap-color-border-subtle);
+        background: var(--ap-color-bg-primary);
+      }
+
+      .icon-button {
+        display: grid;
+        min-width: 32px;
+        min-height: 32px;
+        place-items: center;
+        padding: 5px;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .icon-button img {
+        display: block;
+        width: 22px;
+        height: 22px;
+      }
+
+      .back-button img {
+        width: 9px;
+        height: 18px;
+      }
+
+      .article-actions,
+      .comment-action {
+        display: flex;
+        align-items: center;
+      }
+
+      .article-actions {
+        gap: 10px;
+      }
+
+      .comment-action {
+        gap: 1px;
+      }
+
+      .comment-count {
+        margin-right: 7px;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .article-scroll {
+        height: calc(100% - 96px);
+        overflow: auto;
+        padding: 24px 20px 120px;
+        scrollbar-width: none;
+      }
+
+      .article-scroll p {
+        margin: 0 0 20px;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: 19px;
+        line-height: 28px;
+      }
+
+      .gate-layer {
+        position: absolute;
+        z-index: 10;
+        inset: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .gate-layer.is-open,
+      .gate-layer.is-closing {
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .backdrop {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        background: var(--ap-color-overlay);
+        opacity: 0;
+        transition: opacity 300ms ease;
+      }
+
+      .gate-layer.is-open .backdrop {
+        opacity: var(--backdrop-opacity, 1);
+      }
+
+      .auth-sheet {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        min-height: var(--sheet-height);
+        flex-direction: column;
+        gap: 24px;
+        padding: 24px;
+        border-top: 1px solid var(--ap-color-border-subtle);
+        border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+        background: var(--ap-color-bg-primary);
+        box-shadow: 0 -6px 30px rgb(0 0 0 / 12%);
+        transform: translateY(calc(100% + 20px));
+        transition: transform 420ms var(--sheet-ease);
+        will-change: transform;
+      }
+
+      .gate-layer.is-open .auth-sheet {
+        transform: translateY(var(--drag-y, 0));
+      }
+
+      .gate-layer.is-dragging .auth-sheet,
+      .gate-layer.is-dragging .backdrop {
+        transition: none;
+      }
+
+      .gate-layer.is-closing .auth-sheet {
+        transform: translateY(calc(100% + 20px));
+      }
+
+      .gate-layer.is-closing .backdrop {
+        opacity: 0;
+      }
+
+      .grabber-zone {
+        display: flex;
+        width: 100%;
+        height: 12px;
+        align-items: flex-end;
+        justify-content: center;
+        padding-top: 8px;
+        border: 0;
+        background: transparent;
+        cursor: grab;
+        touch-action: none;
+      }
+
+      .grabber-zone:active {
+        cursor: grabbing;
+      }
+
+      .grabber {
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--ap-color-border-moderate);
+      }
+
+      .callout {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .callout h2 {
+        margin: 0;
+        font-size: 23px;
+        font-stretch: 75%;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .callout p {
+        margin: 0;
+        color: var(--ap-color-text-secondary);
+        font-size: 14px;
+        line-height: 1.3;
+      }
+
+      .email-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .email-group label {
+        font-size: 16px;
+        font-weight: 530;
+        line-height: 1.2;
+      }
+
+      .email-group input {
+        width: 100%;
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid var(--ap-color-outline);
+        border-radius: 3px;
+        background: transparent;
+        color: var(--ap-color-text-primary);
+        font-size: 18px;
+        line-height: 1.5;
+      }
+
+      .email-group input::placeholder {
+        color: var(--ap-color-text-secondary);
+        opacity: 1;
+      }
+
+      .email-group input:focus-visible,
+      .sheet-button:focus-visible,
+      .icon-button:focus-visible,
+      .lead-card:focus-visible,
+      .grabber-zone:focus-visible {
+        outline: 2px solid #0042a9;
+        outline-offset: 2px;
+      }
+
+      .sheet-button {
+        display: flex;
+        width: 100%;
+        height: 40px;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 16px;
+        border: 1px solid var(--ap-color-outline);
+        border-radius: 24px;
+        background: transparent;
+        color: var(--ap-color-text-primary);
+        font-size: 16px;
+        font-weight: 530;
+        letter-spacing: -0.5px;
+        line-height: 1.2;
+        cursor: pointer;
+      }
+
+      .continue-button {
+        height: 48px;
+        border-color: var(--ap-color-text-primary);
+        background: var(--ap-color-text-primary);
+        color: white;
+        line-height: 1.3;
+      }
+
+      .divider {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 16px;
+        color: var(--ap-color-text-secondary);
+        font-size: 14px;
+      }
+
+      .divider::before,
+      .divider::after {
+        height: 1px;
+        background: var(--ap-color-border-subtle);
+        content: "";
+      }
+
+      .social-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .sheet-button img {
+        display: block;
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+
+      .sheet-button .facebook-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      .sheet-button .apple-icon {
+        width: 15px;
+        height: 18px;
+      }
+
+      .prototype-toast {
+        position: absolute;
+        z-index: 20;
+        bottom: 18px;
+        left: 50%;
+        padding: 9px 13px;
+        border-radius: 18px;
+        background: #191919;
+        color: white;
+        font-size: 13px;
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 12px);
+        transition: opacity 160ms ease, transform 160ms ease;
+        white-space: nowrap;
+      }
+
+      .prototype-toast.is-visible {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+
+      @media (max-width: 500px), (max-height: 760px) {
+        .prototype-stage {
+          display: block;
+          min-height: 100dvh;
+          padding: 0;
+        }
+
+        .device {
+          width: 100%;
+          height: 100dvh;
+          padding: 0;
+          border: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+
+        .screen {
+          border-radius: 0;
+        }
+
+        .status-bar {
+          padding-top: max(12px, env(safe-area-inset-top));
+        }
+
+        .auth-sheet {
+          padding-bottom: max(24px, env(safe-area-inset-bottom));
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 1ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="prototype-stage">
+      <section class="device" aria-label="AP News iOS registration gate prototype">
+        <div class="screen">
+          <section class="feed-screen" id="feed-screen" aria-label="AP News feed">
+            <div class="status-bar" aria-hidden="true">
+              <span>8:13</span>
+              <span class="system-icons">
+                <img src="assets/ios-signal.svg" alt="" />
+                <img src="assets/ios-wifi.svg" alt="" />
+                <img src="assets/ios-battery.svg" alt="" />
+              </span>
+            </div>
+            <header class="feed-header">
+              <span class="ap-mark">AP NEWS</span>
+              <span class="feed-header-actions" aria-hidden="true">
+                <span class="round-icon search-icon"></span>
+                <span class="round-icon more-icon"></span>
+              </span>
+            </header>
+            <div class="feed-scroll">
+              <div class="feed-intro">
+                <p class="feed-date">Tuesday, September 22</p>
+                <h1>Your news</h1>
+              </div>
+              <button class="lead-card" id="gated-story" type="button" aria-label="Open gated story: AI companies face lawsuit over coordinated slowdown">
+                <div class="lead-image">
+                  <span class="gate-label">Free account</span>
+                </div>
+                <p class="story-kicker">Technology</p>
+                <h2>AI companies face lawsuit over coordinated slowdown</h2>
+                <p>Leading labs are accused of making an illegal agreement that reduced competition.</p>
+              </button>
+              <div class="story-list" aria-label="More top stories">
+                <article class="story-row">
+                  <div>
+                    <p class="story-kicker">World</p>
+                    <h2>Leaders gather as a new round of talks gets underway</h2>
+                    <p>12 minutes ago</p>
+                  </div>
+                  <div class="story-thumb" aria-hidden="true"></div>
+                </article>
+                <article class="story-row">
+                  <div>
+                    <p class="story-kicker">Climate</p>
+                    <h2>Communities prepare for another season of extremes</h2>
+                    <p>38 minutes ago</p>
+                  </div>
+                  <div class="story-thumb" aria-hidden="true"></div>
+                </article>
+              </div>
+            </div>
+            <nav class="tab-bar" aria-label="Primary navigation">
+              <span class="is-current">Home</span>
+              <span>Explore</span>
+              <span>Following</span>
+              <span>Profile</span>
+            </nav>
+          </section>
+
+          <section class="article-screen" id="article-screen" aria-label="Gated article" aria-hidden="true" inert>
+            <div class="status-bar" aria-hidden="true">
+              <span>8:13</span>
+              <span class="system-icons">
+                <img src="assets/ios-signal.svg" alt="" />
+                <img src="assets/ios-wifi.svg" alt="" />
+                <img src="assets/ios-battery.svg" alt="" />
+              </span>
+            </div>
+            <header class="article-header">
+              <button class="icon-button back-button" id="back-button" type="button" aria-label="Back to news feed">
+                <img src="assets/chevron-left.svg" alt="" />
+              </button>
+              <div class="article-actions" aria-label="Article actions">
+                <span class="comment-action">
+                  <button class="icon-button" type="button" aria-label="View comments">
+                    <img src="assets/message.svg" alt="" />
+                  </button>
+                  <span class="comment-count">135</span>
+                </span>
+                <button class="icon-button" type="button" aria-label="Bookmark article">
+                  <img src="assets/bookmark.svg" alt="" />
+                </button>
+                <button class="icon-button" type="button" aria-label="Share article">
+                  <img src="assets/share.svg" alt="" />
+                </button>
+              </div>
+            </header>
+            <article class="article-scroll">
+              <p>A new lawsuit claims Anthropic, OpenAI, SpaceXAI and Google made an illegal deal to slow the pace of their respective AI development.</p>
+              <p>The lawsuit, which was filed Friday in the U.S. District Court for the Northern District of California, argues that the leading AI companies violated antitrust laws when they agreed to coordinate slowdown efforts, and that doing so would reduce the value consumers get for paid AI subscriptions.</p>
+              <p>The coordination largely took place on Sept. 12, the lawsuit argues, when Anthropic CEO Dario Amodei published an essay urging for industrywide cooperation on decelerating advancements in favor of enhanced safety measures.</p>
+              <p>But the lawsuit also alleges that the coordination began to take shape months earlier. It points to a statement from July 2026 that high-ranking employees from several of the leading AI labs signed.</p>
+            </article>
+
+            <div class="gate-layer" id="gate-layer">
+              <button class="backdrop" id="backdrop" type="button" aria-label="Close sign-in sheet"></button>
+              <section class="auth-sheet" id="auth-sheet" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+                <button class="grabber-zone" id="grabber" type="button" aria-label="Drag down to close sign-in sheet">
+                  <span class="grabber" aria-hidden="true"></span>
+                </button>
+                <div class="callout">
+                  <h2 id="gate-title" tabindex="-1">Sign in to continue</h2>
+                  <p>Sign in or create a free account to access this content.</p>
+                </div>
+                <div class="email-group">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" autocomplete="email" placeholder="Enter your email" />
+                </div>
+                <button class="sheet-button continue-button" type="button" data-prototype-action>Continue with email</button>
+                <div class="divider">Or</div>
+                <div class="social-stack">
+                  <button class="sheet-button" type="button" data-prototype-action>
+                    <img src="assets/google.svg" alt="" />
+                    Continue with Google
+                  </button>
+                  <button class="sheet-button" type="button" data-prototype-action>
+                    <img class="facebook-icon" src="assets/facebook.svg" alt="" />
+                    Continue with Facebook
+                  </button>
+                  <button class="sheet-button" type="button" data-prototype-action>
+                    <img class="apple-icon" src="assets/apple.svg" alt="" />
+                    Continue with Apple
+                  </button>
+                </div>
+              </section>
+            </div>
+          </section>
+          <div class="prototype-toast" id="prototype-toast" role="status">Sign-in flow continues in production</div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const feedScreen = document.querySelector("#feed-screen");
+      const articleScreen = document.querySelector("#article-screen");
+      const gatedStory = document.querySelector("#gated-story");
+      const gateLayer = document.querySelector("#gate-layer");
+      const authSheet = document.querySelector("#auth-sheet");
+      const grabber = document.querySelector("#grabber");
+      const gateTitle = document.querySelector("#gate-title");
+      const toast = document.querySelector("#prototype-toast");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      let isOpen = false;
+      let isDragging = false;
+      let dragStartY = 0;
+      let dragStartTime = 0;
+      let dragDistance = 0;
+      let closeTimer;
+      let toastTimer;
+
+      const setDragPosition = (distance) => {
+        const y = Math.max(0, distance);
+        const sheetHeight = Math.max(authSheet.offsetHeight, 1);
+        dragDistance = y;
+        gateLayer.style.setProperty("--drag-y", `${y}px`);
+        gateLayer.style.setProperty("--backdrop-opacity", Math.max(0, 1 - y / sheetHeight));
+      };
+
+      const resetDragPosition = () => {
+        gateLayer.style.removeProperty("--drag-y");
+        gateLayer.style.removeProperty("--backdrop-opacity");
+      };
+
+      const finishClose = () => {
+        isOpen = false;
+        isDragging = false;
+        gateLayer.classList.remove("is-open", "is-closing", "is-dragging");
+        articleScreen.classList.remove("is-active");
+        feedScreen.classList.remove("is-behind");
+        articleScreen.setAttribute("aria-hidden", "true");
+        articleScreen.inert = true;
+        feedScreen.removeAttribute("aria-hidden");
+        feedScreen.inert = false;
+        resetDragPosition();
+        gatedStory.focus({ preventScroll: true });
+      };
+
+      const closeGate = ({ fromHistory = false } = {}) => {
+        if (!isOpen) return;
+        clearTimeout(closeTimer);
+        gateLayer.classList.remove("is-dragging");
+        gateLayer.classList.add("is-closing");
+        closeTimer = window.setTimeout(finishClose, reduceMotion.matches ? 10 : 360);
+
+        if (!fromHistory && history.state?.gateOpen) {
+          history.back();
+        }
+      };
+
+      const openGate = () => {
+        if (isOpen) return;
+        isOpen = true;
+        feedScreen.classList.add("is-behind");
+        feedScreen.setAttribute("aria-hidden", "true");
+        feedScreen.inert = true;
+        articleScreen.classList.add("is-active");
+        articleScreen.removeAttribute("aria-hidden");
+        articleScreen.inert = false;
+        gateLayer.classList.remove("is-closing");
+        resetDragPosition();
+
+        if (!history.state?.gateOpen) {
+          history.pushState({ gateOpen: true }, "");
+        }
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            gateLayer.classList.add("is-open");
+            window.setTimeout(() => gateTitle.focus({ preventScroll: true }), reduceMotion.matches ? 10 : 430);
+          });
+        });
+      };
+
+      gatedStory.addEventListener("click", openGate);
+      document.querySelector("#back-button").addEventListener("click", () => closeGate());
+      document.querySelector("#backdrop").addEventListener("click", () => closeGate());
+
+      grabber.addEventListener("pointerdown", (event) => {
+        if (!isOpen) return;
+        isDragging = true;
+        dragStartY = event.clientY;
+        dragStartTime = performance.now();
+        dragDistance = 0;
+        gateLayer.classList.add("is-dragging");
+        grabber.setPointerCapture(event.pointerId);
+      });
+
+      grabber.addEventListener("pointermove", (event) => {
+        if (!isDragging) return;
+        setDragPosition(event.clientY - dragStartY);
+      });
+
+      const finishDrag = (event) => {
+        if (!isDragging) return;
+        isDragging = false;
+        gateLayer.classList.remove("is-dragging");
+        if (grabber.hasPointerCapture(event.pointerId)) grabber.releasePointerCapture(event.pointerId);
+
+        const elapsed = Math.max(performance.now() - dragStartTime, 1);
+        const velocity = dragDistance / elapsed;
+        if (dragDistance > Math.min(130, authSheet.offsetHeight * 0.25) || velocity > 0.65) {
+          closeGate();
+        } else {
+          resetDragPosition();
+        }
+      };
+
+      grabber.addEventListener("pointerup", finishDrag);
+      grabber.addEventListener("pointercancel", finishDrag);
+
+      window.addEventListener("popstate", () => {
+        if (isOpen) closeGate({ fromHistory: true });
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && isOpen) closeGate();
+      });
+
+      document.querySelectorAll("[data-prototype-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          clearTimeout(toastTimer);
+          toast.classList.add("is-visible");
+          toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
+        });
+      });
+    </script>
+  </body>
+</html>
